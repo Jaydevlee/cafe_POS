@@ -19,6 +19,7 @@ namespace Cafe_Pos
             btnTea.Click += btnTea_Click;
             btnDessert.Click += btnDessert_Click;
             lstOrder.DoubleClick += lstOrder_DoubleClick;
+            btnPurchase.Click += btnPurchase_Click;
         }
         // ListBox에 주문 내역 표시를 위히 Dictionary 사용
 
@@ -188,6 +189,11 @@ namespace Cafe_Pos
             }
         }
 
+        public void btnPurchase_Click(object? sender, EventArgs e)
+        {
+            Form_PurchaseDial form = new Form_PurchaseDial(OrderList);
+            form.ShowDialog();
+        }
         private void Calc_total()
         {
             int sum = 0;
