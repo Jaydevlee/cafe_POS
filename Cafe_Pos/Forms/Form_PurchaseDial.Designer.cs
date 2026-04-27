@@ -107,7 +107,6 @@
             textRecived.Name = "textRecived";
             textRecived.Size = new Size(294, 47);
             textRecived.TabIndex = 5;
-            textRecived.Text = "0";
             textRecived.TextAlign = HorizontalAlignment.Right;
             textRecived.KeyDown += textRecived_KeyDown;
             // 

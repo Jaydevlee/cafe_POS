@@ -29,7 +29,7 @@ namespace Cafe_Pos.Data
 
                         while (reader.Read())
                         {
-                            MenuItem item = new MenuItem
+                            MenuItem item = new()
                             {
                                 Id = reader.GetInt32("id"),
                                 Name = reader.GetString("name"),
@@ -37,7 +37,6 @@ namespace Cafe_Pos.Data
                                 Price = reader.GetInt32("price")
                             };
                             list.Add(item);
-
                         }                       
                     }
                 }
@@ -46,9 +45,36 @@ namespace Cafe_Pos.Data
             {
                 MessageBox.Show("DB 연결 실패: " + ex.Message);
             }
-            return list;
-            
+            return list;          
         }
         
+        //public List<MenuItem> SelectCategory()
+        //{
+        //    List<MenuItem> list = new List<MenuItem>();
+        //    try
+        //    {
+        //        using MySqlConnection conn = DBHepler.GetConnection();
+        //        {
+        //            conn.Open();
+        //            string sql = "SELECT category FROM MENU";
+        //            using MySqlCommand cmd = new MySqlCommand(sql, conn);
+        //            using MySqlDataReader reader = cmd.ExecuteReader();
+        //            {
+        //                while (reader.Read())
+        //                {
+        //                    MenuItem category = new()
+        //                    {
+        //                        Category = reader.GetString("category");
+        //                    };
+        //                    list.Add(category);
+        //                }
+        //            }
+        //        }
+        //    } catch (Exception ex)
+        //    {
+        //        MessageBox.Show("DB연결실패" + ex.Message);
+        //    }
+        //    return list;
+        //}
     }
 }

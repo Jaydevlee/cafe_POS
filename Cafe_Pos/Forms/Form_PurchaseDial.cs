@@ -84,14 +84,14 @@ namespace Cafe_Pos.Forms
         }
         private void btnClear_Click(object? sender, EventArgs e)
         {
-            textRecived.Text = "0";
+            textRecived.Text = "";
             Calc_Charge();
         }
 
         // 거스름 돈 계산
         private void Calc_Charge()
         {
-            if (textRecived.Text.Equals("0"))
+            if (textRecived.Text.Equals(""))
             {
                 displayCharge.Text = "0원";
             }
@@ -137,7 +137,7 @@ namespace Cafe_Pos.Forms
         private void PressBackSpace()
         {
             string currentValue = textRecived.Text;
-            if (currentValue == "0" || currentValue.Length < 1) currentValue = "0";
+            if (currentValue == "" || currentValue.Length < 1) currentValue = "";
             else currentValue.Substring(0, currentValue.Length - 1);
         }
 
