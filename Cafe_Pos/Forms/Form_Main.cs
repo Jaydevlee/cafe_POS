@@ -149,6 +149,7 @@ namespace Cafe_Pos
             {
                 OrderList[item.Name] = new OrderItems
                 {
+                    Menu_id = item.Id,
                     Menu_name = item.Name,
                     Quantity = 1,
                     Price = item.Price,
