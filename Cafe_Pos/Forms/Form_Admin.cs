@@ -61,6 +61,7 @@ namespace Cafe_Pos.Forms
             //}
         }
 
+        // 메뉴목록에서 판매중 열의 값 이벤트
         public void ListMenu_CellFormatting(object? sender, DataGridViewCellFormattingEventArgs e)
         {
             if (listMenu.Columns[e.ColumnIndex].Name == "Is_active")
