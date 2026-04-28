@@ -14,6 +14,7 @@ namespace Cafe_Pos.Forms
 {
     public partial class Form_Admin : Form
     {
+        private MenuItem menuItem = new MenuItem();
         private List<MenuItem> list = new List<MenuItem>();
         private MenuRepository menuRepository = new MenuRepository();
         public Form_Admin()
@@ -24,6 +25,7 @@ namespace Cafe_Pos.Forms
             LoadCmbCategory();
             LoadCmbStatus();
             listMenu.CellFormatting += ListMenu_CellFormatting;
+            btnEvent();
         }
 
         public void LoadMenu()
@@ -67,16 +69,18 @@ namespace Cafe_Pos.Forms
             if (listMenu.Columns[e.ColumnIndex].Name == "Is_active")
             {
                 if (e.Value != null)
-                Console.WriteLine(e.Value.GetType());
                 {
-                    int stringValue = (int)e.Value;
-                    if (stringValue == 1)
+                    Console.WriteLine(e.Value.GetType());
                     {
-                        e.Value = "판매중";
-                    }
-                    else if (stringValue == 0)
-                    {
-                        e.Value = "품절";
+                        int stringValue = (int)e.Value;
+                        if (stringValue == 1)
+                        {
+                            e.Value = "판매중";
+                        }
+                        else if (stringValue == 0)
+                        {
+                            e.Value = "품절";
+                        }
                     }
                 }
             }
@@ -104,6 +108,27 @@ namespace Cafe_Pos.Forms
             cmbStatus.DataSource = dsStatus;
             cmbStatus.DisplayMember = "Key";
             cmbStatus.ValueMember = "Value";
+        }
+
+        private void btnEvent()
+        {
+            btnAdd.Click += btnAdd_Click;
+        }
+
+        public void btnAdd_Click(object? sender, EventArgs e)
+        {
+            MessageBox.Show(cmbCategory.SelectedItem.ToString());
+            MessageBox.Show(cmbStatus.SelectedValue.ToString());
+
+            menuItem = new MenuItem
+            {
+                Name = txtMenuName.Text,
+                Category = (string)cmbCategory.SelectedItem,
+                Price = Convert.ToInt32(txtPrice.Text),
+                Is_active = Convert.ToInt32(cmbStatus.SelectedValue)
+            };
+
+            menuRepository.InsertMenu(menuItem);
         }
     }
 }

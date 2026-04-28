@@ -2,6 +2,7 @@
 using MySqlConnector;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.Marshalling;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -12,9 +13,10 @@ namespace Cafe_Pos.Data
 {
     public class MenuRepository
     {
-        public List<MenuItem> SelectMenu(string text) {
+        public List<MenuItem> SelectMenu(string text)
+        {
             List<MenuItem> list = new List<MenuItem>();
-            try 
+            try
             {
                 using MySqlConnection conn = DBHepler.GetConnection();
                 {
@@ -38,15 +40,16 @@ namespace Cafe_Pos.Data
                                 Price = reader.GetInt32("price")
                             };
                             list.Add(item);
-                        }                       
+                        }
                     }
                 }
 
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show("DB 연결 실패: " + ex.Message);
             }
-            return list;          
+            return list;
         }
 
         public List<String> SelectCategory()
@@ -64,10 +67,10 @@ namespace Cafe_Pos.Data
                         while (reader.Read())
                         {
                             string category = reader.GetString("category");
-                            if(!list.Contains(category)) 
+                            if (!list.Contains(category))
                             {
                                 list.Add(category);
-                            }                        
+                            }
                         }
                     }
                 }
@@ -78,36 +81,6 @@ namespace Cafe_Pos.Data
             }
             return list;
         }
-
-        //public List<int> SelectIsActive()
-        //{
-        //    List<int> list = new List<int>();
-        //    try
-        //    {
-        //        using MySqlConnection conn = DBHepler.GetConnection();
-        //        {
-        //            conn.Open();
-        //            string sql = "SELECT is_active FROM MENU";
-        //            using MySqlCommand cmd = new MySqlCommand(sql, conn);
-        //            using MySqlDataReader reader = cmd.ExecuteReader();
-        //            {
-        //                while (reader.Read())
-        //                {
-        //                    int isActive = reader.GetInt32("is_active");
-        //                    if (!list.Contains(isActive))
-        //                    {
-        //                        list.Add(isActive);
-        //                    }
-        //                }
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show("DB연결실패" + ex.Message);
-        //    }
-        //    return list;
-        //}
 
         public List<MenuItem> SelectAllMenu()
         {
@@ -146,6 +119,40 @@ namespace Cafe_Pos.Data
                 MessageBox.Show($"DB연결실패: {ex.Message}");
             }
             return List;
+        }
+
+        public int InsertMenu(MenuItem menuItem)
+        {
+            int result = 0;
+            using MySqlConnection conn = DBHepler.GetConnection();
+            {
+                conn.Open();
+                var tx = conn.BeginTransaction();
+                try
+                {             
+                    
+                    string sql = @"INSERT INTO MENU(name, category, price, is_active)
+                            VALUES(@name, @category, @price, @is_active)";
+
+                    using (MySqlCommand cmd = new MySqlCommand(sql, conn, tx))
+                    {
+                        cmd.Parameters.AddWithValue("@name", menuItem.Name);
+                        cmd.Parameters.AddWithValue("@category", menuItem.Category);
+                        cmd.Parameters.AddWithValue("@price", menuItem.Price);
+                        cmd.Parameters.AddWithValue("@is_active", menuItem.Is_active);
+
+                        result = cmd.ExecuteNonQuery();
+                        if (result > 0) MessageBox.Show("메뉴가 추가되었습니다.");
+                    }
+                    tx.Commit();                  
+                }
+                catch (Exception ex)
+                {
+                    tx.Rollback();
+                    MessageBox.Show("메뉴가 추가되지 않았습니다. " + ex.Message);
+                }
+                return result;
+            }
         }
     }
 }
