@@ -161,7 +161,12 @@ namespace Cafe_Pos.Forms
 
         private void btnPayment_Click(object sender, EventArgs e)
         {
-            
+            if (recived_amount < total)
+            {
+                MessageBox.Show("금액이 부족합니다.");
+                return;
+            }
+
             orders.Clear();
             orders.Add(new Orders
             {
@@ -172,6 +177,7 @@ namespace Cafe_Pos.Forms
 
             long orderId = orderRepostiory.InsertOrder(OrderList, orders);
             Form_Recipt form = new Form_Recipt(orderId, orders, OrderList);
+            this.Close();
             form.ShowDialog();            
         }
     }

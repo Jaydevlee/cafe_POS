@@ -206,5 +206,11 @@ namespace Cafe_Pos
             }
             displayTotal.Text = sum.ToString();
         }
+
+        private void menuTool_Click(object sender, EventArgs e)
+        {
+            Form_Admin form = new();
+            form.Show();
+        }
     }
 }

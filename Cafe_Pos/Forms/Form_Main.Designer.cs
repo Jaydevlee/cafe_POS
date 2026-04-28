@@ -42,6 +42,9 @@
             fplButtons = new FlowLayoutPanel();
             pnTotal = new Panel();
             displayTotal = new Label();
+            toolMenu = new ToolStripMenuItem();
+            menuTool = new ToolStripMenuItem();
+            menuStrip1.SuspendLayout();
             pnCategory.SuspendLayout();
             pnTotal.SuspendLayout();
             SuspendLayout();
@@ -49,9 +52,10 @@
             // menuStrip1
             // 
             menuStrip1.ImageScalingSize = new Size(20, 20);
+            menuStrip1.Items.AddRange(new ToolStripItem[] { toolMenu });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(1026, 24);
+            menuStrip1.Size = new Size(1026, 28);
             menuStrip1.TabIndex = 0;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -173,6 +177,20 @@
             displayTotal.Text = "0";
             displayTotal.TextAlign = ContentAlignment.MiddleRight;
             // 
+            // toolMenu
+            // 
+            toolMenu.DropDownItems.AddRange(new ToolStripItem[] { menuTool });
+            toolMenu.Name = "toolMenu";
+            toolMenu.Size = new Size(83, 24);
+            toolMenu.Text = "매장관리";
+            // 
+            // menuTool
+            // 
+            menuTool.Name = "menuTool";
+            menuTool.Size = new Size(224, 26);
+            menuTool.Text = "메뉴 관리";
+            menuTool.Click += menuTool_Click;
+            // 
             // Form_Main
             // 
             AutoScaleDimensions = new SizeF(9F, 20F);
@@ -190,6 +208,8 @@
             Name = "Form_Main";
             Text = "커피한잔 POS";
             Load += Form_Main_Load;
+            menuStrip1.ResumeLayout(false);
+            menuStrip1.PerformLayout();
             pnCategory.ResumeLayout(false);
             pnTotal.ResumeLayout(false);
             pnTotal.PerformLayout();
@@ -213,5 +233,7 @@
         private FlowLayoutPanel fplButtons;
         private Panel pnTotal;
         private Label displayTotal;
+        private ToolStripMenuItem toolMenu;
+        private ToolStripMenuItem menuTool;
     }
 }
