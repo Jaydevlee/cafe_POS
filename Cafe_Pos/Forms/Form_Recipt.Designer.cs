@@ -28,12 +28,45 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "Form4";
+            lblStore = new Label();
+            label1 = new Label();
+            SuspendLayout();
+            // 
+            // lblStore
+            // 
+            lblStore.Dock = DockStyle.Top;
+            lblStore.Font = new Font("맑은 고딕", 20F);
+            lblStore.Location = new Point(0, 0);
+            lblStore.Name = "lblStore";
+            lblStore.Size = new Size(530, 101);
+            lblStore.TabIndex = 0;
+            lblStore.Text = "커피한잔";
+            lblStore.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // label1
+            // 
+            label1.Location = new Point(212, 101);
+            label1.Name = "label1";
+            label1.Size = new Size(89, 25);
+            label1.TabIndex = 1;
+            label1.Text = "시간날짜";
+            // 
+            // Form_Recipt
+            // 
+            AutoScaleDimensions = new SizeF(9F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(530, 646);
+            Controls.Add(label1);
+            Controls.Add(lblStore);
+            Name = "Form_Recipt";
+            StartPosition = FormStartPosition.CenterParent;
+            Text = "영수증";
+            ResumeLayout(false);
         }
 
         #endregion
+
+        private Label lblStore;
+        private Label label1;
     }
 }

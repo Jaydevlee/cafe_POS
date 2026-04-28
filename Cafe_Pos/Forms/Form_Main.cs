@@ -10,10 +10,12 @@ namespace Cafe_Pos
     public partial class Form_Main : Form
     {
         private Dictionary<string, OrderItems> OrderList { get; set; }
+        private List<Orders> orders { get; set; }
         public Form_Main()
         {
             InitializeComponent();
             OrderList = new Dictionary<string, OrderItems>();
+            orders = new List<Orders>();
             btnCoffee.Click += btnCoffee_Click;
             btnNonCoffee.Click += btnNonCoffee_Click;
             btnTea.Click += btnTea_Click;
