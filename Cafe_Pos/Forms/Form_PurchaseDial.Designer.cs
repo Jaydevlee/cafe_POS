@@ -209,6 +209,7 @@
             btnPayment.TabIndex = 9;
             btnPayment.Text = "결제완료";
             btnPayment.UseVisualStyleBackColor = true;
+            btnPayment.Click += btnPayment_Click;
             // 
             // label1
             // 
