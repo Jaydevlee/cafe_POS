@@ -33,19 +33,21 @@ namespace Cafe_Pos.Data
 
                     string sql2 = @"INSERT INTO order_items (order_id, menu_id, menu_name, price, quantity, subtotal)
                                     VALUES (@oid, @mid, @menu_name, @price, @quantity, @subtotal)";
-                    using MySqlCommand cmd2 = new MySqlCommand(sql2, conn, tx);
+                    //using MySqlCommand cmd2 = new MySqlCommand(sql2, conn, tx);
                     foreach (OrderItems order in OrderList.Values)
                     {
+                        using MySqlCommand cmd2 = new MySqlCommand(sql2, conn, tx);
                         cmd2.Parameters.AddWithValue("@oid", orderId);
                         cmd2.Parameters.AddWithValue("@mid", order.Menu_id);
                         cmd2.Parameters.AddWithValue("@menu_name", order.Menu_name);
                         cmd2.Parameters.AddWithValue("@price", order.Price);
                         cmd2.Parameters.AddWithValue("@quantity", order.Quantity);
                         cmd2.Parameters.AddWithValue("@subtotal", order.Subtotal);
+                        cmd2.ExecuteNonQuery();
+                        
                     }
-                    cmd2.ExecuteNonQuery();
-                    tx.Commit();
                     MessageBox.Show("주문이 완료되었습니다.");
+                    tx.Commit();
                 }
                 catch
                 {

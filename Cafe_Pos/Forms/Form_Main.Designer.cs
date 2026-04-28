@@ -71,7 +71,6 @@
             lstOrder.Name = "lstOrder";
             lstOrder.Size = new Size(282, 324);
             lstOrder.TabIndex = 2;
-
             // 
             // lblTotal
             // 

@@ -171,8 +171,8 @@ namespace Cafe_Pos.Forms
             });
 
             long orderId = orderRepostiory.InsertOrder(OrderList, orders);
-
-            
+            Form_Recipt form = new Form_Recipt(orderId, orders, OrderList);
+            form.ShowDialog();            
         }
     }
 }
