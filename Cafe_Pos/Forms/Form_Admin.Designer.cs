@@ -44,11 +44,16 @@
             lblMenuName = new Label();
             dsCategory = new BindingSource(components);
             dsStatus = new BindingSource(components);
+            btnAdd = new Button();
+            btnUpdate = new Button();
+            btnDelete = new Button();
+            tableLayoutPanel1 = new TableLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)listMenu).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dsMenu).BeginInit();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dsCategory).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dsStatus).BeginInit();
+            tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
             // lblListMenu
@@ -84,6 +89,7 @@
             // 
             panel1.BackColor = Color.WhiteSmoke;
             panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(tableLayoutPanel1);
             panel1.Controls.Add(cmbStatus);
             panel1.Controls.Add(cmbCategory);
             panel1.Controls.Add(txtPrice);
@@ -92,27 +98,29 @@
             panel1.Controls.Add(lblCategory);
             panel1.Controls.Add(txtMenuName);
             panel1.Controls.Add(lblMenuName);
-            panel1.Location = new Point(581, 52);
+            panel1.Location = new Point(574, 52);
             panel1.Name = "panel1";
-            panel1.Size = new Size(333, 520);
+            panel1.Size = new Size(340, 520);
             panel1.TabIndex = 3;
             // 
             // cmbStatus
             // 
+            cmbStatus.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbStatus.Font = new Font("맑은 고딕", 18F);
             cmbStatus.FormattingEnabled = true;
             cmbStatus.Location = new Point(14, 372);
             cmbStatus.Name = "cmbStatus";
-            cmbStatus.Size = new Size(297, 49);
+            cmbStatus.Size = new Size(311, 49);
             cmbStatus.TabIndex = 9;
             // 
             // cmbCategory
             // 
+            cmbCategory.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbCategory.Font = new Font("맑은 고딕", 18F);
             cmbCategory.FormattingEnabled = true;
             cmbCategory.Location = new Point(14, 154);
             cmbCategory.Name = "cmbCategory";
-            cmbCategory.Size = new Size(297, 49);
+            cmbCategory.Size = new Size(311, 49);
             cmbCategory.TabIndex = 8;
             // 
             // txtPrice
@@ -121,7 +129,7 @@
             txtPrice.Font = new Font("맑은 고딕", 18F, FontStyle.Regular, GraphicsUnit.Point, 129);
             txtPrice.Location = new Point(14, 260);
             txtPrice.Name = "txtPrice";
-            txtPrice.Size = new Size(297, 47);
+            txtPrice.Size = new Size(311, 47);
             txtPrice.TabIndex = 7;
             // 
             // lblStatus
@@ -157,7 +165,7 @@
             txtMenuName.Font = new Font("맑은 고딕", 18F, FontStyle.Regular, GraphicsUnit.Point, 129);
             txtMenuName.Location = new Point(14, 47);
             txtMenuName.Name = "txtMenuName";
-            txtMenuName.Size = new Size(297, 47);
+            txtMenuName.Size = new Size(311, 47);
             txtMenuName.TabIndex = 3;
             // 
             // lblMenuName
@@ -168,6 +176,49 @@
             lblMenuName.Size = new Size(74, 20);
             lblMenuName.TabIndex = 2;
             lblMenuName.Text = "메뉴 이름";
+            // 
+            // btnAdd
+            // 
+            btnAdd.Location = new Point(3, 3);
+            btnAdd.Name = "btnAdd";
+            btnAdd.Size = new Size(98, 54);
+            btnAdd.TabIndex = 10;
+            btnAdd.Text = "추가";
+            btnAdd.UseVisualStyleBackColor = true;
+            // 
+            // btnUpdate
+            // 
+            btnUpdate.Location = new Point(107, 3);
+            btnUpdate.Name = "btnUpdate";
+            btnUpdate.Size = new Size(98, 54);
+            btnUpdate.TabIndex = 11;
+            btnUpdate.Text = "수정";
+            btnUpdate.UseVisualStyleBackColor = true;
+            // 
+            // btnDelete
+            // 
+            btnDelete.Location = new Point(211, 3);
+            btnDelete.Name = "btnDelete";
+            btnDelete.Size = new Size(100, 54);
+            btnDelete.TabIndex = 12;
+            btnDelete.Text = "삭제";
+            btnDelete.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutPanel1
+            // 
+            tableLayoutPanel1.ColumnCount = 3;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+            tableLayoutPanel1.Controls.Add(btnAdd, 0, 0);
+            tableLayoutPanel1.Controls.Add(btnUpdate, 1, 0);
+            tableLayoutPanel1.Controls.Add(btnDelete, 2, 0);
+            tableLayoutPanel1.Location = new Point(14, 445);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 1;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.Size = new Size(314, 60);
+            tableLayoutPanel1.TabIndex = 13;
             // 
             // Form_Admin
             // 
@@ -186,6 +237,7 @@
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dsCategory).EndInit();
             ((System.ComponentModel.ISupportInitialize)dsStatus).EndInit();
+            tableLayoutPanel1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -207,5 +259,9 @@
         private ComboBox cmbCategory;
         private BindingSource dsCategory;
         private BindingSource dsStatus;
+        private TableLayoutPanel tableLayoutPanel1;
+        private Button btnAdd;
+        private Button btnDelete;
+        private Button btnUpdate;
     }
 }

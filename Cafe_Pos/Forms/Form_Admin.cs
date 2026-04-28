@@ -23,6 +23,7 @@ namespace Cafe_Pos.Forms
             LoadMenuGrid();
             LoadCmbCategory();
             LoadCmbStatus();
+            listMenu.CellFormatting += ListMenu_CellFormatting;
         }
 
         public void LoadMenu()
@@ -60,13 +61,25 @@ namespace Cafe_Pos.Forms
             //}
         }
 
-        //public void ListMenu_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-        //{
-        //    if (listMenu.Columns[e.ColumnIndex].Name == "is_active")
-        //    {
-
-        //    }
-        //}
+        public void ListMenu_CellFormatting(object? sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (listMenu.Columns[e.ColumnIndex].Name == "Is_active")
+            {
+                if (e.Value != null)
+                Console.WriteLine(e.Value.GetType());
+                {
+                    int stringValue = (int)e.Value;
+                    if (stringValue == 1)
+                    {
+                        e.Value = "판매중";
+                    }
+                    else if (stringValue == 0)
+                    {
+                        e.Value = "품절";
+                    }
+                }
+            }
+        }
 
         //카테고리 콤보박스 binding
         private void LoadCmbCategory()
@@ -80,11 +93,16 @@ namespace Cafe_Pos.Forms
         // 상태 콤보박스 binding
         private void LoadCmbStatus()
         {
-            List<int> list = new List<int>();
-            list = menuRepository.SelectIsActive();
-            dsStatus.DataSource = list;
+            var pair1 = new KeyValuePair<string, int>("판매중", 1);
+            var pair2 = new KeyValuePair<string, int>("품절", 0);
+            List<KeyValuePair<string, int>> statusList = new List<KeyValuePair<string, int>>();
+            statusList.Add(pair1);
+            statusList.Add(pair2);
+
+            dsStatus.DataSource = statusList;
             cmbStatus.DataSource = dsStatus;
-            
+            cmbStatus.DisplayMember = "Key";
+            cmbStatus.ValueMember = "Value";
         }
     }
 }

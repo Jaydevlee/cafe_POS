@@ -79,63 +79,24 @@ namespace Cafe_Pos.Data
             return list;
         }
 
-        public List<int> SelectIsActive()
-        {
-            List<int> list = new List<int>();
-            try
-            {
-                using MySqlConnection conn = DBHepler.GetConnection();
-                {
-                    conn.Open();
-                    string sql = "SELECT is_active FROM MENU";
-                    using MySqlCommand cmd = new MySqlCommand(sql, conn);
-                    using MySqlDataReader reader = cmd.ExecuteReader();
-                    {
-                        while (reader.Read())
-                        {
-                            int isActive = reader.GetInt32("is_active");
-                            if (!list.Contains(isActive))
-                            {
-                                list.Add(isActive);
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("DB연결실패" + ex.Message);
-            }
-            return list;
-        }
-
-        //public List<MenuItem> SelectAllMenu()
+        //public List<int> SelectIsActive()
         //{
-        //    List<MenuItem> List = new List<MenuItem>();
+        //    List<int> list = new List<int>();
         //    try
         //    {
-        //        using (MySqlConnection conn = DBHepler.GetConnection())
+        //        using MySqlConnection conn = DBHepler.GetConnection();
         //        {
         //            conn.Open();
-        //            string sql = @"SELECT id, name, category, price, is_active
-        //                            FROM MENU";
-        //            using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+        //            string sql = "SELECT is_active FROM MENU";
+        //            using MySqlCommand cmd = new MySqlCommand(sql, conn);
+        //            using MySqlDataReader reader = cmd.ExecuteReader();
         //            {
-        //                using (MySqlDataReader read = cmd.ExecuteReader())
+        //                while (reader.Read())
         //                {
-        //                    while (read.Read())
+        //                    int isActive = reader.GetInt32("is_active");
+        //                    if (!list.Contains(isActive))
         //                    {
-        //                        {
-        //                            MenuItem item = new MenuItem
-        //                            {
-        //                                Id = read.GetInt32("id"),
-        //                                Name = read.GetString("name"),
-        //                                Category = read.GetString("category"),
-        //                                Price = read.GetInt32("price"),
-        //                                Is_active = read.GetInt32("is_active")
-        //                            };
-        //                            List.Add(item);
-        //                        }
+        //                        list.Add(isActive);
         //                    }
         //                }
         //            }
@@ -143,9 +104,48 @@ namespace Cafe_Pos.Data
         //    }
         //    catch (Exception ex)
         //    {
-        //        MessageBox.Show($"DB연결실패: {ex.Message}");                
+        //        MessageBox.Show("DB연결실패" + ex.Message);
         //    }
-        //    return List;
+        //    return list;
         //}
+
+        public List<MenuItem> SelectAllMenu()
+        {
+            List<MenuItem> List = new List<MenuItem>();
+            try
+            {
+                using (MySqlConnection conn = DBHepler.GetConnection())
+                {
+                    conn.Open();
+                    string sql = @"SELECT id, name, category, price, is_active
+                                    FROM MENU";
+                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                    {
+                        using (MySqlDataReader read = cmd.ExecuteReader())
+                        {
+                            while (read.Read())
+                            {
+                                {
+                                    MenuItem item = new MenuItem
+                                    {
+                                        Id = read.GetInt32("id"),
+                                        Name = read.GetString("name"),
+                                        Category = read.GetString("category"),
+                                        Price = read.GetInt32("price"),
+                                        Is_active = read.GetInt32("is_active")
+                                    };
+                                    List.Add(item);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"DB연결실패: {ex.Message}");
+            }
+            return List;
+        }
     }
 }
