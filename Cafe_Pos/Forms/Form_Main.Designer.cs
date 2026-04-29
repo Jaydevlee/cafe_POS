@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             menuStrip1 = new MenuStrip();
+            toolManage = new ToolStripMenuItem();
+            menuTool = new ToolStripMenuItem();
             lblOrderList = new Label();
             lstOrder = new ListBox();
             lblTotal = new Label();
@@ -42,8 +44,7 @@
             fplButtons = new FlowLayoutPanel();
             pnTotal = new Panel();
             displayTotal = new Label();
-            toolMenu = new ToolStripMenuItem();
-            menuTool = new ToolStripMenuItem();
+            toolSales = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             pnCategory.SuspendLayout();
             pnTotal.SuspendLayout();
@@ -52,12 +53,26 @@
             // menuStrip1
             // 
             menuStrip1.ImageScalingSize = new Size(20, 20);
-            menuStrip1.Items.AddRange(new ToolStripItem[] { toolMenu });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { toolManage });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(1026, 28);
             menuStrip1.TabIndex = 0;
             menuStrip1.Text = "menuStrip1";
+            // 
+            // toolManage
+            // 
+            toolManage.DropDownItems.AddRange(new ToolStripItem[] { menuTool, toolSales });
+            toolManage.Name = "toolManage";
+            toolManage.Size = new Size(53, 24);
+            toolManage.Text = "관리";
+            // 
+            // menuTool
+            // 
+            menuTool.Name = "menuTool";
+            menuTool.Size = new Size(224, 26);
+            menuTool.Text = "메뉴 관리";
+            menuTool.Click += menuTool_Click;
             // 
             // lblOrderList
             // 
@@ -177,19 +192,12 @@
             displayTotal.Text = "0";
             displayTotal.TextAlign = ContentAlignment.MiddleRight;
             // 
-            // toolMenu
+            // toolSales
             // 
-            toolMenu.DropDownItems.AddRange(new ToolStripItem[] { menuTool });
-            toolMenu.Name = "toolMenu";
-            toolMenu.Size = new Size(83, 24);
-            toolMenu.Text = "매장관리";
-            // 
-            // menuTool
-            // 
-            menuTool.Name = "menuTool";
-            menuTool.Size = new Size(224, 26);
-            menuTool.Text = "메뉴 관리";
-            menuTool.Click += menuTool_Click;
+            toolSales.Name = "toolSales";
+            toolSales.Size = new Size(224, 26);
+            toolSales.Text = "매출 조회";
+            toolSales.Click += toolSales_Click;
             // 
             // Form_Main
             // 
@@ -233,7 +241,8 @@
         private FlowLayoutPanel fplButtons;
         private Panel pnTotal;
         private Label displayTotal;
-        private ToolStripMenuItem toolMenu;
+        private ToolStripMenuItem toolManage;
         private ToolStripMenuItem menuTool;
+        private ToolStripMenuItem toolSales;
     }
 }

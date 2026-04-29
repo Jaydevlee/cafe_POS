@@ -11,6 +11,7 @@ namespace Cafe_Pos.Data
 {
     public class OrderRepostiory
     {
+         // 주문 넣기
         public long InsertOrder(Dictionary<string, OrderItems> OrderList, List<Orders> orders)
         {
             long orderId = 0;
@@ -56,6 +57,101 @@ namespace Cafe_Pos.Data
                 }
                 return orderId;
             }
+        }
+
+        public int SelectTotal_Amount(string dateTime1, string dateTime2)
+        {
+            int total_amount = 0;
+            using(MySqlConnection conn = DBHepler.GetConnection())
+            {
+                try 
+                {
+                    conn.Open();
+                    string sql = "SELECT SUM(total_amount) AS total_amount " +
+                                 "FROM orders " +
+                                 "WHERE ORDER_DATE BETWEEN @dateTime1 AND DATE_ADD(@dateTime2, interval 1 DAY)";
+                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("dateTime1", dateTime1);
+                        cmd.Parameters.AddWithValue("dateTime2", dateTime2);
+                        using(MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                total_amount = reader.GetInt32("total_amount");
+                            }
+                        }
+                    }
+                } catch (Exception e)
+                {
+                    MessageBox.Show("매출정보를 가져오지 못했습니다. " + e.Message);
+                }
+                
+            } return total_amount;
+        }
+
+        public int SelectOrders_Amount(string dateTime1, string dateTime2)
+        {
+            int orders_amount = 0;
+            using (MySqlConnection conn = DBHepler.GetConnection())
+            {
+                try
+                {
+                    conn.Open();
+                    string sql = "SELECT COUNT(*) AS orders_amount " +
+                                 "FROM orders " +
+                                 "WHERE ORDER_DATE BETWEEN @dateTime1 AND DATE_ADD(@dateTime2, interval 1 DAY)";
+                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("dateTime1", dateTime1);
+                        cmd.Parameters.AddWithValue("dateTime2", dateTime2);
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                orders_amount = reader.GetInt32("orders_amount");
+                            }
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("매출정보를 가져오지 못했습니다. " + e.Message);
+                }
+            }
+            return orders_amount;
+        }
+
+        public int SelectAvg_Amount(string dateTime1, string dateTime2)
+        {
+            int avg_amount = 0;
+            using (MySqlConnection conn = DBHepler.GetConnection())
+            {
+                try
+                {
+                    conn.Open();
+                    string sql = "SELECT AVG(total_amount) AS avg_amount " +
+                                 "FROM orders " +
+                                 "WHERE ORDER_DATE BETWEEN @dateTime1 AND DATE_ADD(@dateTime2, interval 1 DAY)";
+                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("dateTime1", dateTime1);
+                        cmd.Parameters.AddWithValue("dateTime2", dateTime2);
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                avg_amount = reader.GetInt32("avg_amount");
+                            }
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("매출정보를 가져오지 못했습니다. " + e.Message);
+                }
+            }
+            return avg_amount;
         }
     }
 }

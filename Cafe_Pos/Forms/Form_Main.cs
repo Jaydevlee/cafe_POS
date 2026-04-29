@@ -193,7 +193,7 @@ namespace Cafe_Pos
         }
 
         public void btnPurchase_Click(object? sender, EventArgs e)
-        {   
+        {
             Form_PurchaseDial form = new Form_PurchaseDial(OrderList, this);
             form.ShowDialog();
         }
@@ -217,7 +217,13 @@ namespace Cafe_Pos
         public void Form_Main_Clear()
         {
             OrderList.Clear();
-            lstOrder.Items.Clear ();
+            lstOrder.Items.Clear();
+        }
+
+        private void toolSales_Click(object sender, EventArgs e)
+        {
+            Form_Sales form = new Form_Sales();
+            form.Show();
         }
     }
 }
