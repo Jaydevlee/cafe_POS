@@ -16,27 +16,40 @@ namespace Cafe_Pos.Forms
         string textTotal = "";
         string textCharge = "";
         string textReceived = "";
+        Form_Main formMain = new Form_Main();
 
         private Dictionary<string, OrderItems> orderList = new Dictionary<string, OrderItems>();
         private List<Orders> orders = new List<Orders>();
 
-        public Form_Recipt(long orderId, List<Orders> orders, Dictionary<string, OrderItems> orderList)
+        public Form_Recipt(long orderId, List<Orders> orders, Dictionary<string, OrderItems> orderList, Form_Main formMain)
         {
             InitializeComponent();
             this.orderId = orderId;
             this.orders = orders;
             this.orderList = orderList;
-
+            this.formMain = formMain;
             ReciptInit();
+            btnClose.Click += btnClose_Click;
         }
 
         
         private void ReciptInit()
         {
+            LoadOrderId();
+            LoadDateTime();
             LoadOrderList();
             LoadAmount();
         }
 
+        private void LoadOrderId()
+        {
+            lblOrderId.Text += $" #{orderId}";
+        }
+
+        private void LoadDateTime()
+        {
+            lblDateTime.Text = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+        }
         private void LoadOrderList()
         {
             foreach(OrderItems order in orderList.Values)
@@ -75,11 +88,12 @@ namespace Cafe_Pos.Forms
         }
 
         private void btnClose_Click(object? sender, EventArgs e)
-        {
-            this.Close();
+        {        
             lstOrderList.Items.Clear();
             orderList.Clear();
             orders.Clear();
+            this.Close();
+            formMain.Form_Main_Clear();
         }
     }
 }

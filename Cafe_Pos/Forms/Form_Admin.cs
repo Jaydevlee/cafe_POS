@@ -17,6 +17,11 @@ namespace Cafe_Pos.Forms
         private MenuItem menuItem = new MenuItem();
         private List<MenuItem> list = new List<MenuItem>();
         private MenuRepository menuRepository = new MenuRepository();
+
+        private int id { get; set; }
+        private string name { get; set; }
+
+
         public Form_Admin()
         {
             InitializeComponent();
@@ -25,6 +30,7 @@ namespace Cafe_Pos.Forms
             LoadCmbCategory();
             LoadCmbStatus();
             listMenu.CellFormatting += ListMenu_CellFormatting;
+            listMenu.SelectionChanged += listMenu_SelectionChanged;
             btnEvent();
         }
 
@@ -53,14 +59,6 @@ namespace Cafe_Pos.Forms
             listMenu.RowHeadersWidth = 4;
             listMenu.RowsDefaultCellStyle.BackColor = Color.WhiteSmoke;
             listMenu.AlternatingRowsDefaultCellStyle.BackColor = Color.LightGray;
-            //foreach (DataGridViewRow row in listMenu.Rows)
-            //{
-            //    if ()
-            //    {
-            //        row.SetValues = "판매중";
-
-            //    }
-            //}
         }
 
         // 메뉴목록에서 판매중 열의 값 이벤트
@@ -110,25 +108,95 @@ namespace Cafe_Pos.Forms
             cmbStatus.ValueMember = "Value";
         }
 
+        //DataGridView row select 이벤트
+        private void listMenu_SelectionChanged(object? sender, EventArgs e)
+        {
+            if (listMenu.SelectedRows.Count > 0) Change_pnMenu();
+        }
+
+        private void Change_pnMenu()
+        {
+            DataGridViewRow row = listMenu.SelectedRows[0];
+            id = int.Parse(row.Cells["Id"].Value.ToString());
+            txtMenuName.Text = row.Cells["Name"].Value.ToString();
+            cmbCategory.SelectedItem = row.Cells["Category"].Value;
+            txtPrice.Text = row.Cells["price"].Value.ToString();
+            cmbStatus.SelectedValue = row.Cells["Is_active"].Value;
+        }
+
         private void btnEvent()
         {
             btnAdd.Click += btnAdd_Click;
+            btnUpdate.Click += btnUpdate_Click;
+            btnDelete.Click += btnDelete_Click;
         }
 
         public void btnAdd_Click(object? sender, EventArgs e)
         {
-            MessageBox.Show(cmbCategory.SelectedItem.ToString());
-            MessageBox.Show(cmbStatus.SelectedValue.ToString());
+            foreach(MenuItem menuItem in list) 
+            { 
+                if(menuItem.Name == txtMenuName.Text)
+                {
+                    MessageBox.Show("이미 존재하는 메뉴 입니다.");
+                    return;
+                }
+            }
 
             menuItem = new MenuItem
             {
                 Name = txtMenuName.Text,
-                Category = (string)cmbCategory.SelectedItem,
+                Category = Convert.ToString(cmbCategory.SelectedItem),
                 Price = Convert.ToInt32(txtPrice.Text),
                 Is_active = Convert.ToInt32(cmbStatus.SelectedValue)
             };
 
             menuRepository.InsertMenu(menuItem);
+        }
+        
+        public void btnUpdate_Click(object? sender, EventArgs e)
+        {
+            int result = 0;
+            bool exists = false;
+            foreach (MenuItem menuItem in list)
+            {
+                if (menuItem.Name.Contains(txtMenuName.Text))
+                {
+                    exists = true;
+                    break;
+                } else
+                {
+                    exists = false;
+                }
+            }
+
+            if (exists)
+            {
+                menuItem = new MenuItem
+                {
+                    Id = id,
+                    Name = txtMenuName.Text,
+                    Category = Convert.ToString(cmbCategory.SelectedItem),
+                    Price = Convert.ToInt32(txtPrice.Text),
+                    Is_active = Convert.ToInt32(cmbStatus.SelectedValue)
+                };
+
+                menuRepository.UpdateMenu(menuItem); 
+            } else
+            {
+                MessageBox.Show("존재하지 않는 메뉴입니다.");
+                return;
+            }
+        }
+
+        public void btnDelete_Click(object? sender, EventArgs e)
+        {   
+            // 삭제 기능 구현(menuId)사용
+            menuItem = new MenuItem
+            {
+                Id = id
+            };
+
+            menuRepository.DeleteMenu(menuItem);
         }
     }
 }

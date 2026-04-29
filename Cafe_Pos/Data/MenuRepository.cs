@@ -129,8 +129,8 @@ namespace Cafe_Pos.Data
                 conn.Open();
                 var tx = conn.BeginTransaction();
                 try
-                {             
-                    
+                {
+
                     string sql = @"INSERT INTO MENU(name, category, price, is_active)
                             VALUES(@name, @category, @price, @is_active)";
 
@@ -144,12 +144,81 @@ namespace Cafe_Pos.Data
                         result = cmd.ExecuteNonQuery();
                         if (result > 0) MessageBox.Show("메뉴가 추가되었습니다.");
                     }
-                    tx.Commit();                  
+                    tx.Commit();
                 }
                 catch (Exception ex)
                 {
                     tx.Rollback();
                     MessageBox.Show("메뉴가 추가되지 않았습니다. " + ex.Message);
+                }
+                return result;
+            }
+        }
+
+        public int UpdateMenu(MenuItem menuItem)
+        {
+            int result = 0;
+            using (MySqlConnection conn = DBHepler.GetConnection())
+            {
+                conn.Open();
+                var tx = conn.BeginTransaction();
+                try
+                {
+
+                    string sql = @"UPDATE MENU 
+                                   SET name = @name,
+                                       category = @category,
+                                       price = @price,
+                                       is_active = @is_active
+                                    WHERE id = @id";
+
+                    using (MySqlCommand cmd = new MySqlCommand(sql, conn, tx))
+                    {
+                        cmd.Parameters.AddWithValue("@id", menuItem.Id);
+                        cmd.Parameters.AddWithValue("@name", menuItem.Name);
+                        cmd.Parameters.AddWithValue("@category", menuItem.Category);
+                        cmd.Parameters.AddWithValue("@price", menuItem.Price);
+                        cmd.Parameters.AddWithValue("@is_active", menuItem.Is_active);
+
+                        result = cmd.ExecuteNonQuery();
+                        if (result > 0) MessageBox.Show("메뉴가 수정되었습니다.");
+                    }
+                    tx.Commit();
+                }
+                catch (Exception ex)
+                {
+                    tx.Rollback();
+                    MessageBox.Show("메뉴가 수정되지 않았습니다. " + ex.Message);
+                }
+                return result;
+            }
+        }
+
+        public int DeleteMenu(MenuItem menuItem)
+        {
+            int result = 0;
+            using (MySqlConnection conn = DBHepler.GetConnection())
+            {
+                conn.Open();
+                var tx = conn.BeginTransaction();
+                try
+                {
+
+                    string sql = @"DELETE FROM menu
+                                    WHERE id = @id";
+
+                    using (MySqlCommand cmd = new MySqlCommand(sql, conn, tx))
+                    {
+                        cmd.Parameters.AddWithValue("@id", menuItem.Id);
+                        result = cmd.ExecuteNonQuery();
+                        if (result > 0) MessageBox.Show("메뉴가 삭제됐습니다.");
+                    }
+                    tx.Commit();
+                }
+                catch (Exception ex)
+                {
+                    tx.Rollback();
+                    MessageBox.Show("메뉴가 삭제되지 않았습니다. " + ex.Message);
                 }
                 return result;
             }

@@ -15,14 +15,16 @@ namespace Cafe_Pos.Forms
         private Dictionary<string, OrderItems> OrderList = new Dictionary<string, OrderItems>();
         private List<Orders> orders = new List<Orders>();
         private OrderRepostiory orderRepostiory = new OrderRepostiory();
+        Form_Main formMain = new Form_Main();
 
         private int total { get; set; }
         private int recived_amount { get; set; }
         private int charge { get; set; }
-        public Form_PurchaseDial(Dictionary<string, OrderItems> OrderList)
+        public Form_PurchaseDial(Dictionary<string, OrderItems> OrderList, Form_Main formMain)
         {
             InitializeComponent();
             this.OrderList = OrderList;
+            this.formMain = formMain;
             btnRecivedEvent();
             LoadOrderList();
             CalcTotal();
@@ -135,7 +137,7 @@ namespace Cafe_Pos.Forms
         private void PressNumber(string digit)
         {
             string currentValue = textRecived.Text;
-            if (currentValue == "0")
+            if (currentValue == "")
             {
                 currentValue = "digit";
             }
@@ -176,7 +178,7 @@ namespace Cafe_Pos.Forms
             });
 
             long orderId = orderRepostiory.InsertOrder(OrderList, orders);
-            Form_Recipt form = new Form_Recipt(orderId, orders, OrderList);
+            Form_Recipt form = new Form_Recipt(orderId, orders, OrderList, formMain);
             this.Close();
             form.ShowDialog();            
         }
