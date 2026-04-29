@@ -166,7 +166,7 @@ namespace Cafe_Pos
         }
 
 
-
+        // 더블클릭 이벤트
         private void lstOrder_DoubleClick(object? sender, EventArgs e)
         {
             int selectIndex = lstOrder.SelectedIndex;
@@ -193,8 +193,8 @@ namespace Cafe_Pos
         }
 
         public void btnPurchase_Click(object? sender, EventArgs e)
-        {
-            Form_PurchaseDial form = new Form_PurchaseDial(OrderList);
+        {   
+            Form_PurchaseDial form = new Form_PurchaseDial(OrderList, this);
             form.ShowDialog();
         }
         private void Calc_total()
@@ -211,6 +211,13 @@ namespace Cafe_Pos
         {
             Form_Admin form = new();
             form.Show();
+        }
+
+        // 영수증 닫기 후 기존 내역 초기화
+        public void Form_Main_Clear()
+        {
+            OrderList.Clear();
+            lstOrder.Items.Clear ();
         }
     }
 }

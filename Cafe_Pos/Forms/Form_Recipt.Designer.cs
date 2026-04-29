@@ -28,36 +28,37 @@
         /// </summary>
         private void InitializeComponent()
         {
-            lblStore = new Label();
+            lblOrderId = new Label();
             lblDateTime = new Label();
             lstOrderList = new ListBox();
             pnPrice = new Panel();
-            lblGreeting = new Label();
-            lblTotal = new Label();
-            lblReceived = new Label();
             lblCharge = new Label();
+            lblReceived = new Label();
+            lblTotal = new Label();
+            lblGreeting = new Label();
             btnClose = new Button();
             pnPrice.SuspendLayout();
             SuspendLayout();
             // 
-            // lblStore
+            // lblOrderId
             // 
-            lblStore.Dock = DockStyle.Top;
-            lblStore.Font = new Font("맑은 고딕", 20F);
-            lblStore.Location = new Point(0, 0);
-            lblStore.Name = "lblStore";
-            lblStore.Size = new Size(530, 101);
-            lblStore.TabIndex = 0;
-            lblStore.Text = "커피한잔";
-            lblStore.TextAlign = ContentAlignment.MiddleCenter;
+            lblOrderId.Dock = DockStyle.Top;
+            lblOrderId.Font = new Font("맑은 고딕", 20F);
+            lblOrderId.Location = new Point(0, 0);
+            lblOrderId.Name = "lblOrderId";
+            lblOrderId.Size = new Size(530, 101);
+            lblOrderId.TabIndex = 0;
+            lblOrderId.Text = "커피한잔";
+            lblOrderId.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // lblDateTime
             // 
-            lblDateTime.Location = new Point(212, 101);
+            lblDateTime.Location = new Point(166, 101);
             lblDateTime.Name = "lblDateTime";
-            lblDateTime.Size = new Size(89, 25);
+            lblDateTime.Size = new Size(196, 25);
             lblDateTime.TabIndex = 1;
             lblDateTime.Text = "시간날짜";
+            lblDateTime.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // lstOrderList
             // 
@@ -77,22 +78,13 @@
             pnPrice.Size = new Size(286, 162);
             pnPrice.TabIndex = 3;
             // 
-            // lblGreeting
+            // lblCharge
             // 
-            lblGreeting.Font = new Font("맑은 고딕", 14F);
-            lblGreeting.Location = new Point(122, 506);
-            lblGreeting.Name = "lblGreeting";
-            lblGreeting.Size = new Size(264, 38);
-            lblGreeting.TabIndex = 4;
-            lblGreeting.Text = "감사합니다. 빨리 나가";
-            // 
-            // lblTotal
-            // 
-            lblTotal.Location = new Point(20, 14);
-            lblTotal.Name = "lblTotal";
-            lblTotal.Size = new Size(210, 25);
-            lblTotal.TabIndex = 2;
-            lblTotal.Text = "합계:";
+            lblCharge.Location = new Point(20, 123);
+            lblCharge.Name = "lblCharge";
+            lblCharge.Size = new Size(196, 25);
+            lblCharge.TabIndex = 4;
+            lblCharge.Text = "거스름돈:";
             // 
             // lblReceived
             // 
@@ -102,13 +94,22 @@
             lblReceived.TabIndex = 3;
             lblReceived.Text = "받은 금액:";
             // 
-            // lblCharge
+            // lblTotal
             // 
-            lblCharge.Location = new Point(20, 123);
-            lblCharge.Name = "lblCharge";
-            lblCharge.Size = new Size(196, 25);
-            lblCharge.TabIndex = 4;
-            lblCharge.Text = "거스름돈:";
+            lblTotal.Location = new Point(20, 14);
+            lblTotal.Name = "lblTotal";
+            lblTotal.Size = new Size(210, 25);
+            lblTotal.TabIndex = 2;
+            lblTotal.Text = "합계:";
+            // 
+            // lblGreeting
+            // 
+            lblGreeting.Font = new Font("맑은 고딕", 14F);
+            lblGreeting.Location = new Point(122, 506);
+            lblGreeting.Name = "lblGreeting";
+            lblGreeting.Size = new Size(264, 38);
+            lblGreeting.TabIndex = 4;
+            lblGreeting.Text = "감사합니다. 빨리 나가";
             // 
             // btnClose
             // 
@@ -130,7 +131,7 @@
             Controls.Add(pnPrice);
             Controls.Add(lstOrderList);
             Controls.Add(lblDateTime);
-            Controls.Add(lblStore);
+            Controls.Add(lblOrderId);
             Name = "Form_Recipt";
             StartPosition = FormStartPosition.CenterParent;
             Text = "영수증";
@@ -140,7 +141,7 @@
 
         #endregion
 
-        private Label lblStore;
+        private Label lblOrderId;
         private Label lblDateTime;
         private ListBox lstOrderList;
         private Panel pnPrice;

@@ -14,8 +14,14 @@ namespace Cafe_Pos.Forms
 {
     public partial class Form_Admin : Form
     {
+        private MenuItem menuItem = new MenuItem();
         private List<MenuItem> list = new List<MenuItem>();
         private MenuRepository menuRepository = new MenuRepository();
+
+        private int id { get; set; }
+        private string name { get; set; }
+
+
         public Form_Admin()
         {
             InitializeComponent();
@@ -23,6 +29,9 @@ namespace Cafe_Pos.Forms
             LoadMenuGrid();
             LoadCmbCategory();
             LoadCmbStatus();
+            listMenu.CellFormatting += ListMenu_CellFormatting;
+            listMenu.SelectionChanged += listMenu_SelectionChanged;
+            btnEvent();
         }
 
         public void LoadMenu()
@@ -50,23 +59,30 @@ namespace Cafe_Pos.Forms
             listMenu.RowHeadersWidth = 4;
             listMenu.RowsDefaultCellStyle.BackColor = Color.WhiteSmoke;
             listMenu.AlternatingRowsDefaultCellStyle.BackColor = Color.LightGray;
-            //foreach (DataGridViewRow row in listMenu.Rows)
-            //{
-            //    if ()
-            //    {
-            //        row.SetValues = "판매중";
-
-            //    }
-            //}
         }
 
-        //public void ListMenu_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-        //{
-        //    if (listMenu.Columns[e.ColumnIndex].Name == "is_active")
-        //    {
-
-        //    }
-        //}
+        // 메뉴목록에서 판매중 열의 값 이벤트
+        public void ListMenu_CellFormatting(object? sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (listMenu.Columns[e.ColumnIndex].Name == "Is_active")
+            {
+                if (e.Value != null)
+                {
+                    Console.WriteLine(e.Value.GetType());
+                    {
+                        int stringValue = (int)e.Value;
+                        if (stringValue == 1)
+                        {
+                            e.Value = "판매중";
+                        }
+                        else if (stringValue == 0)
+                        {
+                            e.Value = "품절";
+                        }
+                    }
+                }
+            }
+        }
 
         //카테고리 콤보박스 binding
         private void LoadCmbCategory()
@@ -80,11 +96,107 @@ namespace Cafe_Pos.Forms
         // 상태 콤보박스 binding
         private void LoadCmbStatus()
         {
-            List<int> list = new List<int>();
-            list = menuRepository.SelectIsActive();
-            dsStatus.DataSource = list;
+            var pair1 = new KeyValuePair<string, int>("판매중", 1);
+            var pair2 = new KeyValuePair<string, int>("품절", 0);
+            List<KeyValuePair<string, int>> statusList = new List<KeyValuePair<string, int>>();
+            statusList.Add(pair1);
+            statusList.Add(pair2);
+
+            dsStatus.DataSource = statusList;
             cmbStatus.DataSource = dsStatus;
-            
+            cmbStatus.DisplayMember = "Key";
+            cmbStatus.ValueMember = "Value";
+        }
+
+        //DataGridView row select 이벤트
+        private void listMenu_SelectionChanged(object? sender, EventArgs e)
+        {
+            if (listMenu.SelectedRows.Count > 0) Change_pnMenu();
+        }
+
+        private void Change_pnMenu()
+        {
+            DataGridViewRow row = listMenu.SelectedRows[0];
+            id = int.Parse(row.Cells["Id"].Value.ToString());
+            txtMenuName.Text = row.Cells["Name"].Value.ToString();
+            cmbCategory.SelectedItem = row.Cells["Category"].Value;
+            txtPrice.Text = row.Cells["price"].Value.ToString();
+            cmbStatus.SelectedValue = row.Cells["Is_active"].Value;
+        }
+
+        private void btnEvent()
+        {
+            btnAdd.Click += btnAdd_Click;
+            btnUpdate.Click += btnUpdate_Click;
+            btnDelete.Click += btnDelete_Click;
+        }
+
+        public void btnAdd_Click(object? sender, EventArgs e)
+        {
+            foreach(MenuItem menuItem in list) 
+            { 
+                if(menuItem.Name == txtMenuName.Text)
+                {
+                    MessageBox.Show("이미 존재하는 메뉴 입니다.");
+                    return;
+                }
+            }
+
+            menuItem = new MenuItem
+            {
+                Name = txtMenuName.Text,
+                Category = Convert.ToString(cmbCategory.SelectedItem),
+                Price = Convert.ToInt32(txtPrice.Text),
+                Is_active = Convert.ToInt32(cmbStatus.SelectedValue)
+            };
+
+            menuRepository.InsertMenu(menuItem);
+        }
+        
+        public void btnUpdate_Click(object? sender, EventArgs e)
+        {
+            int result = 0;
+            bool exists = false;
+            foreach (MenuItem menuItem in list)
+            {
+                if (menuItem.Name.Contains(txtMenuName.Text))
+                {
+                    exists = true;
+                    break;
+                } else
+                {
+                    exists = false;
+                }
+            }
+
+            if (exists)
+            {
+                menuItem = new MenuItem
+                {
+                    Id = id,
+                    Name = txtMenuName.Text,
+                    Category = Convert.ToString(cmbCategory.SelectedItem),
+                    Price = Convert.ToInt32(txtPrice.Text),
+                    Is_active = Convert.ToInt32(cmbStatus.SelectedValue)
+                };
+
+                menuRepository.UpdateMenu(menuItem); 
+            } else
+            {
+                MessageBox.Show("존재하지 않는 메뉴입니다.");
+                return;
+            }
+        }
+
+        public void btnDelete_Click(object? sender, EventArgs e)
+        {   
+            // 삭제 기능 구현(menuId)사용
+            menuItem = new MenuItem
+            {
+                Id = id
+            };
+
+            menuRepository.DeleteMenu(menuItem);
         }
     }
 }
