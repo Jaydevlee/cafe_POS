@@ -3,6 +3,7 @@ using MySqlConnector;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing.Text;
 using System.Text;
 using static System.Net.Mime.MediaTypeNames;
 using MenuItem = Cafe_Pos.Models.MenuItem;
@@ -11,11 +12,11 @@ namespace Cafe_Pos.Data
 {
     public class OrderRepostiory
     {
-         // 주문 넣기
+        // 주문 넣기
         public long InsertOrder(Dictionary<string, OrderItems> OrderList, List<Orders> orders)
         {
             long orderId = 0;
-            
+
             using MySqlConnection conn = DBHepler.GetConnection();
             {
                 conn.Open();
@@ -45,7 +46,7 @@ namespace Cafe_Pos.Data
                         cmd2.Parameters.AddWithValue("@quantity", order.Quantity);
                         cmd2.Parameters.AddWithValue("@subtotal", order.Subtotal);
                         cmd2.ExecuteNonQuery();
-                        
+
                     }
                     MessageBox.Show("주문이 완료되었습니다.");
                     tx.Commit();
@@ -62,9 +63,9 @@ namespace Cafe_Pos.Data
         public int SelectTotal_Amount(string dateTime1, string dateTime2)
         {
             int total_amount = 0;
-            using(MySqlConnection conn = DBHepler.GetConnection())
+            using (MySqlConnection conn = DBHepler.GetConnection())
             {
-                try 
+                try
                 {
                     conn.Open();
                     string sql = "SELECT SUM(total_amount) AS total_amount " +
@@ -74,7 +75,7 @@ namespace Cafe_Pos.Data
                     {
                         cmd.Parameters.AddWithValue("dateTime1", dateTime1);
                         cmd.Parameters.AddWithValue("dateTime2", dateTime2);
-                        using(MySqlDataReader reader = cmd.ExecuteReader())
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
                         {
                             while (reader.Read())
                             {
@@ -82,12 +83,14 @@ namespace Cafe_Pos.Data
                             }
                         }
                     }
-                } catch (Exception e)
+                }
+                catch (Exception e)
                 {
                     MessageBox.Show("매출정보를 가져오지 못했습니다. " + e.Message);
                 }
-                
-            } return total_amount;
+
+            }
+            return total_amount;
         }
 
         public int SelectOrders_Amount(string dateTime1, string dateTime2)
@@ -152,6 +155,54 @@ namespace Cafe_Pos.Data
                 }
             }
             return avg_amount;
+        }
+
+        public List<OrderTop5> SelectOrderTop5(string dateTime1, string dateTime2)
+        {
+            List<OrderTop5> orderTop5 = new List<OrderTop5>();
+            using (MySqlConnection conn = DBHepler.GetConnection())
+            {
+                try
+                {
+                    conn.Open();
+                    string sql = @"SELECT menu_name, 
+		                            SUM(oi.quantity) as 판매량, 
+		                            SUM(oi.subtotal) as 매출, 
+		                            ROUND(sum(oi.SUBTOTAL)/
+		                            (SELECT SUM(total_amount) FROM orders WHERE ORDER_DATE BETWEEN @dateTime1 AND DATE_ADD(@dateTime2, interval 1 DAY))*100, 2) as 비중
+	                             FROM ORDER_ITEMS oi
+	                             INNER JOIN ORDERS o
+	                             ON oi.ORDER_ID  = o.ID
+	                             WHERE o.ORDER_DATE  BETWEEN @dateTime1 AND DATE_ADD(@dateTime2, interval 1 DAY)
+                                 GROUP BY menu_name
+                                 ORDER BY SUM(oi.quantity) desc
+                                 LIMIT 5";
+                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("dateTime1", dateTime1);
+                        cmd.Parameters.AddWithValue("dateTime2", dateTime2);
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                OrderTop5 items = new OrderTop5()
+                                {
+                                    name = reader.GetString("menu_name"),
+                                    quantity = reader.GetInt32("판매량"),
+                                    subtotal = reader.GetInt32("매출"),
+                                    ratio = reader.GetDouble("비중")
+                                };
+                                orderTop5.Add(items);
+                            }
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("매출정보를 가져오지 못했습니다. " + e.Message);
+                }
+            }
+            return orderTop5;
         }
     }
 }

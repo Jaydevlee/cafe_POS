@@ -139,7 +139,7 @@ namespace Cafe_Pos.Forms
             string currentValue = textRecived.Text;
             if (currentValue == "")
             {
-                currentValue = "digit";
+                currentValue = digit;
             }
             else
             {
@@ -153,7 +153,7 @@ namespace Cafe_Pos.Forms
         {
             string currentValue = textRecived.Text;
             if (currentValue == "" || currentValue.Length < 1) currentValue = "";
-            else currentValue.Substring(0, currentValue.Length - 1);
+            else currentValue = currentValue.Substring(0, currentValue.Length - 1);
         }
 
         private void Reset()
