@@ -48,18 +48,24 @@
             lblMenuName = new Label();
             dsCategory = new BindingSource(components);
             dsStatus = new BindingSource(components);
+            tlpMainTitle = new TableLayoutPanel();
+            btnMin = new Button();
+            btnMax = new Button();
+            btnClose = new Button();
+            lblTitle = new Label();
             ((System.ComponentModel.ISupportInitialize)listMenu).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dsMenu).BeginInit();
             pnMenu.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dsCategory).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dsStatus).BeginInit();
+            tlpMainTitle.SuspendLayout();
             SuspendLayout();
             // 
             // lblListMenu
             // 
             lblListMenu.AutoSize = true;
-            lblListMenu.Location = new Point(12, 9);
+            lblListMenu.Location = new Point(12, 47);
             lblListMenu.Name = "lblListMenu";
             lblListMenu.Size = new Size(74, 20);
             lblListMenu.TabIndex = 0;
@@ -68,7 +74,7 @@
             // lblEditMenu
             // 
             lblEditMenu.AutoSize = true;
-            lblEditMenu.Location = new Point(581, 9);
+            lblEditMenu.Location = new Point(581, 47);
             lblEditMenu.Name = "lblEditMenu";
             lblEditMenu.Size = new Size(74, 20);
             lblEditMenu.TabIndex = 1;
@@ -80,7 +86,7 @@
             listMenu.BackgroundColor = Color.WhiteSmoke;
             listMenu.ColumnHeadersHeight = 50;
             listMenu.GridColor = Color.White;
-            listMenu.Location = new Point(12, 51);
+            listMenu.Location = new Point(12, 89);
             listMenu.Name = "listMenu";
             listMenu.ReadOnly = true;
             listMenu.RowHeadersVisible = false;
@@ -102,7 +108,7 @@
             pnMenu.Controls.Add(lblCategory);
             pnMenu.Controls.Add(txtMenuName);
             pnMenu.Controls.Add(lblMenuName);
-            pnMenu.Location = new Point(574, 52);
+            pnMenu.Location = new Point(574, 90);
             pnMenu.Name = "pnMenu";
             pnMenu.Size = new Size(340, 520);
             pnMenu.TabIndex = 3;
@@ -125,30 +131,36 @@
             // 
             // btnAdd
             // 
+            btnAdd.BackColor = Color.LimeGreen;
+            btnAdd.ForeColor = Color.White;
             btnAdd.Location = new Point(3, 3);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(98, 54);
             btnAdd.TabIndex = 10;
             btnAdd.Text = "추가";
-            btnAdd.UseVisualStyleBackColor = true;
+            btnAdd.UseVisualStyleBackColor = false;
             // 
             // btnUpdate
             // 
+            btnUpdate.BackColor = Color.CornflowerBlue;
+            btnUpdate.ForeColor = Color.White;
             btnUpdate.Location = new Point(107, 3);
             btnUpdate.Name = "btnUpdate";
             btnUpdate.Size = new Size(98, 54);
             btnUpdate.TabIndex = 11;
             btnUpdate.Text = "수정";
-            btnUpdate.UseVisualStyleBackColor = true;
+            btnUpdate.UseVisualStyleBackColor = false;
             // 
             // btnDelete
             // 
+            btnDelete.BackColor = Color.FromArgb(216, 67, 21);
+            btnDelete.ForeColor = Color.White;
             btnDelete.Location = new Point(211, 3);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(100, 54);
             btnDelete.TabIndex = 12;
             btnDelete.Text = "삭제";
-            btnDelete.UseVisualStyleBackColor = true;
+            btnDelete.UseVisualStyleBackColor = false;
             // 
             // cmbStatus
             // 
@@ -224,15 +236,82 @@
             lblMenuName.TabIndex = 2;
             lblMenuName.Text = "메뉴 이름";
             // 
+            // tlpMainTitle
+            // 
+            tlpMainTitle.BackColor = Color.FromArgb(93, 55, 55);
+            tlpMainTitle.ColumnCount = 4;
+            tlpMainTitle.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tlpMainTitle.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 35F));
+            tlpMainTitle.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 35F));
+            tlpMainTitle.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 35F));
+            tlpMainTitle.Controls.Add(btnMin, 1, 0);
+            tlpMainTitle.Controls.Add(btnMax, 2, 0);
+            tlpMainTitle.Controls.Add(btnClose, 3, 0);
+            tlpMainTitle.Controls.Add(lblTitle, 0, 0);
+            tlpMainTitle.Dock = DockStyle.Top;
+            tlpMainTitle.Location = new Point(0, 0);
+            tlpMainTitle.Name = "tlpMainTitle";
+            tlpMainTitle.RowCount = 1;
+            tlpMainTitle.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tlpMainTitle.Size = new Size(936, 37);
+            tlpMainTitle.TabIndex = 10;
+            tlpMainTitle.MouseDown += lblTitle_MouseDown;
+            tlpMainTitle.MouseMove += lblTitle_MouseMove;
+            tlpMainTitle.MouseUp += lblTitle_MouseUp;
+            // 
+            // btnMin
+            // 
+            btnMin.Location = new Point(834, 3);
+            btnMin.Name = "btnMin";
+            btnMin.Size = new Size(29, 31);
+            btnMin.TabIndex = 1;
+            btnMin.Text = "-";
+            btnMin.UseVisualStyleBackColor = true;
+            btnMin.Click += btnMin_Click;
+            // 
+            // btnMax
+            // 
+            btnMax.Font = new Font("맑은 고딕", 7.8F, FontStyle.Regular, GraphicsUnit.Point, 129);
+            btnMax.Location = new Point(869, 3);
+            btnMax.Name = "btnMax";
+            btnMax.Size = new Size(29, 31);
+            btnMax.TabIndex = 2;
+            btnMax.Text = "□";
+            btnMax.UseVisualStyleBackColor = true;
+            btnMax.Click += btnMax_Button;
+            // 
+            // btnClose
+            // 
+            btnClose.Location = new Point(904, 3);
+            btnClose.Name = "btnClose";
+            btnClose.Size = new Size(29, 31);
+            btnClose.TabIndex = 3;
+            btnClose.Text = "X";
+            btnClose.UseVisualStyleBackColor = true;
+            btnClose.Click += btnClose_Click;
+            // 
+            // lblTitle
+            // 
+            lblTitle.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point, 129);
+            lblTitle.ForeColor = Color.White;
+            lblTitle.Location = new Point(3, 0);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Size = new Size(314, 37);
+            lblTitle.TabIndex = 0;
+            lblTitle.Text = "☕커피한잔 POS - 괸라자 메뉴(메뉴관리)";
+            lblTitle.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // Form_Admin
             // 
             AutoScaleDimensions = new SizeF(9F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(936, 650);
+            Controls.Add(tlpMainTitle);
             Controls.Add(pnMenu);
             Controls.Add(listMenu);
             Controls.Add(lblEditMenu);
             Controls.Add(lblListMenu);
+            FormBorderStyle = FormBorderStyle.None;
             Name = "Form_Admin";
             Text = "커피한잔POS - 관리자(메뉴 관리)";
             ((System.ComponentModel.ISupportInitialize)listMenu).EndInit();
@@ -242,6 +321,7 @@
             tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dsCategory).EndInit();
             ((System.ComponentModel.ISupportInitialize)dsStatus).EndInit();
+            tlpMainTitle.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -267,5 +347,10 @@
         private Button btnAdd;
         private Button btnDelete;
         private Button btnUpdate;
+        private TableLayoutPanel tlpMainTitle;
+        private Button btnMin;
+        private Button btnMax;
+        private Button btnClose;
+        private Label lblTitle;
     }
 }

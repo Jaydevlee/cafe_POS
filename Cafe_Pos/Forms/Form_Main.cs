@@ -11,6 +11,12 @@ namespace Cafe_Pos
     {
         private Dictionary<string, OrderItems> OrderList { get; set; }
         private List<Orders> orders { get; set; }
+
+        // 창 이동 전역 변수
+        bool mouseDown;
+        Point lastLotion;
+
+      
         public Form_Main()
         {
             InitializeComponent();
@@ -23,7 +29,56 @@ namespace Cafe_Pos
             lstOrder.DoubleClick += lstOrder_DoubleClick;
             btnPurchase.Click += btnPurchase_Click;
         }
-        // ListBox에 주문 내역 표시를 위히 Dictionary 사용
+        
+
+        // 제목줄 마우스 좌클릭
+        private void lblTitle_MouseDown(object? sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                mouseDown = true;
+                lastLotion = e.Location;
+            }
+        }
+
+        private void lblTitle_MouseUp(object? sender, MouseEventArgs e)
+        {
+            mouseDown = false;
+        }
+
+        private void lblTitle_MouseMove(object? sender, MouseEventArgs e)
+        {
+            if (mouseDown)
+            {
+                this.Location = new Point(
+                    (this.Location.X - lastLotion.X) + e.X,
+                    (this.Location.Y - lastLotion.Y) + e.Y);
+                this.Update();
+            }
+        }
+
+        // 폼 최소화
+        private void btnMin_Click(object? sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void btnMax_Button(object? sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Normal)
+            {
+                this.WindowState = FormWindowState.Maximized;
+            }
+            else
+            {
+                this.WindowState = FormWindowState.Normal;
+            }
+        }
+
+        private void btnClose_Click(object? sender, EventArgs e)
+        {
+            this.Close();
+        }
 
 
         private void Form_Main_Load(object? sender, EventArgs e)
@@ -134,6 +189,8 @@ namespace Cafe_Pos
         /////////////////////////////////////////////////////////////
         /// 버튼 클릭 시 주문 내역 추가 및 총합계 계산 /////////////
         ///////////////////////////////////////////////////////////
+        // ListBox에 주문 내역 표시를 위히 Dictionary 사용
+
         private void btn_Click(object? sender, EventArgs e)
         {
 

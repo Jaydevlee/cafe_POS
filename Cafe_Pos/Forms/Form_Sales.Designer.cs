@@ -48,6 +48,11 @@
             dgvTop5 = new DataGridView();
             pnDgv = new Panel();
             dsTop5 = new BindingSource(components);
+            tlpMainTitle = new TableLayoutPanel();
+            btnMin = new Button();
+            btnMax = new Button();
+            btnClose = new Button();
+            lblTitle = new Label();
             panel1.SuspendLayout();
             pnOrder.SuspendLayout();
             pnTotal.SuspendLayout();
@@ -55,6 +60,7 @@
             ((System.ComponentModel.ISupportInitialize)dgvTop5).BeginInit();
             pnDgv.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dsTop5).BeginInit();
+            tlpMainTitle.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
@@ -64,19 +70,21 @@
             panel1.Controls.Add(dtpEnd);
             panel1.Controls.Add(dtpStart);
             panel1.Controls.Add(lblPreiod);
-            panel1.Location = new Point(12, 12);
+            panel1.Location = new Point(12, 59);
             panel1.Name = "panel1";
             panel1.Size = new Size(922, 74);
             panel1.TabIndex = 0;
             // 
             // btnSelect
             // 
+            btnSelect.BackColor = Color.FromArgb(93, 55, 55);
+            btnSelect.ForeColor = Color.White;
             btnSelect.Location = new Point(463, 19);
             btnSelect.Name = "btnSelect";
             btnSelect.Size = new Size(103, 29);
             btnSelect.TabIndex = 7;
             btnSelect.Text = "조회";
-            btnSelect.UseVisualStyleBackColor = true;
+            btnSelect.UseVisualStyleBackColor = false;
             // 
             // label1
             // 
@@ -116,7 +124,7 @@
             // 
             pnOrder.Controls.Add(displayOrders);
             pnOrder.Controls.Add(lblOrders);
-            pnOrder.Location = new Point(334, 108);
+            pnOrder.Location = new Point(327, 154);
             pnOrder.Name = "pnOrder";
             pnOrder.Size = new Size(280, 128);
             pnOrder.TabIndex = 2;
@@ -144,7 +152,7 @@
             // 
             pnTotal.Controls.Add(displayTotal);
             pnTotal.Controls.Add(lblTotal);
-            pnTotal.Location = new Point(12, 108);
+            pnTotal.Location = new Point(12, 154);
             pnTotal.Name = "pnTotal";
             pnTotal.Size = new Size(280, 128);
             pnTotal.TabIndex = 1;
@@ -172,7 +180,7 @@
             // 
             pnAvg.Controls.Add(displayAvg);
             pnAvg.Controls.Add(lblAvg);
-            pnAvg.Location = new Point(654, 108);
+            pnAvg.Location = new Point(654, 154);
             pnAvg.Name = "pnAvg";
             pnAvg.Size = new Size(280, 128);
             pnAvg.TabIndex = 2;
@@ -199,7 +207,7 @@
             // lblTop5
             // 
             lblTop5.BackColor = Color.Transparent;
-            lblTop5.Location = new Point(12, 260);
+            lblTop5.Location = new Point(12, 310);
             lblTop5.Name = "lblTop5";
             lblTop5.Size = new Size(131, 25);
             lblTop5.TabIndex = 4;
@@ -218,22 +226,89 @@
             // pnDgv
             // 
             pnDgv.Controls.Add(dgvTop5);
-            pnDgv.Location = new Point(12, 288);
+            pnDgv.Location = new Point(12, 347);
             pnDgv.Name = "pnDgv";
             pnDgv.Size = new Size(922, 301);
             pnDgv.TabIndex = 6;
+            // 
+            // tlpMainTitle
+            // 
+            tlpMainTitle.BackColor = Color.FromArgb(93, 55, 55);
+            tlpMainTitle.ColumnCount = 4;
+            tlpMainTitle.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tlpMainTitle.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 35F));
+            tlpMainTitle.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 35F));
+            tlpMainTitle.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 35F));
+            tlpMainTitle.Controls.Add(btnMin, 1, 0);
+            tlpMainTitle.Controls.Add(btnMax, 2, 0);
+            tlpMainTitle.Controls.Add(btnClose, 3, 0);
+            tlpMainTitle.Controls.Add(lblTitle, 0, 0);
+            tlpMainTitle.Dock = DockStyle.Top;
+            tlpMainTitle.Location = new Point(0, 0);
+            tlpMainTitle.Name = "tlpMainTitle";
+            tlpMainTitle.RowCount = 1;
+            tlpMainTitle.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tlpMainTitle.Size = new Size(946, 37);
+            tlpMainTitle.TabIndex = 11;
+            tlpMainTitle.MouseDown += lblTitle_MouseDown;
+            tlpMainTitle.MouseMove += lblTitle_MouseMove;
+            tlpMainTitle.MouseUp += lblTitle_MouseUp;
+            // 
+            // btnMin
+            // 
+            btnMin.Location = new Point(844, 3);
+            btnMin.Name = "btnMin";
+            btnMin.Size = new Size(29, 31);
+            btnMin.TabIndex = 1;
+            btnMin.Text = "-";
+            btnMin.UseVisualStyleBackColor = true;
+            btnMin.Click += btnMin_Click;
+            // 
+            // btnMax
+            // 
+            btnMax.Font = new Font("맑은 고딕", 7.8F, FontStyle.Regular, GraphicsUnit.Point, 129);
+            btnMax.Location = new Point(879, 3);
+            btnMax.Name = "btnMax";
+            btnMax.Size = new Size(29, 31);
+            btnMax.TabIndex = 2;
+            btnMax.Text = "□";
+            btnMax.UseVisualStyleBackColor = true;
+            btnMax.Click += btnMax_Button;
+            // 
+            // btnClose
+            // 
+            btnClose.Location = new Point(914, 3);
+            btnClose.Name = "btnClose";
+            btnClose.Size = new Size(29, 31);
+            btnClose.TabIndex = 3;
+            btnClose.Text = "X";
+            btnClose.UseVisualStyleBackColor = true;
+            btnClose.Click += btnClose_Click;
+            // 
+            // lblTitle
+            // 
+            lblTitle.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point, 129);
+            lblTitle.ForeColor = Color.White;
+            lblTitle.Location = new Point(3, 0);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Size = new Size(228, 37);
+            lblTitle.TabIndex = 0;
+            lblTitle.Text = "☕커피한잔 POS - 매출조회";
+            lblTitle.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // Form_Sales
             // 
             AutoScaleDimensions = new SizeF(9F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(946, 601);
+            ClientSize = new Size(946, 718);
+            Controls.Add(tlpMainTitle);
             Controls.Add(pnDgv);
             Controls.Add(lblTop5);
             Controls.Add(pnOrder);
             Controls.Add(pnAvg);
             Controls.Add(pnTotal);
             Controls.Add(panel1);
+            FormBorderStyle = FormBorderStyle.None;
             Name = "Form_Sales";
             Text = "커피한잔POS - 매출 조회";
             panel1.ResumeLayout(false);
@@ -243,6 +318,7 @@
             ((System.ComponentModel.ISupportInitialize)dgvTop5).EndInit();
             pnDgv.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dsTop5).EndInit();
+            tlpMainTitle.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -267,5 +343,10 @@
         private Label displayOrders;
         private Label displayAvg;
         private BindingSource dsTop5;
+        private TableLayoutPanel tlpMainTitle;
+        private Button btnMin;
+        private Button btnMax;
+        private Button btnClose;
+        private Label lblTitle;
     }
 }

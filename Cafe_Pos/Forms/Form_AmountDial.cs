@@ -14,6 +14,9 @@ namespace Cafe_Pos.Forms
     {
         private Dictionary<string, OrderItems> OrderList;
         private string menuName;
+        // 창 이동 전역 변수
+        bool mouseDown;
+        Point lastLotion;
         public Form_AmountDial(string menuName, string quantity, Dictionary<string, OrderItems> OrderList)
         {
             InitializeComponent();
@@ -26,7 +29,55 @@ namespace Cafe_Pos.Forms
             btnRemove.Click += btnRemove_Click;
 
         }
+       
+        // 제목줄 마우스 좌클릭
+        private void lblTitle_MouseDown(object? sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                mouseDown = true;
+                lastLotion = e.Location;
+            }
+        }
 
+        private void lblTitle_MouseUp(object? sender, MouseEventArgs e)
+        {
+            mouseDown = false;
+        }
+
+        private void lblTitle_MouseMove(object? sender, MouseEventArgs e)
+        {
+            if (mouseDown)
+            {
+                this.Location = new Point(
+                    (this.Location.X - lastLotion.X) + e.X,
+                    (this.Location.Y - lastLotion.Y) + e.Y);
+                this.Update();
+            }
+        }
+
+        // 폼 최소화
+        private void btnMin_Click(object? sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void btnMax_Button(object? sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Normal)
+            {
+                this.WindowState = FormWindowState.Maximized;
+            }
+            else
+            {
+                this.WindowState = FormWindowState.Normal;
+            }
+        }
+
+        private void btnClose_Click(object? sender, EventArgs e)
+        {
+            this.Close();
+        }
         private void btnUp_Click(object? sender, EventArgs e)
         {
             int quantity = int.Parse(lblQuantity.Text);

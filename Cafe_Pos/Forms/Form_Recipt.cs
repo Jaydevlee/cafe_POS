@@ -21,6 +21,10 @@ namespace Cafe_Pos.Forms
         private Dictionary<string, OrderItems> orderList = new Dictionary<string, OrderItems>();
         private List<Orders> orders = new List<Orders>();
 
+        // 창 이동 전역 변수
+        bool mouseDown;
+        Point lastLotion;
+
         public Form_Recipt(long orderId, List<Orders> orders, Dictionary<string, OrderItems> orderList, Form_Main formMain)
         {
             InitializeComponent();
@@ -32,7 +36,38 @@ namespace Cafe_Pos.Forms
             btnClose.Click += btnClose_Click;
         }
 
-        
+
+        // 제목줄 마우스 좌클릭
+        private void lblTitle_MouseDown(object? sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                mouseDown = true;
+                lastLotion = e.Location;
+            }
+        }
+
+        private void lblTitle_MouseUp(object? sender, MouseEventArgs e)
+        {
+            mouseDown = false;
+        }
+
+        private void lblTitle_MouseMove(object? sender, MouseEventArgs e)
+        {
+            if (mouseDown)
+            {
+                this.Location = new Point(
+                    (this.Location.X - lastLotion.X) + e.X,
+                    (this.Location.Y - lastLotion.Y) + e.Y);
+                this.Update();
+            }
+        }
+
+        private void btnFormClose_Clilck(object? sender, EventArgs e)
+        {
+            this.Close();
+        }
+
         private void ReciptInit()
         {
             LoadOrderId();
@@ -52,7 +87,7 @@ namespace Cafe_Pos.Forms
         }
         private void LoadOrderList()
         {
-            foreach(OrderItems order in orderList.Values)
+            foreach (OrderItems order in orderList.Values)
             {
                 lstOrderList.Items.Add($"{order.Menu_name} {order.Quantity} {order.Subtotal}");
             }
@@ -67,7 +102,7 @@ namespace Cafe_Pos.Forms
         }
 
         private void LoadReceived()
-        { 
+        {
             int received = orders[0].Received_amount;
             textReceived = received.ToString("N0");
             lblReceived.Text += $" {textReceived}원";
@@ -88,7 +123,7 @@ namespace Cafe_Pos.Forms
         }
 
         private void btnClose_Click(object? sender, EventArgs e)
-        {        
+        {
             lstOrderList.Items.Clear();
             orderList.Clear();
             orders.Clear();

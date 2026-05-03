@@ -21,6 +21,9 @@ namespace Cafe_Pos.Forms
         private int id { get; set; }
         private string name { get; set; }
 
+        // 창 이동 전역 변수
+        bool mouseDown;
+        Point lastLotion;
 
         public Form_Admin()
         {
@@ -33,6 +36,56 @@ namespace Cafe_Pos.Forms
             listMenu.SelectionChanged += listMenu_SelectionChanged;
             btnEvent();
         }
+
+        // 제목줄 마우스 좌클릭
+        private void lblTitle_MouseDown(object? sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                mouseDown = true;
+                lastLotion = e.Location;
+            }
+        }
+
+        private void lblTitle_MouseUp(object? sender, MouseEventArgs e)
+        {
+            mouseDown = false;
+        }
+
+        private void lblTitle_MouseMove(object? sender, MouseEventArgs e)
+        {
+            if (mouseDown)
+            {
+                this.Location = new Point(
+                    (this.Location.X - lastLotion.X) + e.X,
+                    (this.Location.Y - lastLotion.Y) + e.Y);
+                this.Update();
+            }
+        }
+
+        // 폼 최소화
+        private void btnMin_Click(object? sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void btnMax_Button(object? sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Normal)
+            {
+                this.WindowState = FormWindowState.Maximized;
+            }
+            else
+            {
+                this.WindowState = FormWindowState.Normal;
+            }
+        }
+
+        private void btnClose_Click(object? sender, EventArgs e)
+        {
+            this.Close();
+        }
+
 
         public void LoadMenu()
         {

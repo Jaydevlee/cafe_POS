@@ -20,6 +20,11 @@ namespace Cafe_Pos.Forms
         private int total { get; set; }
         private int recived_amount { get; set; }
         private int charge { get; set; }
+
+        // 창 이동 전역 변수
+        bool mouseDown;
+        Point lastLotion;
+
         public Form_PurchaseDial(Dictionary<string, OrderItems> OrderList, Form_Main formMain)
         {
             InitializeComponent();
@@ -29,6 +34,37 @@ namespace Cafe_Pos.Forms
             LoadOrderList();
             CalcTotal();
             Calc_Charge();
+        }
+
+        // 제목줄 마우스 좌클릭
+        private void lblTitle_MouseDown(object? sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                mouseDown = true;
+                lastLotion = e.Location;
+            }
+        }
+
+        private void lblTitle_MouseUp(object? sender, MouseEventArgs e)
+        {
+            mouseDown = false;
+        }
+
+        private void lblTitle_MouseMove(object? sender, MouseEventArgs e)
+        {
+            if (mouseDown)
+            {
+                this.Location = new Point(
+                    (this.Location.X - lastLotion.X) + e.X,
+                    (this.Location.Y - lastLotion.Y) + e.Y);
+                this.Update();
+            }
+        }
+
+        private void btnClose_Click(object? sender, EventArgs e)
+        {
+            this.Close();
         }
 
         private void LoadOrderList()
@@ -180,7 +216,7 @@ namespace Cafe_Pos.Forms
             long orderId = orderRepostiory.InsertOrder(OrderList, orders);
             Form_Recipt form = new Form_Recipt(orderId, orders, OrderList, formMain);
             this.Close();
-            form.ShowDialog();            
+            form.ShowDialog();
         }
     }
 }
