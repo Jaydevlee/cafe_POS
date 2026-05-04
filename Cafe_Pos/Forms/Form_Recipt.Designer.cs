@@ -40,6 +40,7 @@
             tlpTitle = new TableLayoutPanel();
             btnFormClose = new Button();
             lblTitle = new Label();
+            btnPrint = new Button();
             pnPrice.SuspendLayout();
             tlpTitle.SuspendLayout();
             SuspendLayout();
@@ -49,14 +50,14 @@
             lblOrderId.Font = new Font("맑은 고딕", 20F);
             lblOrderId.Location = new Point(0, 37);
             lblOrderId.Name = "lblOrderId";
-            lblOrderId.Size = new Size(530, 101);
+            lblOrderId.Size = new Size(530, 76);
             lblOrderId.TabIndex = 0;
             lblOrderId.Text = "커피한잔";
             lblOrderId.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // lblDateTime
             // 
-            lblDateTime.Location = new Point(159, 161);
+            lblDateTime.Location = new Point(164, 113);
             lblDateTime.Name = "lblDateTime";
             lblDateTime.Size = new Size(196, 25);
             lblDateTime.TabIndex = 1;
@@ -112,7 +113,7 @@
             lblGreeting.Name = "lblGreeting";
             lblGreeting.Size = new Size(264, 38);
             lblGreeting.TabIndex = 4;
-            lblGreeting.Text = "감사합니다. 빨리 나가";
+            lblGreeting.Text = "감사합니다. 또 오세요";
             // 
             // btnClose
             // 
@@ -166,11 +167,23 @@
             lblTitle.Text = "결제";
             lblTitle.TextAlign = ContentAlignment.MiddleCenter;
             // 
+            // btnPrint
+            // 
+            btnPrint.BackColor = Color.FromArgb(215, 204, 200);
+            btnPrint.ForeColor = Color.FromArgb(62, 39, 35);
+            btnPrint.Location = new Point(402, 137);
+            btnPrint.Name = "btnPrint";
+            btnPrint.Size = new Size(89, 39);
+            btnPrint.TabIndex = 13;
+            btnPrint.Text = "출력";
+            btnPrint.UseVisualStyleBackColor = false;
+            // 
             // Form_Recipt
             // 
             AutoScaleDimensions = new SizeF(9F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(530, 710);
+            Controls.Add(btnPrint);
             Controls.Add(tlpTitle);
             Controls.Add(btnClose);
             Controls.Add(lblGreeting);
@@ -201,5 +214,6 @@
         private TableLayoutPanel tlpTitle;
         private Button btnFormClose;
         private Label lblTitle;
+        private Button btnPrint;
     }
 }

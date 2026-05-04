@@ -204,5 +204,98 @@ namespace Cafe_Pos.Data
             }
             return orderTop5;
         }
+
+        public Member? SelectMember(string phone)
+        {
+            Member? member = null;
+            using (MySqlConnection conn = DBHepler.GetConnection())
+            {
+                try
+                {
+                    conn.Open();
+                    string sql = @"SELECT id, name, phone, points FROM meber 
+		                            WHERE PHONE = @phone";
+                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("phone", phone);
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                member = new Member
+                                {
+                                    id = reader.GetInt32("id"),
+                                    name = reader.GetString("name"),
+                                    phone = reader.GetString("phone"),
+                                    points = reader.GetInt32("points")
+                                };
+                            }
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("매출정보를 가져오지 못했습니다. " + e.Message);
+                }
+            }
+            return member;
+        }
+
+        public void InsertMember(Member member)
+        {
+            using MySqlConnection conn = DBHepler.GetConnection();
+            {
+                conn.Open();
+                using var tx = conn.BeginTransaction();
+                try
+                {
+                    // ORDERS INSERT
+                    string sql1 = @"INSERT INTO member(name, phone) 
+                                    VALUES (@name, @phone)";
+                    using (MySqlCommand cmd = new MySqlCommand(sql1, conn, tx))
+                    {
+                        cmd.Parameters.AddWithValue("@name", member.name);
+                        cmd.Parameters.AddWithValue("@phone", member.phone);
+                        cmd.ExecuteNonQuery();
+                    }
+                    tx.Commit();
+                    MessageBox.Show("회원가입이 완료되었습니다.");
+                }
+                catch
+                {
+                    tx.Rollback();
+                    throw;
+                }
+            }
+        }
+
+        public void UpdatePoints(Member member)
+        {
+            using MySqlConnection conn = DBHepler.GetConnection();
+            {
+                conn.Open();
+                using var tx = conn.BeginTransaction();
+                try
+                {
+                    // ORDERS INSERT
+                    string sql = @"UPDATE member 
+                                    SET points = points + @addPoints 
+                                    WHERE phone = @phone";
+                    using (MySqlCommand cmd = new MySqlCommand(sql, conn, tx))
+                    {
+                        cmd.Parameters.AddWithValue("@addPoints", member.addPoints);
+                        cmd.Parameters.AddWithValue("@phone", member.phone);
+                        cmd.ExecuteNonQuery();
+                    }
+                    tx.Commit();
+                    MessageBox.Show("포인트가 적립되었습니다.");
+                }
+                catch
+                {
+                    tx.Rollback();
+                    throw;
+                }
+            }
+        }
     }
 }

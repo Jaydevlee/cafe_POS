@@ -119,7 +119,7 @@
             // btnCancel
             // 
             btnCancel.BackColor = Color.FromArgb(215, 204, 200);
-            btnCancel.ForeColor = Color.FromArgb(93, 55, 55);
+            btnCancel.ForeColor = Color.FromArgb(62, 39, 35);
             btnCancel.Location = new Point(732, 524);
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(145, 50);
@@ -152,7 +152,7 @@
             // btnDessert
             // 
             btnDessert.BackColor = Color.FromArgb(215, 204, 200);
-            btnDessert.ForeColor = Color.FromArgb(93, 55, 55);
+            btnDessert.ForeColor = Color.FromArgb(62, 39, 35);
             btnDessert.Location = new Point(355, 13);
             btnDessert.Name = "btnDessert";
             btnDessert.Size = new Size(104, 35);
@@ -163,7 +163,7 @@
             // btnTea
             // 
             btnTea.BackColor = Color.FromArgb(215, 204, 200);
-            btnTea.ForeColor = Color.FromArgb(93, 55, 55);
+            btnTea.ForeColor = Color.FromArgb(62, 39, 35);
             btnTea.Location = new Point(245, 13);
             btnTea.Name = "btnTea";
             btnTea.Size = new Size(104, 35);
@@ -174,7 +174,7 @@
             // btnNonCoffee
             // 
             btnNonCoffee.BackColor = Color.FromArgb(215, 204, 200);
-            btnNonCoffee.ForeColor = Color.FromArgb(93, 55, 55);
+            btnNonCoffee.ForeColor = Color.FromArgb(62, 39, 35);
             btnNonCoffee.Location = new Point(135, 13);
             btnNonCoffee.Name = "btnNonCoffee";
             btnNonCoffee.Size = new Size(104, 35);
@@ -185,7 +185,7 @@
             // btnCoffee
             // 
             btnCoffee.BackColor = Color.FromArgb(215, 204, 200);
-            btnCoffee.ForeColor = Color.FromArgb(93, 55, 55);
+            btnCoffee.ForeColor = Color.FromArgb(62, 39, 35);
             btnCoffee.Location = new Point(25, 13);
             btnCoffee.Name = "btnCoffee";
             btnCoffee.Size = new Size(104, 35);
