@@ -112,6 +112,24 @@ namespace Cafe_Pos
         /////////////////////////////////////////////////////////////
         /// 카테고리 버튼 클릭했을 때 해당 카테고리의 메뉴버튼 /////
         ///////////////////////////////////////////////////////////
+        //private void Coffee_Init()
+        //{
+        //    string category = btnCoffee.Text;
+        //    MenuRepository menuRepository = new();
+        //    List<MenuItem> list = menuRepository.SelectMenu(category);
+        //    fplButtons.Controls.Clear();
+        //    foreach (MenuItem item in list)
+        //    {
+        //        Button btn = new Button();
+        //        btn.Text = item.Name + "\n" + item.Price + "원";
+        //        btn.Width = 230;
+        //        btn.Height = 100;
+        //        btn.Tag = item;
+        //        btn.Click += btn_Click;
+        //        fplButtons.Controls.Add(btn);
+        //    }
+        //}
+
         private void Coffee_Init()
         {
             string category = btnCoffee.Text;
@@ -120,13 +138,27 @@ namespace Cafe_Pos
             fplButtons.Controls.Clear();
             foreach (MenuItem item in list)
             {
-                Button btn = new Button();
-                btn.Text = item.Name + "\n" + item.Price + "원";
-                btn.Width = 100;
-                btn.Height = 80;
-                btn.Tag = item;
-                btn.Click += btn_Click;
-                fplButtons.Controls.Add(btn);
+                Panel pn = new Panel();
+                Label lblMenu = new Label();
+                Label lblPrice = new Label();
+                lblMenu.Text = item.Name;
+                lblPrice.Text = item.Price + "원";
+                lblMenu.ForeColor = Color.FromArgb(62, 39, 35);
+                lblMenu.AutoSize = true;
+                lblMenu.TextAlign = ContentAlignment.MiddleCenter;
+                lblMenu.Location = new Point(50, 20);
+                lblPrice.ForeColor = Color.FromArgb(216, 67, 21);
+                lblPrice.AutoSize = true;
+                lblPrice.TextAlign = ContentAlignment.MiddleCenter;
+                lblPrice.Location = new Point(70, 40);
+                pn.Width = 230;
+                pn.Height = 100;
+                pn.BackColor = Color.White;
+                pn.Tag = item;
+                pn.Click += pn_Click;
+                pn.Controls.Add(lblMenu);
+                pn.Controls.Add(lblPrice);
+                fplButtons.Controls.Add(pn);
             }
         }
 
@@ -141,8 +173,8 @@ namespace Cafe_Pos
             {
                 Button btn = new Button();
                 btn.Text = item.Name + "\n" + item.Price + "원";
-                btn.Width = 100;
-                btn.Height = 80;
+                btn.Width = 230;
+                btn.Height = 100;
                 btn.Tag = item;
                 btn.Click += btn_Click;
                 fplButtons.Controls.Add(btn);
@@ -159,8 +191,8 @@ namespace Cafe_Pos
             {
                 Button btn = new Button();
                 btn.Text = item.Name + "\n" + item.Price + "원";
-                btn.Width = 100;
-                btn.Height = 80;
+                btn.Width = 230;
+                btn.Height = 100;
                 btn.Tag = item;
                 btn.Click += btn_Click;
                 fplButtons.Controls.Add(btn);
@@ -177,8 +209,8 @@ namespace Cafe_Pos
             {
                 Button btn = new Button();
                 btn.Text = item.Name + "\n" + item.Price + "원";
-                btn.Width = 100;
-                btn.Height = 80;
+                btn.Width = 230;
+                btn.Height = 100;
                 btn.Tag = item;
                 btn.Click += btn_Click;
                 fplButtons.Controls.Add(btn);
@@ -222,6 +254,47 @@ namespace Cafe_Pos
             Calc_total();
         }
 
+
+        private void pn_Click(object? sender, EventArgs e)
+        {
+            Label lbl = null;
+            Panel pn = null;
+            if (sender is Label)
+            {
+                lbl = (Label)sender;
+                pn = (Panel)lbl.Parent;
+            }
+            else if (sender is Panel)
+            {
+                pn = (Panel)sender;
+            }
+
+            MenuItem item = (MenuItem)pn.Tag;
+            //Dictionary 객체로 주문 내역을 넣어서 listbox로 전달
+            if (OrderList.ContainsKey(item.Name))
+            {
+                OrderList[item.Name].Quantity++;
+                OrderList[item.Name].Subtotal = OrderList[item.Name].Quantity * OrderList[item.Name].Price;
+            }
+            else
+            {
+                OrderList[item.Name] = new OrderItems
+                {
+                    Menu_id = item.Id,
+                    Menu_name = item.Name,
+                    Quantity = 1,
+                    Price = item.Price,
+                    Subtotal = item.Price
+                };
+            }
+
+            lstOrder.Items.Clear();
+            foreach (OrderItems order in OrderList.Values)
+            {
+                lstOrder.Items.Add(order.Menu_name + " " + order.Quantity + " " + order.Subtotal);
+            }
+            Calc_total();
+        }
 
         // 더블클릭 이벤트
         private void lstOrder_DoubleClick(object? sender, EventArgs e)
