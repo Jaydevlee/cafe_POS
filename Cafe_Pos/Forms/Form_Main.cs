@@ -355,5 +355,11 @@ namespace Cafe_Pos
             Form_Sales form = new Form_Sales();
             form.Show();
         }
+
+        private void toolOrder_Click(object sender, EventArgs e)
+        {
+            Form_Order form = new Form_Order();
+            form.Show();
+        }
     }
 }
