@@ -29,10 +29,16 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            lblListMenu = new Label();
-            lblEditMenu = new Label();
-            listMenu = new DataGridView();
             dsMenu = new BindingSource(components);
+            dsCategory = new BindingSource(components);
+            dsStatus = new BindingSource(components);
+            tlpMainTitle = new TableLayoutPanel();
+            btnMin = new Button();
+            btnMax = new Button();
+            btnClose = new Button();
+            lblTitle = new Label();
+            tabAdmin = new TabControl();
+            tabMenuPage = new TabPage();
             pnMenu = new Panel();
             tableLayoutPanel1 = new TableLayoutPanel();
             btnAdd = new Button();
@@ -46,54 +52,122 @@
             lblCategory = new Label();
             txtMenuName = new TextBox();
             lblMenuName = new Label();
-            dsCategory = new BindingSource(components);
-            dsStatus = new BindingSource(components);
-            tlpMainTitle = new TableLayoutPanel();
-            btnMin = new Button();
-            btnMax = new Button();
-            btnClose = new Button();
-            lblTitle = new Label();
-            ((System.ComponentModel.ISupportInitialize)listMenu).BeginInit();
+            listMenu = new DataGridView();
+            lblEditMenu = new Label();
+            lblListMenu = new Label();
+            tabMember = new TabPage();
+            pnMember = new Panel();
+            lblPoints = new Label();
+            txtPhone = new TextBox();
+            lblPhone = new Label();
+            txtName = new TextBox();
+            lblName = new Label();
+            dgvMember = new DataGridView();
+            dsMembers = new BindingSource(components);
+            displayPoints = new Label();
             ((System.ComponentModel.ISupportInitialize)dsMenu).BeginInit();
-            pnMenu.SuspendLayout();
-            tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dsCategory).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dsStatus).BeginInit();
             tlpMainTitle.SuspendLayout();
+            tabAdmin.SuspendLayout();
+            tabMenuPage.SuspendLayout();
+            pnMenu.SuspendLayout();
+            tableLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)listMenu).BeginInit();
+            tabMember.SuspendLayout();
+            pnMember.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvMember).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dsMembers).BeginInit();
             SuspendLayout();
             // 
-            // lblListMenu
+            // tlpMainTitle
             // 
-            lblListMenu.AutoSize = true;
-            lblListMenu.Location = new Point(12, 66);
-            lblListMenu.Name = "lblListMenu";
-            lblListMenu.Size = new Size(74, 20);
-            lblListMenu.TabIndex = 0;
-            lblListMenu.Text = "메뉴 목록";
+            tlpMainTitle.BackColor = Color.FromArgb(93, 55, 55);
+            tlpMainTitle.ColumnCount = 4;
+            tlpMainTitle.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tlpMainTitle.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 35F));
+            tlpMainTitle.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 35F));
+            tlpMainTitle.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 35F));
+            tlpMainTitle.Controls.Add(btnMin, 1, 0);
+            tlpMainTitle.Controls.Add(btnMax, 2, 0);
+            tlpMainTitle.Controls.Add(btnClose, 3, 0);
+            tlpMainTitle.Controls.Add(lblTitle, 0, 0);
+            tlpMainTitle.Dock = DockStyle.Top;
+            tlpMainTitle.Location = new Point(0, 0);
+            tlpMainTitle.Name = "tlpMainTitle";
+            tlpMainTitle.RowCount = 1;
+            tlpMainTitle.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tlpMainTitle.Size = new Size(948, 37);
+            tlpMainTitle.TabIndex = 10;
+            tlpMainTitle.MouseDown += lblTitle_MouseDown;
+            tlpMainTitle.MouseMove += lblTitle_MouseMove;
+            tlpMainTitle.MouseUp += lblTitle_MouseUp;
             // 
-            // lblEditMenu
+            // btnMin
             // 
-            lblEditMenu.AutoSize = true;
-            lblEditMenu.Location = new Point(574, 66);
-            lblEditMenu.Name = "lblEditMenu";
-            lblEditMenu.Size = new Size(74, 20);
-            lblEditMenu.TabIndex = 1;
-            lblEditMenu.Text = "메뉴 편집";
+            btnMin.Location = new Point(846, 3);
+            btnMin.Name = "btnMin";
+            btnMin.Size = new Size(29, 31);
+            btnMin.TabIndex = 1;
+            btnMin.Text = "-";
+            btnMin.UseVisualStyleBackColor = true;
+            btnMin.Click += btnMin_Click;
             // 
-            // listMenu
+            // btnMax
             // 
-            listMenu.AllowUserToAddRows = false;
-            listMenu.BackgroundColor = Color.WhiteSmoke;
-            listMenu.ColumnHeadersHeight = 50;
-            listMenu.GridColor = Color.White;
-            listMenu.Location = new Point(12, 89);
-            listMenu.Name = "listMenu";
-            listMenu.ReadOnly = true;
-            listMenu.RowHeadersVisible = false;
-            listMenu.RowHeadersWidth = 20;
-            listMenu.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            listMenu.Size = new Size(531, 521);
-            listMenu.TabIndex = 2;
+            btnMax.Font = new Font("맑은 고딕", 7.8F, FontStyle.Regular, GraphicsUnit.Point, 129);
+            btnMax.Location = new Point(881, 3);
+            btnMax.Name = "btnMax";
+            btnMax.Size = new Size(29, 31);
+            btnMax.TabIndex = 2;
+            btnMax.Text = "□";
+            btnMax.UseVisualStyleBackColor = true;
+            btnMax.Click += btnMax_Button;
+            // 
+            // btnClose
+            // 
+            btnClose.Location = new Point(916, 3);
+            btnClose.Name = "btnClose";
+            btnClose.Size = new Size(29, 31);
+            btnClose.TabIndex = 3;
+            btnClose.Text = "X";
+            btnClose.UseVisualStyleBackColor = true;
+            btnClose.Click += btnClose_Click;
+            // 
+            // lblTitle
+            // 
+            lblTitle.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point, 129);
+            lblTitle.ForeColor = Color.White;
+            lblTitle.Location = new Point(3, 0);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Size = new Size(314, 37);
+            lblTitle.TabIndex = 0;
+            lblTitle.Text = "☕커피한잔 POS - 괸라자 메뉴(메뉴관리)";
+            lblTitle.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // tabAdmin
+            // 
+            tabAdmin.Controls.Add(tabMenuPage);
+            tabAdmin.Controls.Add(tabMember);
+            tabAdmin.Location = new Point(3, 43);
+            tabAdmin.Name = "tabAdmin";
+            tabAdmin.SelectedIndex = 0;
+            tabAdmin.Size = new Size(933, 591);
+            tabAdmin.TabIndex = 11;
+            // 
+            // tabMenuPage
+            // 
+            tabMenuPage.Controls.Add(pnMenu);
+            tabMenuPage.Controls.Add(listMenu);
+            tabMenuPage.Controls.Add(lblEditMenu);
+            tabMenuPage.Controls.Add(lblListMenu);
+            tabMenuPage.Location = new Point(4, 29);
+            tabMenuPage.Name = "tabMenuPage";
+            tabMenuPage.Padding = new Padding(3);
+            tabMenuPage.Size = new Size(925, 558);
+            tabMenuPage.TabIndex = 0;
+            tabMenuPage.Text = "메뉴관리";
+            tabMenuPage.UseVisualStyleBackColor = true;
             // 
             // pnMenu
             // 
@@ -108,10 +182,10 @@
             pnMenu.Controls.Add(lblCategory);
             pnMenu.Controls.Add(txtMenuName);
             pnMenu.Controls.Add(lblMenuName);
-            pnMenu.Location = new Point(574, 90);
+            pnMenu.Location = new Point(568, 27);
             pnMenu.Name = "pnMenu";
             pnMenu.Size = new Size(340, 520);
-            pnMenu.TabIndex = 3;
+            pnMenu.TabIndex = 7;
             // 
             // tableLayoutPanel1
             // 
@@ -236,121 +310,199 @@
             lblMenuName.TabIndex = 2;
             lblMenuName.Text = "메뉴 이름";
             // 
-            // tlpMainTitle
+            // listMenu
             // 
-            tlpMainTitle.BackColor = Color.FromArgb(93, 55, 55);
-            tlpMainTitle.ColumnCount = 4;
-            tlpMainTitle.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            tlpMainTitle.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 35F));
-            tlpMainTitle.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 35F));
-            tlpMainTitle.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 35F));
-            tlpMainTitle.Controls.Add(btnMin, 1, 0);
-            tlpMainTitle.Controls.Add(btnMax, 2, 0);
-            tlpMainTitle.Controls.Add(btnClose, 3, 0);
-            tlpMainTitle.Controls.Add(lblTitle, 0, 0);
-            tlpMainTitle.Dock = DockStyle.Top;
-            tlpMainTitle.Location = new Point(0, 0);
-            tlpMainTitle.Name = "tlpMainTitle";
-            tlpMainTitle.RowCount = 1;
-            tlpMainTitle.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tlpMainTitle.Size = new Size(936, 37);
-            tlpMainTitle.TabIndex = 10;
-            tlpMainTitle.MouseDown += lblTitle_MouseDown;
-            tlpMainTitle.MouseMove += lblTitle_MouseMove;
-            tlpMainTitle.MouseUp += lblTitle_MouseUp;
+            listMenu.AllowUserToAddRows = false;
+            listMenu.BackgroundColor = Color.WhiteSmoke;
+            listMenu.ColumnHeadersHeight = 50;
+            listMenu.GridColor = Color.White;
+            listMenu.Location = new Point(6, 26);
+            listMenu.Name = "listMenu";
+            listMenu.RowHeadersVisible = false;
+            listMenu.RowHeadersWidth = 20;
+            listMenu.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            listMenu.Size = new Size(531, 521);
+            listMenu.TabIndex = 6;
             // 
-            // btnMin
+            // lblEditMenu
             // 
-            btnMin.Location = new Point(834, 3);
-            btnMin.Name = "btnMin";
-            btnMin.Size = new Size(29, 31);
-            btnMin.TabIndex = 1;
-            btnMin.Text = "-";
-            btnMin.UseVisualStyleBackColor = true;
-            btnMin.Click += btnMin_Click;
+            lblEditMenu.AutoSize = true;
+            lblEditMenu.Location = new Point(568, 3);
+            lblEditMenu.Name = "lblEditMenu";
+            lblEditMenu.Size = new Size(74, 20);
+            lblEditMenu.TabIndex = 5;
+            lblEditMenu.Text = "메뉴 편집";
             // 
-            // btnMax
+            // lblListMenu
             // 
-            btnMax.Font = new Font("맑은 고딕", 7.8F, FontStyle.Regular, GraphicsUnit.Point, 129);
-            btnMax.Location = new Point(869, 3);
-            btnMax.Name = "btnMax";
-            btnMax.Size = new Size(29, 31);
-            btnMax.TabIndex = 2;
-            btnMax.Text = "□";
-            btnMax.UseVisualStyleBackColor = true;
-            btnMax.Click += btnMax_Button;
+            lblListMenu.AutoSize = true;
+            lblListMenu.Location = new Point(6, 3);
+            lblListMenu.Name = "lblListMenu";
+            lblListMenu.Size = new Size(74, 20);
+            lblListMenu.TabIndex = 4;
+            lblListMenu.Text = "메뉴 목록";
             // 
-            // btnClose
+            // tabMember
             // 
-            btnClose.Location = new Point(904, 3);
-            btnClose.Name = "btnClose";
-            btnClose.Size = new Size(29, 31);
-            btnClose.TabIndex = 3;
-            btnClose.Text = "X";
-            btnClose.UseVisualStyleBackColor = true;
-            btnClose.Click += btnClose_Click;
+            tabMember.Controls.Add(pnMember);
+            tabMember.Controls.Add(dgvMember);
+            tabMember.Location = new Point(4, 29);
+            tabMember.Name = "tabMember";
+            tabMember.Padding = new Padding(3);
+            tabMember.Size = new Size(925, 558);
+            tabMember.TabIndex = 1;
+            tabMember.Text = "회원조회";
+            tabMember.UseVisualStyleBackColor = true;
             // 
-            // lblTitle
+            // pnMember
             // 
-            lblTitle.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point, 129);
-            lblTitle.ForeColor = Color.White;
-            lblTitle.Location = new Point(3, 0);
-            lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(314, 37);
-            lblTitle.TabIndex = 0;
-            lblTitle.Text = "☕커피한잔 POS - 괸라자 메뉴(메뉴관리)";
-            lblTitle.TextAlign = ContentAlignment.MiddleCenter;
+            pnMember.Controls.Add(displayPoints);
+            pnMember.Controls.Add(lblPoints);
+            pnMember.Controls.Add(txtPhone);
+            pnMember.Controls.Add(lblPhone);
+            pnMember.Controls.Add(txtName);
+            pnMember.Controls.Add(lblName);
+            pnMember.Location = new Point(658, 35);
+            pnMember.Name = "pnMember";
+            pnMember.Size = new Size(245, 517);
+            pnMember.TabIndex = 1;
+            // 
+            // lblPoints
+            // 
+            lblPoints.AutoSize = true;
+            lblPoints.Font = new Font("맑은 고딕", 15F);
+            lblPoints.Location = new Point(13, 247);
+            lblPoints.Name = "lblPoints";
+            lblPoints.Size = new Size(90, 35);
+            lblPoints.TabIndex = 11;
+            lblPoints.Text = "포인트";
+            // 
+            // txtPhone
+            // 
+            txtPhone.Font = new Font("맑은 고딕", 15F);
+            txtPhone.Location = new Point(13, 167);
+            txtPhone.Name = "txtPhone";
+            txtPhone.Size = new Size(208, 41);
+            txtPhone.TabIndex = 10;
+            // 
+            // lblPhone
+            // 
+            lblPhone.AutoSize = true;
+            lblPhone.Font = new Font("맑은 고딕", 15F);
+            lblPhone.Location = new Point(13, 129);
+            lblPhone.Name = "lblPhone";
+            lblPhone.Size = new Size(115, 35);
+            lblPhone.TabIndex = 9;
+            lblPhone.Text = "전화번호";
+            // 
+            // txtName
+            // 
+            txtName.Font = new Font("맑은 고딕", 15F);
+            txtName.Location = new Point(13, 54);
+            txtName.Name = "txtName";
+            txtName.Size = new Size(208, 41);
+            txtName.TabIndex = 8;
+            // 
+            // lblName
+            // 
+            lblName.AutoSize = true;
+            lblName.Font = new Font("맑은 고딕", 15F);
+            lblName.Location = new Point(13, 16);
+            lblName.Name = "lblName";
+            lblName.Size = new Size(65, 35);
+            lblName.TabIndex = 7;
+            lblName.Text = "이름";
+            // 
+            // dgvMember
+            // 
+            dgvMember.AllowUserToAddRows = false;
+            dgvMember.BackgroundColor = Color.WhiteSmoke;
+            dgvMember.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvMember.Location = new Point(6, 35);
+            dgvMember.Name = "dgvMember";
+            dgvMember.ReadOnly = true;
+            dgvMember.RowHeadersVisible = false;
+            dgvMember.RowHeadersWidth = 51;
+            dgvMember.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvMember.Size = new Size(623, 520);
+            dgvMember.TabIndex = 0;
+            // 
+            // displayPoints
+            // 
+            displayPoints.Font = new Font("맑은 고딕", 15F, FontStyle.Bold, GraphicsUnit.Point, 129);
+            displayPoints.ForeColor = Color.FromArgb(216, 67, 21);
+            displayPoints.Location = new Point(41, 308);
+            displayPoints.Name = "displayPoints";
+            displayPoints.Size = new Size(172, 47);
+            displayPoints.TabIndex = 12;
+            displayPoints.Text = "0";
+            displayPoints.TextAlign = ContentAlignment.MiddleRight;
             // 
             // Form_Admin
             // 
             AutoScaleDimensions = new SizeF(9F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(936, 650);
+            ClientSize = new Size(948, 642);
+            Controls.Add(tabAdmin);
             Controls.Add(tlpMainTitle);
-            Controls.Add(pnMenu);
-            Controls.Add(listMenu);
-            Controls.Add(lblEditMenu);
-            Controls.Add(lblListMenu);
             FormBorderStyle = FormBorderStyle.None;
             Name = "Form_Admin";
             Text = "커피한잔POS - 관리자(메뉴 관리)";
-            ((System.ComponentModel.ISupportInitialize)listMenu).EndInit();
             ((System.ComponentModel.ISupportInitialize)dsMenu).EndInit();
-            pnMenu.ResumeLayout(false);
-            pnMenu.PerformLayout();
-            tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dsCategory).EndInit();
             ((System.ComponentModel.ISupportInitialize)dsStatus).EndInit();
             tlpMainTitle.ResumeLayout(false);
+            tabAdmin.ResumeLayout(false);
+            tabMenuPage.ResumeLayout(false);
+            tabMenuPage.PerformLayout();
+            pnMenu.ResumeLayout(false);
+            pnMenu.PerformLayout();
+            tableLayoutPanel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)listMenu).EndInit();
+            tabMember.ResumeLayout(false);
+            pnMember.ResumeLayout(false);
+            pnMember.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvMember).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dsMembers).EndInit();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
-
-        private Label lblListMenu;
-        private Label lblEditMenu;
-        private DataGridView listMenu;
         private BindingSource dsMenu;
-        private Panel pnMenu;
-        private Label lblStatus;
-        private Label lblPrice;
-        private Label lblCategory;
-        private TextBox txtMenuName;
-        private Label lblMenuName;
-        private TextBox txtPrice;
-        private ComboBox cmbStatus;
-        private ComboBox cmbCategory;
         private BindingSource dsCategory;
         private BindingSource dsStatus;
-        private TableLayoutPanel tableLayoutPanel1;
-        private Button btnAdd;
-        private Button btnDelete;
-        private Button btnUpdate;
         private TableLayoutPanel tlpMainTitle;
         private Button btnMin;
         private Button btnMax;
         private Button btnClose;
         private Label lblTitle;
+        private TabControl tabAdmin;
+        private TabPage tabMenuPage;
+        private TabPage tabMember;
+        private Panel pnMenu;
+        private TableLayoutPanel tableLayoutPanel1;
+        private Button btnAdd;
+        private Button btnUpdate;
+        private Button btnDelete;
+        private ComboBox cmbStatus;
+        private ComboBox cmbCategory;
+        private TextBox txtPrice;
+        private Label lblStatus;
+        private Label lblPrice;
+        private Label lblCategory;
+        private TextBox txtMenuName;
+        private Label lblMenuName;
+        private DataGridView listMenu;
+        private Label lblEditMenu;
+        private Label lblListMenu;
+        private DataGridView dgvMember;
+        private BindingSource dsMembers;
+        private Panel pnMember;
+        private Label lblPoints;
+        private TextBox txtPhone;
+        private Label lblPhone;
+        private TextBox txtName;
+        private Label lblName;
+        private Label displayPoints;
     }
 }
