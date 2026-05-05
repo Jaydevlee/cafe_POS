@@ -32,6 +32,7 @@
             toolManage = new ToolStripMenuItem();
             menuTool = new ToolStripMenuItem();
             toolSales = new ToolStripMenuItem();
+            toolOrder = new ToolStripMenuItem();
             lblOrderList = new Label();
             lstOrder = new ListBox();
             lblTotal = new Label();
@@ -69,7 +70,7 @@
             // 
             // toolManage
             // 
-            toolManage.DropDownItems.AddRange(new ToolStripItem[] { menuTool, toolSales });
+            toolManage.DropDownItems.AddRange(new ToolStripItem[] { menuTool, toolSales, toolOrder });
             toolManage.Name = "toolManage";
             toolManage.Size = new Size(53, 24);
             toolManage.Text = "관리";
@@ -87,6 +88,13 @@
             toolSales.Size = new Size(224, 26);
             toolSales.Text = "매출 조회";
             toolSales.Click += toolSales_Click;
+            // 
+            // toolOrder
+            // 
+            toolOrder.Name = "toolOrder";
+            toolOrder.Size = new Size(224, 26);
+            toolOrder.Text = "주문 관리";
+            toolOrder.Click += toolOrder_Click;
             // 
             // lblOrderList
             // 
@@ -340,5 +348,6 @@
         private Button btnMin;
         private Button btnMax;
         private Button btnClose;
+        private ToolStripMenuItem toolOrder;
     }
 }

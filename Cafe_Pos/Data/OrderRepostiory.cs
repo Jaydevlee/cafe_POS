@@ -204,6 +204,96 @@ namespace Cafe_Pos.Data
             }
             return orderTop5;
         }
+
+        public List<Orders> SelectTodayOrders(string dateTime1, string dateTime2)
+        {
+            Orders? orders = null;
+            List<Orders> list = new List<Orders>();
+            using (MySqlConnection conn = DBHepler.GetConnection())
+            {
+                try
+                {
+                    conn.Open();
+                    string sql = @"SELECT id, order_date, total_amount, received_amount, change_amount 
+                                   FROM orders
+                                   WHERE order_date >= @dateTime1 AND order_date < @dateTime2";
+                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("dateTime1", dateTime1);
+                        cmd.Parameters.AddWithValue("dateTime2", dateTime2);
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                orders = new Orders
+                                {
+                                    Id = reader.GetInt32("id"),
+                                    Order_date = reader.GetDateTime("order_date"),
+                                    Total_amount = reader.GetInt32("total_amount"),
+                                    Received_amount = reader.GetInt32("received_amount"),
+                                    Change_amount = reader.GetInt32("change_amount")
+                                };
+                                list.Add(orders);
+                            }
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("주문정보를 가져오지 못했습니다. " + e.Message);
+                }
+            }
+            return list;
+        }
+
+        public List<OrderItems> SelectOrderITemById(long id)
+        {
+            OrderItems? orderItem = null;
+            List<OrderItems> list = new List<OrderItems>();
+            using (MySqlConnection conn = DBHepler.GetConnection())
+            {
+                try
+                {
+                    conn.Open();
+                    string sql = @"SELECT id,
+                                   order_id,
+                                   menu_id,
+                                   menu_name,
+                                   price,
+                                   quantity,
+                                   subtotal 
+                                   FROM order_items
+                                   WHERE order_id = @id";
+                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("id", id);
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                orderItem = new OrderItems
+                                {
+                                    Id = reader.GetInt32("id"),
+                                    Order_id = reader.GetInt32("order_id"),
+                                    Menu_id = reader.GetInt32("menu_id"),
+                                    Menu_name = reader.GetString("menu_name"),
+                                    Price = reader.GetInt32("price"),
+                                    Quantity = reader.GetInt32("quantity"),
+                                    Subtotal = reader.GetInt32("subTotal")
+                                };
+                                list.Add(orderItem);
+                            }
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("주문정보를 가져오지 못했습니다. " + e.Message);
+                }
+            }
+            return list;
+        }
+
         public List<Member> SelectAllMember()
         {
             Member? member = null;
