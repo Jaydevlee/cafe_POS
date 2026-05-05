@@ -213,10 +213,27 @@ namespace Cafe_Pos.Forms
                 Received_amount = recived_amount
             });
 
-            long orderId = orderRepostiory.InsertOrder(OrderList, orders);
-            Form_Recipt form = new Form_Recipt(orderId, orders, OrderList, formMain);
-            this.Close();
-            form.ShowDialog();
+            Form_Points formPoints = new Form_Points();
+
+            formPoints.OnComplete += (addPoints, phone) =>
+            {
+                if (addPoints)
+                {
+                    Member member = new Member
+                    {
+                        phone = phone,
+                        addPoints = total * 5 / 100
+                    };
+                    orderRepostiory.UpdatePoints(member);
+                }
+
+                long orderId = orderRepostiory.InsertOrder(OrderList, orders);
+                Form_Recipt form = new Form_Recipt(orderId, orders, OrderList, formMain);
+                this.Close();
+                form.ShowDialog();
+            };
+
+            formPoints.ShowDialog();
         }
     }
 }

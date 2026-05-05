@@ -65,7 +65,7 @@
             // lblListMenu
             // 
             lblListMenu.AutoSize = true;
-            lblListMenu.Location = new Point(12, 47);
+            lblListMenu.Location = new Point(12, 66);
             lblListMenu.Name = "lblListMenu";
             lblListMenu.Size = new Size(74, 20);
             lblListMenu.TabIndex = 0;
@@ -74,7 +74,7 @@
             // lblEditMenu
             // 
             lblEditMenu.AutoSize = true;
-            lblEditMenu.Location = new Point(581, 47);
+            lblEditMenu.Location = new Point(574, 66);
             lblEditMenu.Name = "lblEditMenu";
             lblEditMenu.Size = new Size(74, 20);
             lblEditMenu.TabIndex = 1;

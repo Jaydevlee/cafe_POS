@@ -213,7 +213,7 @@ namespace Cafe_Pos.Data
                 try
                 {
                     conn.Open();
-                    string sql = @"SELECT id, name, phone, points FROM meber 
+                    string sql = @"SELECT id, name, phone, points FROM member 
 		                            WHERE PHONE = @phone";
                     using (MySqlCommand cmd = new MySqlCommand(sql, conn))
                     {
@@ -235,7 +235,7 @@ namespace Cafe_Pos.Data
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show("매출정보를 가져오지 못했습니다. " + e.Message);
+                    MessageBox.Show("회원정보를 가져오지 못했습니다. " + e.Message);
                 }
             }
             return member;
