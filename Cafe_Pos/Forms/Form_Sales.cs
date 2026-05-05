@@ -7,6 +7,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace Cafe_Pos.Forms
 {
@@ -24,7 +25,7 @@ namespace Cafe_Pos.Forms
         {
             InitializeComponent();
             PageInit();
-            
+            DrawChart();
         }
 
         //private void btnSelect_Click(object? sender, EventArgs e)
@@ -93,9 +94,10 @@ namespace Cafe_Pos.Forms
             SelectOrders_Amount(dateTime1, dateTime2);
             SelectAvg_Amount(dateTime1, dateTime2);
             btnSelect.Click += btnSelect_Click;
+            LoadTop5(dateTime1, dateTime2);
         }
 
-        
+
 
         private void btnSelect_Click(object? sender, EventArgs e)
         {
@@ -113,7 +115,7 @@ namespace Cafe_Pos.Forms
         }
 
         private void SelectTotal_Amount(string dateTime1, string dateTime2)
-        {   
+        {
             int result = orderRepository.SelectTotal_Amount(dateTime1, dateTime2);
             string total_amount = result.ToString("N0");
             displayTotal.Text = $"{total_amount}원";
@@ -138,6 +140,31 @@ namespace Cafe_Pos.Forms
             list = orderRepository.SelectOrderTop5(dateTime1, dateTime2);
             dsTop5.DataSource = list;
             dgvTop5.DataSource = list;
+        }
+
+        private void DrawChart()
+        {
+            List<OrderChart> list = orderRepository.SelectOrderByDate();
+
+            chartOrder.Series.Clear();
+            chartOrder.ChartAreas.Clear();
+
+            ChartArea chartArea = new ChartArea();
+            chartOrder.ChartAreas.Add(chartArea);
+
+            Series series = new Series();
+            series.ChartType = SeriesChartType.Column;
+            series["PointWidth"] = "0.5";
+
+            int i = 0;
+            foreach (OrderChart item in list)
+            {
+                series.Points.AddXY(i, item.daily_total);
+                series.Points[i].AxisLabel = item.order_date.ToString("MM-dd");
+                i++;
+            }
+
+            chartOrder.Series.Add(series);
         }
     }
 }
