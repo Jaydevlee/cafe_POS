@@ -128,12 +128,12 @@
             // 
             // lblOrder
             // 
-            lblOrder.AutoSize = true;
-            lblOrder.Location = new Point(12, 56);
+            lblOrder.Location = new Point(12, 40);
             lblOrder.Name = "lblOrder";
-            lblOrder.Size = new Size(69, 20);
+            lblOrder.Size = new Size(101, 36);
             lblOrder.TabIndex = 13;
             lblOrder.Text = "주문내역";
+            lblOrder.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // lblOrderItem
             // 

@@ -34,6 +34,7 @@ namespace Cafe_Pos.Forms
             LoadOrderList();
             CalcTotal();
             Calc_Charge();
+            ApplyModernDesign();
         }
 
         // 제목줄 마우스 좌클릭
@@ -234,6 +235,79 @@ namespace Cafe_Pos.Forms
             };
 
             formPoints.ShowDialog();
+        }
+
+        private void ApplyModernDesign()
+        {
+            // 1. 폼 전체 배경색 설정 (연한 회색)
+            this.BackColor = Color.FromArgb(245, 245, 245);
+
+            // 2. 상단 타이틀 바 설정
+            tlpMainTitle.BackColor = Color.FromArgb(90, 61, 49); // 짙은 갈색
+            lblTitle.ForeColor = Color.White;
+            lblTitle.Font = new Font("맑은 고딕", 12F, FontStyle.Bold);
+
+            btnClose.FlatStyle = FlatStyle.Flat;
+            btnClose.FlatAppearance.BorderSize = 0;
+            btnClose.BackColor = Color.FromArgb(90, 61, 49);
+            btnClose.ForeColor = Color.White;
+            btnClose.Cursor = Cursors.Hand;
+
+            // 3. 공통 라벨 폰트 및 색상
+            Font labelFont = new Font("맑은 고딕", 11F, FontStyle.Bold);
+            Color darkBrown = Color.FromArgb(62, 39, 35);
+
+            lblOrder.Font = labelFont; lblOrder.ForeColor = darkBrown;
+            lblTotal.Font = labelFont; lblTotal.ForeColor = darkBrown;
+            lblRecived.Font = labelFont; lblRecived.ForeColor = darkBrown;
+            lblCharge.Font = labelFont; lblCharge.ForeColor = darkBrown;
+            label1.Font = labelFont; label1.ForeColor = darkBrown; // '원' 글자
+
+            // 4. 주문 리스트 박스
+            lstOrder.Font = new Font("맑은 고딕", 11F);
+            lstOrder.BorderStyle = BorderStyle.FixedSingle;
+
+            // 5. 결제 금액 패널 및 금액 표시 (연한 주황색 배경 + 주황색 테두리)
+            pnPrice.BackColor = Color.FromArgb(253, 235, 228);
+            pnPrice.BorderStyle = BorderStyle.FixedSingle;
+
+            displayTotal.ForeColor = Color.FromArgb(215, 65, 25); // 진한 주황/빨강
+            displayTotal.Font = new Font("맑은 고딕", 22F, FontStyle.Bold);
+
+            // 6. 받은 금액 텍스트박스
+            textRecived.Font = new Font("맑은 고딕", 18F, FontStyle.Bold);
+            textRecived.BorderStyle = BorderStyle.FixedSingle;
+
+            // 7. 금액 조작 버튼들 (+1만, +5천 등)
+            Button[] moneyBtns = { btn10, btn5, btn1, btnPrice, btnClear };
+            foreach (Button btn in moneyBtns)
+            {
+                btn.FlatStyle = FlatStyle.Flat;
+                btn.FlatAppearance.BorderColor = Color.FromArgb(180, 170, 160); // 사진의 연한 테두리
+                btn.BackColor = Color.FromArgb(220, 210, 205); // 베이지색 바탕
+                btn.ForeColor = darkBrown;
+                btn.Font = new Font("맑은 고딕", 11F, FontStyle.Bold);
+                btn.Cursor = Cursors.Hand;
+            }
+
+            // 8. 거스름돈 표시 (사진과 동일한 초록색 포인트)
+            displayCharge.ForeColor = Color.FromArgb(67, 160, 71); // 진한 초록색
+            displayCharge.Font = new Font("맑은 고딕", 18F, FontStyle.Bold);
+
+            // 9. 하단 취소 / 결제 완료 버튼
+            btnCancel.FlatStyle = FlatStyle.Flat;
+            btnCancel.FlatAppearance.BorderColor = Color.FromArgb(180, 170, 160);
+            btnCancel.BackColor = Color.FromArgb(220, 210, 205);
+            btnCancel.ForeColor = darkBrown;
+            btnCancel.Font = new Font("맑은 고딕", 14F, FontStyle.Bold);
+            btnCancel.Cursor = Cursors.Hand;
+
+            btnPayment.FlatStyle = FlatStyle.Flat;
+            btnPayment.FlatAppearance.BorderSize = 0;
+            btnPayment.BackColor = Color.FromArgb(215, 65, 25); // 진한 주황/빨강
+            btnPayment.ForeColor = Color.White;
+            btnPayment.Font = new Font("맑은 고딕", 14F, FontStyle.Bold);
+            btnPayment.Cursor = Cursors.Hand;
         }
     }
 }

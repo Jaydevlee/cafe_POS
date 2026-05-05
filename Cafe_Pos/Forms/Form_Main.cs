@@ -16,10 +16,11 @@ namespace Cafe_Pos
         bool mouseDown;
         Point lastLotion;
 
-      
+
         public Form_Main()
         {
             InitializeComponent();
+            ApplyModernDesign();
             OrderList = new Dictionary<string, OrderItems>();
             orders = new List<Orders>();
             btnCoffee.Click += btnCoffee_Click;
@@ -29,7 +30,7 @@ namespace Cafe_Pos
             lstOrder.DoubleClick += lstOrder_DoubleClick;
             btnPurchase.Click += btnPurchase_Click;
         }
-        
+
 
         // 제목줄 마우스 좌클릭
         private void lblTitle_MouseDown(object? sender, MouseEventArgs e)
@@ -112,52 +113,54 @@ namespace Cafe_Pos
         /////////////////////////////////////////////////////////////
         /// 카테고리 버튼 클릭했을 때 해당 카테고리의 메뉴버튼 /////
         ///////////////////////////////////////////////////////////
-        //private void Coffee_Init()
-        //{
-        //    string category = btnCoffee.Text;
-        //    MenuRepository menuRepository = new();
-        //    List<MenuItem> list = menuRepository.SelectMenu(category);
-        //    fplButtons.Controls.Clear();
-        //    foreach (MenuItem item in list)
-        //    {
-        //        Button btn = new Button();
-        //        btn.Text = item.Name + "\n" + item.Price + "원";
-        //        btn.Width = 230;
-        //        btn.Height = 100;
-        //        btn.Tag = item;
-        //        btn.Click += btn_Click;
-        //        fplButtons.Controls.Add(btn);
-        //    }
-        //}
-
         private void Coffee_Init()
         {
             string category = btnCoffee.Text;
             MenuRepository menuRepository = new();
             List<MenuItem> list = menuRepository.SelectMenu(category);
+
             fplButtons.Controls.Clear();
+
             foreach (MenuItem item in list)
             {
+                // 1. 패널 기본 설정
                 Panel pn = new Panel();
-                Label lblMenu = new Label();
-                Label lblPrice = new Label();
-                lblMenu.Text = item.Name;
-                lblPrice.Text = item.Price + "원";
-                lblMenu.ForeColor = Color.FromArgb(62, 39, 35);
-                lblMenu.AutoSize = true;
-                lblMenu.TextAlign = ContentAlignment.MiddleCenter;
-                lblMenu.Location = new Point(50, 20);
-                lblPrice.ForeColor = Color.FromArgb(216, 67, 21);
-                lblPrice.AutoSize = true;
-                lblPrice.TextAlign = ContentAlignment.MiddleCenter;
-                lblPrice.Location = new Point(70, 40);
-                pn.Width = 230;
+                pn.Width = 230;     // 작성하신 사이즈 유지
                 pn.Height = 100;
                 pn.BackColor = Color.White;
-                pn.Tag = item;
+                pn.BorderStyle = BorderStyle.FixedSingle; // 사진처럼 외곽선 추가
+                pn.Cursor = Cursors.Hand; // 마우스 오버 시 클릭 가능한 손가락 모양
+                pn.Tag = item;      // 데이터 바인딩 유지
+
+                // 2. 메뉴명 라벨 설정
+                Label lblMenu = new Label();
+                lblMenu.Text = item.Name;
+                lblMenu.ForeColor = Color.FromArgb(62, 39, 35); // 작성하신 색상 유지
+                lblMenu.Font = new Font("맑은 고딕", 12F, FontStyle.Bold);
+                lblMenu.Dock = DockStyle.Top; // Location 대신 Dock을 사용하여 자동 중앙 정렬 유도
+                lblMenu.Height = 50;
+                lblMenu.TextAlign = ContentAlignment.BottomCenter; // 가격과 가깝게 배치
+
+                // 3. 가격 라벨 설정
+                Label lblPrice = new Label();
+                lblPrice.Text = item.Price + "원";
+                lblPrice.ForeColor = Color.FromArgb(216, 67, 21); // 작성하신 색상 유지
+                lblPrice.Font = new Font("맑은 고딕", 13F, FontStyle.Bold);
+                lblPrice.Dock = DockStyle.Bottom; // 하단 영역에 자동 정렬
+                lblPrice.Height = 50;
+                lblPrice.TextAlign = ContentAlignment.TopCenter; // 메뉴명과 가깝게 배치
+
+                // 4. 클릭 이벤트 통합 (★핵심 포인트)
+                // 라벨(글씨)을 클릭해도 pn_Click에서 (Panel)sender 처리를 
+                // 오류 없이 할 수 있도록 sender를 pn으로 강제 지정하여 전달합니다.
                 pn.Click += pn_Click;
+                lblMenu.Click += (s, e) => pn_Click(pn, e);
+                lblPrice.Click += (s, e) => pn_Click(pn, e);
+
+                // 5. 컨트롤 조립
                 pn.Controls.Add(lblMenu);
                 pn.Controls.Add(lblPrice);
+
                 fplButtons.Controls.Add(pn);
             }
         }
@@ -171,13 +174,45 @@ namespace Cafe_Pos
 
             foreach (MenuItem item in list)
             {
-                Button btn = new Button();
-                btn.Text = item.Name + "\n" + item.Price + "원";
-                btn.Width = 230;
-                btn.Height = 100;
-                btn.Tag = item;
-                btn.Click += btn_Click;
-                fplButtons.Controls.Add(btn);
+                // 1. 패널 기본 설정
+                Panel pn = new Panel();
+                pn.Width = 230;     // 작성하신 사이즈 유지
+                pn.Height = 100;
+                pn.BackColor = Color.White;
+                pn.BorderStyle = BorderStyle.FixedSingle; // 사진처럼 외곽선 추가
+                pn.Cursor = Cursors.Hand; // 마우스 오버 시 클릭 가능한 손가락 모양
+                pn.Tag = item;      // 데이터 바인딩 유지
+
+                // 2. 메뉴명 라벨 설정
+                Label lblMenu = new Label();
+                lblMenu.Text = item.Name;
+                lblMenu.ForeColor = Color.FromArgb(62, 39, 35); // 작성하신 색상 유지
+                lblMenu.Font = new Font("맑은 고딕", 12F, FontStyle.Bold);
+                lblMenu.Dock = DockStyle.Top; // Location 대신 Dock을 사용하여 자동 중앙 정렬 유도
+                lblMenu.Height = 50;
+                lblMenu.TextAlign = ContentAlignment.BottomCenter; // 가격과 가깝게 배치
+
+                // 3. 가격 라벨 설정
+                Label lblPrice = new Label();
+                lblPrice.Text = item.Price + "원";
+                lblPrice.ForeColor = Color.FromArgb(216, 67, 21); // 작성하신 색상 유지
+                lblPrice.Font = new Font("맑은 고딕", 13F, FontStyle.Bold);
+                lblPrice.Dock = DockStyle.Bottom; // 하단 영역에 자동 정렬
+                lblPrice.Height = 50;
+                lblPrice.TextAlign = ContentAlignment.TopCenter; // 메뉴명과 가깝게 배치
+
+                // 4. 클릭 이벤트 통합 (★핵심 포인트)
+                // 라벨(글씨)을 클릭해도 pn_Click에서 (Panel)sender 처리를 
+                // 오류 없이 할 수 있도록 sender를 pn으로 강제 지정하여 전달합니다.
+                pn.Click += pn_Click;
+                lblMenu.Click += (s, e) => pn_Click(pn, e);
+                lblPrice.Click += (s, e) => pn_Click(pn, e);
+
+                // 5. 컨트롤 조립
+                pn.Controls.Add(lblMenu);
+                pn.Controls.Add(lblPrice);
+
+                fplButtons.Controls.Add(pn);
             }
         }
 
@@ -189,13 +224,45 @@ namespace Cafe_Pos
             fplButtons.Controls.Clear();
             foreach (MenuItem item in list)
             {
-                Button btn = new Button();
-                btn.Text = item.Name + "\n" + item.Price + "원";
-                btn.Width = 230;
-                btn.Height = 100;
-                btn.Tag = item;
-                btn.Click += btn_Click;
-                fplButtons.Controls.Add(btn);
+                // 1. 패널 기본 설정
+                Panel pn = new Panel();
+                pn.Width = 230;     // 작성하신 사이즈 유지
+                pn.Height = 100;
+                pn.BackColor = Color.White;
+                pn.BorderStyle = BorderStyle.FixedSingle; // 사진처럼 외곽선 추가
+                pn.Cursor = Cursors.Hand; // 마우스 오버 시 클릭 가능한 손가락 모양
+                pn.Tag = item;      // 데이터 바인딩 유지
+
+                // 2. 메뉴명 라벨 설정
+                Label lblMenu = new Label();
+                lblMenu.Text = item.Name;
+                lblMenu.ForeColor = Color.FromArgb(62, 39, 35); // 작성하신 색상 유지
+                lblMenu.Font = new Font("맑은 고딕", 12F, FontStyle.Bold);
+                lblMenu.Dock = DockStyle.Top; // Location 대신 Dock을 사용하여 자동 중앙 정렬 유도
+                lblMenu.Height = 50;
+                lblMenu.TextAlign = ContentAlignment.BottomCenter; // 가격과 가깝게 배치
+
+                // 3. 가격 라벨 설정
+                Label lblPrice = new Label();
+                lblPrice.Text = item.Price + "원";
+                lblPrice.ForeColor = Color.FromArgb(216, 67, 21); // 작성하신 색상 유지
+                lblPrice.Font = new Font("맑은 고딕", 13F, FontStyle.Bold);
+                lblPrice.Dock = DockStyle.Bottom; // 하단 영역에 자동 정렬
+                lblPrice.Height = 50;
+                lblPrice.TextAlign = ContentAlignment.TopCenter; // 메뉴명과 가깝게 배치
+
+                // 4. 클릭 이벤트 통합 (★핵심 포인트)
+                // 라벨(글씨)을 클릭해도 pn_Click에서 (Panel)sender 처리를 
+                // 오류 없이 할 수 있도록 sender를 pn으로 강제 지정하여 전달합니다.
+                pn.Click += pn_Click;
+                lblMenu.Click += (s, e) => pn_Click(pn, e);
+                lblPrice.Click += (s, e) => pn_Click(pn, e);
+
+                // 5. 컨트롤 조립
+                pn.Controls.Add(lblMenu);
+                pn.Controls.Add(lblPrice);
+
+                fplButtons.Controls.Add(pn);
             }
         }
 
@@ -207,13 +274,45 @@ namespace Cafe_Pos
             fplButtons.Controls.Clear();
             foreach (MenuItem item in list)
             {
-                Button btn = new Button();
-                btn.Text = item.Name + "\n" + item.Price + "원";
-                btn.Width = 230;
-                btn.Height = 100;
-                btn.Tag = item;
-                btn.Click += btn_Click;
-                fplButtons.Controls.Add(btn);
+                // 1. 패널 기본 설정
+                Panel pn = new Panel();
+                pn.Width = 230;     // 작성하신 사이즈 유지
+                pn.Height = 100;
+                pn.BackColor = Color.White;
+                pn.BorderStyle = BorderStyle.FixedSingle; // 사진처럼 외곽선 추가
+                pn.Cursor = Cursors.Hand; // 마우스 오버 시 클릭 가능한 손가락 모양
+                pn.Tag = item;      // 데이터 바인딩 유지
+
+                // 2. 메뉴명 라벨 설정
+                Label lblMenu = new Label();
+                lblMenu.Text = item.Name;
+                lblMenu.ForeColor = Color.FromArgb(62, 39, 35); // 작성하신 색상 유지
+                lblMenu.Font = new Font("맑은 고딕", 12F, FontStyle.Bold);
+                lblMenu.Dock = DockStyle.Top; // Location 대신 Dock을 사용하여 자동 중앙 정렬 유도
+                lblMenu.Height = 50;
+                lblMenu.TextAlign = ContentAlignment.BottomCenter; // 가격과 가깝게 배치
+
+                // 3. 가격 라벨 설정
+                Label lblPrice = new Label();
+                lblPrice.Text = item.Price + "원";
+                lblPrice.ForeColor = Color.FromArgb(216, 67, 21); // 작성하신 색상 유지
+                lblPrice.Font = new Font("맑은 고딕", 13F, FontStyle.Bold);
+                lblPrice.Dock = DockStyle.Bottom; // 하단 영역에 자동 정렬
+                lblPrice.Height = 50;
+                lblPrice.TextAlign = ContentAlignment.TopCenter; // 메뉴명과 가깝게 배치
+
+                // 4. 클릭 이벤트 통합 (★핵심 포인트)
+                // 라벨(글씨)을 클릭해도 pn_Click에서 (Panel)sender 처리를 
+                // 오류 없이 할 수 있도록 sender를 pn으로 강제 지정하여 전달합니다.
+                pn.Click += pn_Click;
+                lblMenu.Click += (s, e) => pn_Click(pn, e);
+                lblPrice.Click += (s, e) => pn_Click(pn, e);
+
+                // 5. 컨트롤 조립
+                pn.Controls.Add(lblMenu);
+                pn.Controls.Add(lblPrice);
+
+                fplButtons.Controls.Add(pn);
             }
         }
 
@@ -222,39 +321,6 @@ namespace Cafe_Pos
         /// 버튼 클릭 시 주문 내역 추가 및 총합계 계산 /////////////
         ///////////////////////////////////////////////////////////
         // ListBox에 주문 내역 표시를 위히 Dictionary 사용
-
-        private void btn_Click(object? sender, EventArgs e)
-        {
-
-            Button btn = (Button)sender;
-            MenuItem item = (MenuItem)btn.Tag;
-            //Dictionary 객체로 주문 내역을 넣어서 listbox로 전달
-            if (OrderList.ContainsKey(item.Name))
-            {
-                OrderList[item.Name].Quantity++;
-                OrderList[item.Name].Subtotal = OrderList[item.Name].Quantity * OrderList[item.Name].Price;
-            }
-            else
-            {
-                OrderList[item.Name] = new OrderItems
-                {
-                    Menu_id = item.Id,
-                    Menu_name = item.Name,
-                    Quantity = 1,
-                    Price = item.Price,
-                    Subtotal = item.Price
-                };
-            }
-
-            lstOrder.Items.Clear();
-            foreach (OrderItems order in OrderList.Values)
-            {
-                lstOrder.Items.Add(order.Menu_name + " " + order.Quantity + " " + order.Subtotal);
-            }
-            Calc_total();
-        }
-
-
         private void pn_Click(object? sender, EventArgs e)
         {
             Label lbl = null;
@@ -324,6 +390,10 @@ namespace Cafe_Pos
 
         public void btnPurchase_Click(object? sender, EventArgs e)
         {
+            if(OrderList is null)
+            {
+                MessageBox.Show("메뉴를 선택해주세요");
+            }
             Form_PurchaseDial form = new Form_PurchaseDial(OrderList, this);
             form.ShowDialog();
         }
@@ -360,6 +430,60 @@ namespace Cafe_Pos
         {
             Form_Order form = new Form_Order();
             form.Show();
+        }
+
+        private void ApplyModernDesign()
+        {
+            // 1. 폼 전체 배경색 (연한 회색/베이지 톤)
+            this.BackColor = Color.FromArgb(248, 248, 248);
+
+            // 2. 상단 타이틀바 패널
+            btnMin.BackColor = Color.FromArgb(93, 55, 55);
+            btnMin.FlatStyle = FlatStyle.Flat;
+            btnMin.FlatAppearance.BorderSize = 0;
+            btnMin.Cursor = Cursors.Hand;
+            btnMax.BackColor = Color.FromArgb(93, 55, 55);
+            btnMax.FlatStyle = FlatStyle.Flat;
+            btnMax.FlatAppearance.BorderSize = 0;
+            btnMax.Cursor = Cursors.Hand;
+            btnClose.BackColor = Color.FromArgb(93, 55, 55);
+            btnClose.FlatStyle = FlatStyle.Flat;
+            btnClose.FlatAppearance.BorderSize = 0;                     
+            btnClose.Cursor = Cursors.Hand;
+
+            // 3. 카테고리 버튼 스타일 일괄 적용
+            // btnCoffee, btnNonCoffee 등 버튼들을 묶어서 처리
+            Button[] categoryButtons = { btnCoffee, btnNonCoffee, btnTea, btnDessert };
+            foreach (Button btn in categoryButtons)
+            {
+                btn.FlatStyle = FlatStyle.Flat;
+                btn.FlatAppearance.BorderSize = 1;
+                btn.FlatAppearance.BorderColor = Color.FromArgb(200, 190, 180);
+                btn.BackColor = Color.FromArgb(220, 210, 205); // 기본 비활성 색상 (연한 베이지)
+                btn.ForeColor = Color.Black;
+                btn.Font = new Font("맑은 고딕", 11F, FontStyle.Bold);
+            }
+
+            // 현재 선택된 '커피' 버튼 포인트 컬러 적용
+            btnCoffee.BackColor = Color.FromArgb(90, 61, 49);
+            btnCoffee.ForeColor = Color.White;
+
+            // 4. 결제 및 취소 버튼 스타일
+            btnPurchase.FlatStyle = FlatStyle.Flat;
+            btnPurchase.BackColor = Color.FromArgb(215, 65, 25); // 진한 주황/빨강
+            btnPurchase.ForeColor = Color.White;
+            btnPurchase.Font = new Font("맑은 고딕", 12F, FontStyle.Bold);
+
+            btnCancel.FlatStyle = FlatStyle.Flat;
+            btnCancel.FlatAppearance.BorderSize = 1;
+            btnCancel.FlatAppearance.BorderColor = Color.Gray;
+            btnCancel.BackColor = Color.FromArgb(215, 205, 195);
+            btnCancel.ForeColor = Color.Black;
+            btnCancel.Font = new Font("맑은 고딕", 12F, FontStyle.Bold);
+
+            // 5. 합계 금액 라벨 포인트
+            displayTotal.ForeColor = Color.FromArgb(215, 65, 25); // 결제 버튼과 동일한 주황/빨강
+            displayTotal.Font = new Font("맑은 고딕", 18F, FontStyle.Bold);
         }
     }
 }

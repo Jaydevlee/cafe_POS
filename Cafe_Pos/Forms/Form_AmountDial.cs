@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace Cafe_Pos.Forms
 {
-    
+
     public partial class Form_AmountDial : Form
     {
         private Dictionary<string, OrderItems> OrderList;
@@ -27,9 +27,10 @@ namespace Cafe_Pos.Forms
 
             btnSave.Click += btnSave_Click;
             btnRemove.Click += btnRemove_Click;
+            ApplyModernDesign();
 
         }
-       
+
         // 제목줄 마우스 좌클릭
         private void lblTitle_MouseDown(object? sender, MouseEventArgs e)
         {
@@ -82,18 +83,24 @@ namespace Cafe_Pos.Forms
         {
             int quantity = int.Parse(lblQuantity.Text);
             quantity++;
-            lblQuantity.Text=quantity.ToString();
+            lblQuantity.Text = quantity.ToString();
         }
 
         private void btnDown_Click(object? sender, EventArgs e)
         {
             int quantity = int.Parse(lblQuantity.Text);
             quantity--;
-            if (quantity < 1)
+            if (quantity < 0)
             {
                 return;
             }
-            lblQuantity.Text = quantity.ToString();          
+            lblQuantity.Text = quantity.ToString();
+
+            if(lblQuantity.Text == "0")
+            {
+                OrderList.Remove(menuName);
+                this.Close();
+            }
         }
 
         private void btnSave_Click(object? sender, EventArgs e)
@@ -107,6 +114,49 @@ namespace Cafe_Pos.Forms
         {
             OrderList.Remove(menuName);
             this.Close();
+        }
+
+        private void ApplyModernDesign()
+        {
+            this.BackColor = Color.FromArgb(245, 245, 245); // 전체 배경색 연한 회색
+
+            // 텍스트 설정
+            lblMenu.ForeColor = Color.FromArgb(62, 39, 35); // 짙은 갈색
+            lblMenu.Font = new Font("맑은 고딕", 16F, FontStyle.Bold);
+
+            // 수량 라벨(또는 텍스트박스) 
+            lblQuantity.BackColor = Color.White;
+            lblQuantity.ForeColor = Color.Black;
+            lblQuantity.Font = new Font("맑은 고딕", 24F, FontStyle.Bold);
+            // lblQuantity.BorderStyle = BorderStyle.FixedSingle; // 라벨인 경우 주석 해제
+
+            // -, + 버튼 디자인 (베이지색)
+            Button[] qtyButtons = { btnUp, btnDown };
+            foreach (Button btn in qtyButtons)
+            {
+                btn.FlatStyle = FlatStyle.Flat;
+                btn.FlatAppearance.BorderColor = Color.FromArgb(180, 170, 160);
+                btn.BackColor = Color.FromArgb(220, 210, 205);
+                btn.Font = new Font("맑은 고딕", 20F, FontStyle.Bold);
+                btn.ForeColor = Color.FromArgb(62, 39, 35);
+                btn.Cursor = Cursors.Hand;
+            }
+
+            // 삭제 버튼 디자인 (빨간색)
+            btnRemove.FlatStyle = FlatStyle.Flat;
+            btnRemove.FlatAppearance.BorderSize = 0;
+            btnRemove.BackColor = Color.FromArgb(211, 47, 47);
+            btnRemove.ForeColor = Color.White;
+            btnRemove.Font = new Font("맑은 고딕", 12F, FontStyle.Bold);
+            btnRemove.Cursor = Cursors.Hand;
+
+            // 확인 버튼 디자인 (주황/빨간색)
+            btnSave.FlatStyle = FlatStyle.Flat;
+            btnSave.FlatAppearance.BorderSize = 0;
+            btnSave.BackColor = Color.FromArgb(216, 67, 21);
+            btnSave.ForeColor = Color.White;
+            btnSave.Font = new Font("맑은 고딕", 12F, FontStyle.Bold);
+            btnSave.Cursor = Cursors.Hand;
         }
     }
 }

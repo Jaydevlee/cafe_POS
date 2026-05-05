@@ -40,6 +40,7 @@ namespace Cafe_Pos.Forms
             dgvMember.SelectionChanged += dgvMember_SelectionChanged;
             LoadMemebers();
             btnEvent();
+            ApplyModernDesign();
         }
 
         // 제목줄 마우스 좌클릭
@@ -122,20 +123,27 @@ namespace Cafe_Pos.Forms
         // 메뉴목록에서 판매중 열의 값 이벤트
         public void ListMenu_CellFormatting(object? sender, DataGridViewCellFormattingEventArgs e)
         {
-            if (listMenu.Columns[e.ColumnIndex].Name == "Is_active")
+            // 현재 처리 중인 컬럼이 "Is_active" (상태) 컬럼인지 확인
+            if (sender is DataGridView dgv && dgv.Columns[e.ColumnIndex].Name == "Is_active")
             {
                 if (e.Value != null)
                 {
-                    Console.WriteLine(e.Value.GetType());
+                    // DB에서 int 타입으로 넘어오므로 안전하게 변환
+                    if (int.TryParse(e.Value.ToString(), out int statusValue))
                     {
-                        int stringValue = (int)e.Value;
-                        if (stringValue == 1)
+                        if (statusValue == 1)
                         {
-                            e.Value = "판매중";
+                            e.Value = "판매중"; // 텍스트 변환
+                            e.CellStyle.ForeColor = Color.FromArgb(56, 142, 60); // 초록색
+                            e.CellStyle.Font = new Font("맑은 고딕", 10F, FontStyle.Bold);
+                            e.FormattingApplied = true; // 시스템에 "내가 변환을 완료했다"고 알림
                         }
-                        else if (stringValue == 0)
+                        else if (statusValue == 0)
                         {
-                            e.Value = "품절";
+                            e.Value = "품절"; // 텍스트 변환
+                            e.CellStyle.ForeColor = Color.FromArgb(211, 47, 47); // 빨간색
+                            e.CellStyle.Font = new Font("맑은 고딕", 10F, FontStyle.Bold);
+                            e.FormattingApplied = true;
                         }
                     }
                 }
@@ -282,6 +290,87 @@ namespace Cafe_Pos.Forms
             txtName.Text = row.Cells["name"].Value.ToString();
             txtPhone.Text = row.Cells["phone"].Value.ToString();
             displayPoints.Text = row.Cells["points"].Value.ToString();
+        }
+
+        private void ApplyModernDesign()
+        {
+            // 1. 폼 전체 배경색 (연한 회색)
+            this.BackColor = Color.FromArgb(248, 248, 248);
+
+            // 2. 폼 내의 모든 컨트롤(탭 페이지 포함)을 순회하며 스타일 적용
+            ApplyStyleToAllControls(this);
+        }
+
+        private void ApplyStyleToAllControls(Control parent)
+        {
+            foreach (Control ctrl in parent.Controls)
+            {
+                // 1. DataGridView 디자인 일괄 적용
+                if (ctrl is DataGridView dgv)
+                {
+                    dgv.BackgroundColor = Color.White;
+                    dgv.BorderStyle = BorderStyle.FixedSingle;
+                    dgv.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+                    dgv.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+
+                    // 헤더 스타일 (갈색 배경, 흰색 글씨)
+                    dgv.EnableHeadersVisualStyles = false;
+                    dgv.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(90, 61, 49);
+                    dgv.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+                    dgv.ColumnHeadersDefaultCellStyle.Font = new Font("맑은 고딕", 11F, FontStyle.Bold);
+                    dgv.ColumnHeadersHeight = 40;
+
+                    // 행(Row) 스타일
+                    dgv.DefaultCellStyle.BackColor = Color.White;
+                    dgv.DefaultCellStyle.ForeColor = Color.Black;
+                    dgv.DefaultCellStyle.Font = new Font("맑은 고딕", 10F);
+                    dgv.DefaultCellStyle.SelectionBackColor = Color.FromArgb(253, 224, 180); // 연한 주황/베이지색 하이라이트
+                    dgv.DefaultCellStyle.SelectionForeColor = Color.Black;
+                    dgv.RowTemplate.Height = 35;
+
+                    dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                    dgv.AllowUserToAddRows = false; // 빈 하단 행 제거
+                    dgv.RowHeadersVisible = false;  // 왼쪽 화살표 열 숨김
+
+                    // [보너스] 상태 컬럼(판매중/품절) 글씨 색상 자동 변경 이벤트 연결
+                    dgv.CellFormatting -= ListMenu_CellFormatting;// 중복 방지
+                    dgv.CellFormatting += ListMenu_CellFormatting;
+                }
+                // 2. 탭 페이지 배경색 투명화 (위화감 제거)
+                else if (ctrl is TabPage tabPage)
+                {
+                    tabPage.BackColor = Color.FromArgb(248, 248, 248);
+                }
+                // 3. 버튼 디자인 (버튼의 '텍스트'를 읽고 자동으로 색상 지정)
+                else if (ctrl is Button btn)
+                {
+                    btn.FlatStyle = FlatStyle.Flat;
+                    btn.FlatAppearance.BorderSize = 0;
+                    btn.Font = new Font("맑은 고딕", 11F, FontStyle.Bold);
+                    btn.ForeColor = Color.White;
+                    btn.Cursor = Cursors.Hand;
+
+                    if (btn.Text.Contains("추가"))
+                        btn.BackColor = Color.FromArgb(56, 142, 60); // 초록색
+                    else if (btn.Text.Contains("수정"))
+                        btn.BackColor = Color.FromArgb(25, 118, 210); // 파란색
+                    else if (btn.Text.Contains("삭제"))
+                        btn.BackColor = Color.FromArgb(211, 47, 47); // 빨간색
+                    else
+                        btn.BackColor = Color.FromArgb(90, 61, 49); // 기본 갈색 (닫기 등)
+                }
+                // 4. 입력칸 (TextBox, ComboBox) 디자인
+                else if (ctrl is TextBox || ctrl is ComboBox)
+                {
+                    ctrl.Font = new Font("맑은 고딕", 11F);
+                }
+
+                // 컨테이너 컨트롤(Panel, TabControl 등) 안에 다른 컨트롤이 있다면 계속 파고들기
+                if (ctrl.HasChildren)
+                {
+                    ApplyStyleToAllControls(ctrl);
+                }
+            }
         }
     }
 }
