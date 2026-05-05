@@ -294,6 +294,46 @@ namespace Cafe_Pos.Data
             return list;
         }
 
+        // 차트
+        public List<OrderChart> SelectOrderByDate()
+        {
+            OrderChart? orderChart = null;
+            List<OrderChart> list = new List<OrderChart>();
+            using (MySqlConnection conn = DBHepler.GetConnection())
+            {
+                try
+                {
+                    conn.Open();
+                    string sql = @"SELECT DATE(order_date) AS order_day, 
+                                    SUM(total_amount) AS daily_total
+                                    FROM orders
+                                    GROUP BY DATE(order_date)
+                                    ORDER BY order_day asc";
+                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                    {
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                orderChart = new OrderChart
+                                {
+                                    order_date = reader.GetDateTime("order_day"),
+                                    daily_total = reader.GetInt64("daily_total")
+                                };
+                                list.Add(orderChart);
+                            }
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("주문정보를 가져오지 못했습니다. " + e.Message);
+                }
+            }
+            MessageBox.Show("조회 건수: " + list.Count);
+            return list;
+        }
+
         public List<Member> SelectAllMember()
         {
             Member? member = null;

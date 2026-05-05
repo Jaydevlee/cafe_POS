@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             panel1 = new Panel();
             btnSelect = new Button();
             label1 = new Label();
@@ -53,6 +56,7 @@
             btnMax = new Button();
             btnClose = new Button();
             lblTitle = new Label();
+            chartOrder = new System.Windows.Forms.DataVisualization.Charting.Chart();
             panel1.SuspendLayout();
             pnOrder.SuspendLayout();
             pnTotal.SuspendLayout();
@@ -61,6 +65,7 @@
             pnDgv.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dsTop5).BeginInit();
             tlpMainTitle.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)chartOrder).BeginInit();
             SuspendLayout();
             // 
             // panel1
@@ -220,7 +225,7 @@
             dgvTop5.Location = new Point(0, 0);
             dgvTop5.Name = "dgvTop5";
             dgvTop5.RowHeadersWidth = 51;
-            dgvTop5.Size = new Size(922, 298);
+            dgvTop5.Size = new Size(922, 169);
             dgvTop5.TabIndex = 5;
             // 
             // pnDgv
@@ -228,7 +233,7 @@
             pnDgv.Controls.Add(dgvTop5);
             pnDgv.Location = new Point(12, 347);
             pnDgv.Name = "pnDgv";
-            pnDgv.Size = new Size(922, 301);
+            pnDgv.Size = new Size(922, 169);
             pnDgv.TabIndex = 6;
             // 
             // tlpMainTitle
@@ -296,11 +301,28 @@
             lblTitle.Text = "☕커피한잔 POS - 매출조회";
             lblTitle.TextAlign = ContentAlignment.MiddleCenter;
             // 
+            // chartOrder
+            // 
+            chartArea2.Name = "ChartArea1";
+            chartOrder.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            chartOrder.Legends.Add(legend2);
+            chartOrder.Location = new Point(12, 532);
+            chartOrder.Name = "chartOrder";
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            chartOrder.Series.Add(series2);
+            chartOrder.Size = new Size(922, 375);
+            chartOrder.TabIndex = 12;
+            chartOrder.Text = "chart1";
+            // 
             // Form_Sales
             // 
             AutoScaleDimensions = new SizeF(9F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(946, 718);
+            ClientSize = new Size(946, 937);
+            Controls.Add(chartOrder);
             Controls.Add(tlpMainTitle);
             Controls.Add(pnDgv);
             Controls.Add(lblTop5);
@@ -319,6 +341,7 @@
             pnDgv.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dsTop5).EndInit();
             tlpMainTitle.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)chartOrder).EndInit();
             ResumeLayout(false);
         }
 
@@ -348,5 +371,6 @@
         private Button btnMax;
         private Button btnClose;
         private Label lblTitle;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chartOrder;
     }
 }
