@@ -63,7 +63,7 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { toolManage });
             menuStrip1.Location = new Point(0, 36);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(61, 28);
+            menuStrip1.Size = new Size(211, 28);
             menuStrip1.TabIndex = 0;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -77,14 +77,14 @@
             // menuTool
             // 
             menuTool.Name = "menuTool";
-            menuTool.Size = new Size(157, 26);
-            menuTool.Text = "메뉴 관리";
+            menuTool.Size = new Size(224, 26);
+            menuTool.Text = "매장 관리";
             menuTool.Click += menuTool_Click;
             // 
             // toolSales
             // 
             toolSales.Name = "toolSales";
-            toolSales.Size = new Size(157, 26);
+            toolSales.Size = new Size(224, 26);
             toolSales.Text = "매출 조회";
             toolSales.Click += toolSales_Click;
             // 

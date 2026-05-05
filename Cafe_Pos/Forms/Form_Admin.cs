@@ -16,7 +16,10 @@ namespace Cafe_Pos.Forms
     {
         private MenuItem menuItem = new MenuItem();
         private List<MenuItem> list = new List<MenuItem>();
+        private List<Member> members = new List<Member>();
         private MenuRepository menuRepository = new MenuRepository();
+
+        private OrderRepostiory orderRepostiory = new OrderRepostiory();
 
         private int id { get; set; }
         private string name { get; set; }
@@ -34,6 +37,8 @@ namespace Cafe_Pos.Forms
             LoadCmbStatus();
             listMenu.CellFormatting += ListMenu_CellFormatting;
             listMenu.SelectionChanged += listMenu_SelectionChanged;
+            dgvMember.SelectionChanged += dgvMember_SelectionChanged;
+            LoadMemebers();
             btnEvent();
         }
 
@@ -186,9 +191,9 @@ namespace Cafe_Pos.Forms
 
         public void btnAdd_Click(object? sender, EventArgs e)
         {
-            foreach(MenuItem menuItem in list) 
-            { 
-                if(menuItem.Name == txtMenuName.Text)
+            foreach (MenuItem menuItem in list)
+            {
+                if (menuItem.Name == txtMenuName.Text)
                 {
                     MessageBox.Show("이미 존재하는 메뉴 입니다.");
                     return;
@@ -205,7 +210,7 @@ namespace Cafe_Pos.Forms
 
             menuRepository.InsertMenu(menuItem);
         }
-        
+
         public void btnUpdate_Click(object? sender, EventArgs e)
         {
             int result = 0;
@@ -216,7 +221,8 @@ namespace Cafe_Pos.Forms
                 {
                     exists = true;
                     break;
-                } else
+                }
+                else
                 {
                     exists = false;
                 }
@@ -233,8 +239,9 @@ namespace Cafe_Pos.Forms
                     Is_active = Convert.ToInt32(cmbStatus.SelectedValue)
                 };
 
-                menuRepository.UpdateMenu(menuItem); 
-            } else
+                menuRepository.UpdateMenu(menuItem);
+            }
+            else
             {
                 MessageBox.Show("존재하지 않는 메뉴입니다.");
                 return;
@@ -242,7 +249,7 @@ namespace Cafe_Pos.Forms
         }
 
         public void btnDelete_Click(object? sender, EventArgs e)
-        {   
+        {
             // 삭제 기능 구현(menuId)사용
             menuItem = new MenuItem
             {
@@ -250,6 +257,31 @@ namespace Cafe_Pos.Forms
             };
 
             menuRepository.DeleteMenu(menuItem);
+        }
+
+        ////////////////////////////////
+        /////////// 회원관리 ///////////
+        ////////////////////////////////
+        private void LoadMemebers()
+        {
+            members = orderRepostiory.SelectAllMember();
+            dsMembers.DataSource = members;
+            dgvMember.DataSource = dsMembers;
+        }
+
+        //DataGridView row select 이벤트
+        private void dgvMember_SelectionChanged(object? sender, EventArgs e)
+        {
+            if (dgvMember.SelectedRows.Count > 0) Change_pnMember();
+        }
+
+        private void Change_pnMember()
+        {
+            DataGridViewRow row = dgvMember.SelectedRows[0];
+            id = int.Parse(row.Cells["id"].Value.ToString());
+            txtName.Text = row.Cells["name"].Value.ToString();
+            txtPhone.Text = row.Cells["phone"].Value.ToString();
+            displayPoints.Text = row.Cells["points"].Value.ToString();
         }
     }
 }

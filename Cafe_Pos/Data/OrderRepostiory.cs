@@ -204,7 +204,41 @@ namespace Cafe_Pos.Data
             }
             return orderTop5;
         }
-
+        public List<Member> SelectAllMember()
+        {
+            Member? member = null;
+            List<Member> list = new List<Member>();
+            using (MySqlConnection conn = DBHepler.GetConnection())
+            {
+                try
+                {
+                    conn.Open();
+                    string sql = @"SELECT id, name, phone, points FROM member";
+                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                    {
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                member = new Member
+                                {
+                                    id = reader.GetInt32("id"),
+                                    name = reader.GetString("name"),
+                                    phone = reader.GetString("phone"),
+                                    points = reader.GetInt32("points")
+                                };
+                                list.Add(member);
+                            }
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("회원정보를 가져오지 못했습니다. " + e.Message);
+                }
+            }
+            return list;
+        }
         public Member? SelectMember(string phone)
         {
             Member? member = null;
@@ -213,7 +247,7 @@ namespace Cafe_Pos.Data
                 try
                 {
                     conn.Open();
-                    string sql = @"SELECT id, name, phone, points FROM meber 
+                    string sql = @"SELECT id, name, phone, points FROM member 
 		                            WHERE PHONE = @phone";
                     using (MySqlCommand cmd = new MySqlCommand(sql, conn))
                     {
@@ -235,7 +269,7 @@ namespace Cafe_Pos.Data
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show("매출정보를 가져오지 못했습니다. " + e.Message);
+                    MessageBox.Show("회원정보를 가져오지 못했습니다. " + e.Message);
                 }
             }
             return member;
