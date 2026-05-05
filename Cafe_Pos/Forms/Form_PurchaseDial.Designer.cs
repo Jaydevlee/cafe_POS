@@ -58,7 +58,7 @@
             // 
             lblOrder.Location = new Point(3, 41);
             lblOrder.Name = "lblOrder";
-            lblOrder.Size = new Size(78, 25);
+            lblOrder.Size = new Size(108, 25);
             lblOrder.TabIndex = 0;
             lblOrder.Text = "주문 상품";
             // 
@@ -95,7 +95,7 @@
             // 
             lblTotal.Location = new Point(15, 23);
             lblTotal.Name = "lblTotal";
-            lblTotal.Size = new Size(78, 25);
+            lblTotal.Size = new Size(100, 25);
             lblTotal.TabIndex = 3;
             lblTotal.Text = "결제 금액";
             // 
@@ -103,7 +103,7 @@
             // 
             lblRecived.Location = new Point(12, 337);
             lblRecived.Name = "lblRecived";
-            lblRecived.Size = new Size(78, 25);
+            lblRecived.Size = new Size(115, 25);
             lblRecived.TabIndex = 4;
             lblRecived.Text = "받은 금액";
             // 
@@ -196,7 +196,7 @@
             // 
             lblCharge.Location = new Point(15, 474);
             lblCharge.Name = "lblCharge";
-            lblCharge.Size = new Size(78, 25);
+            lblCharge.Size = new Size(112, 25);
             lblCharge.TabIndex = 7;
             lblCharge.Text = "거스름돈";
             // 

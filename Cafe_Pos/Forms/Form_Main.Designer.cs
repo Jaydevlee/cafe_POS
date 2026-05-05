@@ -64,7 +64,7 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { toolManage });
             menuStrip1.Location = new Point(0, 36);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(211, 28);
+            menuStrip1.Size = new Size(61, 28);
             menuStrip1.TabIndex = 0;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -78,21 +78,21 @@
             // menuTool
             // 
             menuTool.Name = "menuTool";
-            menuTool.Size = new Size(224, 26);
+            menuTool.Size = new Size(157, 26);
             menuTool.Text = "매장 관리";
             menuTool.Click += menuTool_Click;
             // 
             // toolSales
             // 
             toolSales.Name = "toolSales";
-            toolSales.Size = new Size(224, 26);
+            toolSales.Size = new Size(157, 26);
             toolSales.Text = "매출 조회";
             toolSales.Click += toolSales_Click;
             // 
             // toolOrder
             // 
             toolOrder.Name = "toolOrder";
-            toolOrder.Size = new Size(224, 26);
+            toolOrder.Size = new Size(157, 26);
             toolOrder.Text = "주문 관리";
             toolOrder.Click += toolOrder_Click;
             // 
@@ -254,6 +254,7 @@
             // 
             // btnMin
             // 
+            btnMin.ForeColor = Color.White;
             btnMin.Location = new Point(924, 3);
             btnMin.Name = "btnMin";
             btnMin.Size = new Size(29, 31);
@@ -265,6 +266,7 @@
             // btnMax
             // 
             btnMax.Font = new Font("맑은 고딕", 7.8F, FontStyle.Regular, GraphicsUnit.Point, 129);
+            btnMax.ForeColor = Color.White;
             btnMax.Location = new Point(959, 3);
             btnMax.Name = "btnMax";
             btnMax.Size = new Size(29, 31);
@@ -275,6 +277,7 @@
             // 
             // btnClose
             // 
+            btnClose.ForeColor = Color.White;
             btnClose.Location = new Point(994, 3);
             btnClose.Name = "btnClose";
             btnClose.Size = new Size(29, 31);

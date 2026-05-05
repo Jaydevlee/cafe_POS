@@ -26,6 +26,7 @@ namespace Cafe_Pos.Forms
             InitializeComponent();
             PageInit();
             DrawChart();
+            ApplyModernDesign();
         }
 
         //private void btnSelect_Click(object? sender, EventArgs e)
@@ -165,6 +166,131 @@ namespace Cafe_Pos.Forms
             }
 
             chartOrder.Series.Add(series);
+        }
+
+        private void ApplyModernDesign()
+        {
+            // 1. 전체 배경색
+            this.BackColor = Color.FromArgb(248, 248, 248);
+
+            // 2. 폼 내의 모든 컨트롤 순회하며 스타일 적용
+            ApplyStyleToAllControls(this);
+
+            // 3. 포인트 라벨 색상 
+            
+            displayTotal.ForeColor = Color.FromArgb(216, 67, 21); // 총 매출 (주황)
+            displayOrders.ForeColor = Color.FromArgb(25, 118, 210);    // 주문 건수 (파랑)
+            displayAvg.ForeColor = Color.FromArgb(56, 142, 60);      // 평균 주문 금액 (초록)
+            
+        }
+
+        private void ApplyStyleToAllControls(Control parent)
+        {
+            foreach (Control ctrl in parent.Controls)
+            {
+                // [그리드 뷰 디자인]
+                if (ctrl is DataGridView dgv)
+                {
+                    dgv.BackgroundColor = Color.White;
+                    dgv.BorderStyle = BorderStyle.FixedSingle;
+                    dgv.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+                    dgv.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+
+                    dgv.EnableHeadersVisualStyles = false;
+                    dgv.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(90, 61, 49);
+                    dgv.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+                    dgv.ColumnHeadersDefaultCellStyle.Font = new Font("맑은 고딕", 11F, FontStyle.Bold);
+                    dgv.ColumnHeadersHeight = 40;
+
+                    dgv.DefaultCellStyle.BackColor = Color.White;
+                    dgv.DefaultCellStyle.ForeColor = Color.Black;
+                    dgv.DefaultCellStyle.Font = new Font("맑은 고딕", 10F);
+                    dgv.DefaultCellStyle.SelectionBackColor = Color.FromArgb(253, 224, 180);
+                    dgv.DefaultCellStyle.SelectionForeColor = Color.Black;
+                    dgv.RowTemplate.Height = 35;
+
+                    dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                    dgv.AllowUserToAddRows = false;
+                    dgv.RowHeadersVisible = false;
+
+                    // 순위(1~5) 컬럼 글씨색 주황색으로 변경하는 이벤트 연결
+                    dgv.CellFormatting -= DgvTop5_CellFormatting;
+                    dgv.CellFormatting += DgvTop5_CellFormatting;
+                }
+                // [버튼 디자인]
+                else if (ctrl is Button btn)
+                {
+                    btn.FlatStyle = FlatStyle.Flat;
+                    btn.FlatAppearance.BorderSize = 0;
+                    btn.BackColor = Color.FromArgb(90, 61, 49); // 조회 버튼 (갈색)
+                    btn.ForeColor = Color.White;
+                    btn.Font = new Font("맑은 고딕", 11F, FontStyle.Bold);
+                    btn.Cursor = Cursors.Hand;
+                }
+                // [차트 디자인] - 디자인 언어를 해치지 않는 모던 플랫 스타일
+                else if (ctrl is System.Windows.Forms.DataVisualization.Charting.Chart chart)
+                {
+                    ApplyChartDesign(chart);
+                }
+
+                if (ctrl.HasChildren)
+                {
+                    ApplyStyleToAllControls(ctrl);
+                }
+            }
+        }
+
+        private void ApplyChartDesign(System.Windows.Forms.DataVisualization.Charting.Chart chart)
+        {
+            chart.BackColor = Color.White;
+            // 테두리를 패널들과 동일한 연한 갈색으로 설정
+            chart.BorderlineColor = Color.FromArgb(180, 170, 160);
+            chart.BorderlineWidth = 1;
+            chart.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
+
+            foreach (var chartArea in chart.ChartAreas)
+            {
+                chartArea.BackColor = Color.White;
+                // 촌스러운 굵은 검은색 축 선을 연한 회색으로 변경
+                chartArea.AxisX.MajorGrid.LineColor = Color.FromArgb(240, 240, 240);
+                chartArea.AxisY.MajorGrid.LineColor = Color.FromArgb(240, 240, 240);
+                chartArea.AxisX.LineColor = Color.LightGray;
+                chartArea.AxisY.LineColor = Color.LightGray;
+
+                chartArea.AxisX.LabelStyle.Font = new Font("맑은 고딕", 9F);
+                chartArea.AxisY.LabelStyle.Font = new Font("맑은 고딕", 9F);
+            }
+
+            // 카페 POS에 어울리는 커스텀 색상 팔레트 (주황, 갈색, 베이지, 초록 순)
+            Color[] customPalette = {
+        Color.FromArgb(216, 67, 21),   // 메인 주황 (총 매출 색상과 통일)
+        Color.FromArgb(90, 61, 49),    // 진갈색
+        Color.FromArgb(205, 161, 114), // 라떼 베이지
+        Color.FromArgb(56, 142, 60)    // 포인트 초록
+    };
+
+            chart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
+            chart.PaletteCustomColors = customPalette;
+
+            // 범례(Legend) 폰트 설정
+            if (chart.Legends.Count > 0)
+            {
+                chart.Legends[0].Font = new Font("맑은 고딕", 9F);
+                chart.Legends[0].BackColor = Color.White;
+            }
+        }
+
+        // DataGridView의 "순위" 컬럼 숫자를 사진처럼 주황색 굵은 글씨로 만드는 이벤트
+        private void DgvTop5_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            DataGridView dgv = sender as DataGridView;
+            // 첫 번째 컬럼(인덱스 0)이 '순위'라고 가정. 
+            // 만약 컬럼 이름이 "Rank" 등이라면 dgv.Columns[e.ColumnIndex].Name == "Rank" 로 변경하세요.
+            if (e.ColumnIndex == 0 && e.Value != null)
+            {
+                e.CellStyle.ForeColor = Color.FromArgb(216, 67, 21); // 진한 주황
+                e.CellStyle.Font = new Font("맑은 고딕", 11F, FontStyle.Bold);
+            }
         }
     }
 }

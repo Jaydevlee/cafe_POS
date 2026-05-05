@@ -79,12 +79,12 @@
             pnPrice.Controls.Add(lblTotal);
             pnPrice.Location = new Point(205, 389);
             pnPrice.Name = "pnPrice";
-            pnPrice.Size = new Size(286, 162);
+            pnPrice.Size = new Size(286, 188);
             pnPrice.TabIndex = 3;
             // 
             // lblCharge
             // 
-            lblCharge.Location = new Point(20, 123);
+            lblCharge.Location = new Point(34, 127);
             lblCharge.Name = "lblCharge";
             lblCharge.Size = new Size(196, 25);
             lblCharge.TabIndex = 4;
@@ -92,7 +92,7 @@
             // 
             // lblReceived
             // 
-            lblReceived.Location = new Point(20, 62);
+            lblReceived.Location = new Point(51, 75);
             lblReceived.Name = "lblReceived";
             lblReceived.Size = new Size(179, 25);
             lblReceived.TabIndex = 3;
@@ -109,7 +109,7 @@
             // lblGreeting
             // 
             lblGreeting.Font = new Font("맑은 고딕", 14F);
-            lblGreeting.Location = new Point(115, 566);
+            lblGreeting.Location = new Point(115, 613);
             lblGreeting.Name = "lblGreeting";
             lblGreeting.Size = new Size(264, 38);
             lblGreeting.TabIndex = 4;
@@ -118,7 +118,7 @@
             // btnClose
             // 
             btnClose.Dock = DockStyle.Bottom;
-            btnClose.Location = new Point(0, 639);
+            btnClose.Location = new Point(0, 699);
             btnClose.Name = "btnClose";
             btnClose.Size = new Size(530, 71);
             btnClose.TabIndex = 5;
@@ -182,7 +182,7 @@
             // 
             AutoScaleDimensions = new SizeF(9F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(530, 710);
+            ClientSize = new Size(530, 770);
             Controls.Add(btnPrint);
             Controls.Add(tlpTitle);
             Controls.Add(btnClose);
