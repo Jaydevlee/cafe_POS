@@ -13,6 +13,8 @@ namespace Cafe_Pos.Forms
     public partial class Form_Points : Form
     {
         Member member = new Member();
+        public bool isPointsAdded { get; private set; }
+        public string phone { get; private set; }
 
         private OrderRepostiory orderRepository = new OrderRepostiory();
         // 창 이동 전역 변수
@@ -71,7 +73,7 @@ namespace Cafe_Pos.Forms
 
         private void btnAddPoints_Click(object? sender, EventArgs e)
         {
-            string phone = txtPhone.Text;
+            phone = txtPhone.Text;
             Member? member = orderRepository.SelectMember(phone);
 
             if (member == null)
@@ -79,14 +81,15 @@ namespace Cafe_Pos.Forms
                 MessageBox.Show("회원정보가 존재하지 않습니다. 회원가입을 진행해주세요.");
                 return;
             }
-
-            OnComplete(true, phone);
+            isPointsAdded = true;
+            //OnComplete(true, phone);
+            this.DialogResult = DialogResult.OK;
             this.Close();
         }
 
         private void btnSkip_Click(object? sender, EventArgs e)
         {
-            OnComplete(false, "");
+            isPointsAdded = false;
             this.Close();
         }
         private void ApplyModernDesign()

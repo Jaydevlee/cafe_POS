@@ -8,6 +8,7 @@ using System.Drawing.Printing;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Forms;
+using static Cafe_Pos.Forms.Form_Recipt;
 
 namespace Cafe_Pos.Forms
 {
@@ -29,13 +30,15 @@ namespace Cafe_Pos.Forms
         bool mouseDown;
         Point lastLotion;
 
-        public Form_Recipt(long orderId, List<Orders> orders, Dictionary<string, OrderItems> orderList, Form_Main formMain)
+
+
+        public Form_Recipt(long orderId, List<Orders> orders, Dictionary<string, OrderItems> orderList)
         {
             InitializeComponent();
             this.orderId = orderId;
             this.orders = orders;
             this.orderList = orderList;
-            this.formMain = formMain;
+            //this.formMain = formMain;
             ReciptInit();
             btnClose.Click += btnClose_Click;
             btnPrint.Click += btnPrint_Click;
@@ -130,11 +133,16 @@ namespace Cafe_Pos.Forms
 
         private void btnClose_Click(object? sender, EventArgs e)
         {
-            lstOrderList.Items.Clear();
-            orderList.Clear();
-            orders.Clear();
+            //lstOrderList.Items.Clear();
+            //orderList.Clear();
+            //orders.Clear();
+            //this.Close();
+            //formMain.Form_Main_Clear();
+
+            this.DialogResult = DialogResult.OK;
             this.Close();
-            formMain.Form_Main_Clear();
+
+            
         }
 
         private void btnPrint_Click(object? sender, EventArgs e)

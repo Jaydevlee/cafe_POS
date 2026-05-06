@@ -25,11 +25,11 @@ namespace Cafe_Pos.Forms
         bool mouseDown;
         Point lastLotion;
 
-        public Form_PurchaseDial(Dictionary<string, OrderItems> OrderList, Form_Main formMain)
+        public Form_PurchaseDial(Dictionary<string, OrderItems> OrderList)
         {
             InitializeComponent();
             this.OrderList = OrderList;
-            this.formMain = formMain;
+            //this.formMain = formMain;
             btnRecivedEvent();
             LoadOrderList();
             CalcTotal();
@@ -214,27 +214,59 @@ namespace Cafe_Pos.Forms
                 Received_amount = recived_amount
             });
 
-            Form_Points formPoints = new Form_Points();
-
-            formPoints.OnComplete += (addPoints, phone) =>
+            using (Form_Points formPoints = new Form_Points())
             {
-                if (addPoints)
+                if (formPoints.ShowDialog() == DialogResult.OK)
                 {
-                    Member member = new Member
+                    bool addPoints = formPoints.isPointsAdded;
+                    string phone = formPoints.phone;
+
+                    if(addPoints)
                     {
-                        phone = phone,
-                        addPoints = total * 5 / 100
-                    };
-                    orderRepostiory.UpdatePoints(member);
+                        Member member = new Member
+                        {
+                            phone = phone,
+                            addPoints = total * 5 / 100
+                        };
+                        orderRepostiory.UpdatePoints(member);
+                    }
+                    long orderId = orderRepostiory.InsertOrder(OrderList, orders);
+
+                    using (Form_Recipt form = new Form_Recipt(orderId, orders, OrderList))
+                    {
+                        if(form.ShowDialog() == DialogResult.OK)
+                        {
+                            this.DialogResult = DialogResult.OK;
+                            this.Close();
+                        }
+                    }
                 }
+            }
+                
 
-                long orderId = orderRepostiory.InsertOrder(OrderList, orders);
-                Form_Recipt form = new Form_Recipt(orderId, orders, OrderList, formMain);
-                this.Close();
-                form.ShowDialog();
-            };
+            //formPoints.OnComplete += (addPoints, phone) =>
+            //{
+            //    if (addPoints)
+            //    {
+            //        Member member = new Member
+            //        {
+            //            phone = phone,
+            //            addPoints = total * 5 / 100
+            //        };
+            //        orderRepostiory.UpdatePoints(member);
+            //    }
 
-            formPoints.ShowDialog();
+            //    long orderId = orderRepostiory.InsertOrder(OrderList, orders);
+            //    Form_Recipt form = new Form_Recipt(orderId, orders, OrderList, formMain);
+            //    if (form.ShowDialog() == DialogResult.OK)
+            //    {
+            //        this.DialogResult = DialogResult.OK;
+            //        this.Close();
+            //    }               
+            //    form.ShowDialog();
+            //};
+
+            //formPoints.ShowDialog();
         }
 
         private void ApplyModernDesign()

@@ -390,12 +390,18 @@ namespace Cafe_Pos
 
         public void btnPurchase_Click(object? sender, EventArgs e)
         {
-            if(OrderList is null)
+            if(OrderList == null || OrderList.Count == 0)
             {
                 MessageBox.Show("메뉴를 선택해주세요");
+                return;
             }
-            Form_PurchaseDial form = new Form_PurchaseDial(OrderList, this);
-            form.ShowDialog();
+            using (Form_PurchaseDial form = new Form_PurchaseDial(OrderList))
+            {
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    Form_Main_Clear();
+                }
+            }   
         }
         private void Calc_total()
         {
