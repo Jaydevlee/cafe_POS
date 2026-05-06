@@ -229,7 +229,7 @@ namespace Cafe_Pos.Forms
                             addPoints = total * 5 / 100
                         };
                         orderRepostiory.UpdatePoints(member);
-                    }
+                    } 
                     long orderId = orderRepostiory.InsertOrder(OrderList, orders);
 
                     using (Form_Recipt form = new Form_Recipt(orderId, orders, OrderList))
