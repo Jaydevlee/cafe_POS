@@ -26,23 +26,19 @@ namespace Cafe_Pos.Forms
         private Dictionary<string, OrderItems> orderList = new Dictionary<string, OrderItems>();
         private List<Orders> orders = new List<Orders>();
 
-        // 창닫기 후 폼 새로고침 이벤트
-        public delegate void FormRefreshHandler(bool closeForm);
-        public event FormRefreshHandler OnComplete;
-
         // 창 이동 전역 변수
         bool mouseDown;
         Point lastLotion;
 
 
 
-        public Form_Recipt(long orderId, List<Orders> orders, Dictionary<string, OrderItems> orderList, Form_Main formMain)
+        public Form_Recipt(long orderId, List<Orders> orders, Dictionary<string, OrderItems> orderList)
         {
             InitializeComponent();
             this.orderId = orderId;
             this.orders = orders;
             this.orderList = orderList;
-            this.formMain = formMain;
+            //this.formMain = formMain;
             ReciptInit();
             btnClose.Click += btnClose_Click;
             btnPrint.Click += btnPrint_Click;
@@ -137,14 +133,16 @@ namespace Cafe_Pos.Forms
 
         private void btnClose_Click(object? sender, EventArgs e)
         {
-            lstOrderList.Items.Clear();
-            orderList.Clear();
-            orders.Clear();
-            this.Close();
-            formMain.Form_Main_Clear();
+            //lstOrderList.Items.Clear();
+            //orderList.Clear();
+            //orders.Clear();
+            //this.Close();
+            //formMain.Form_Main_Clear();
 
-            //delegate활용
-            OnComplete(true);
+            this.DialogResult = DialogResult.OK;
+            this.Close();
+
+            
         }
 
         private void btnPrint_Click(object? sender, EventArgs e)
