@@ -288,13 +288,6 @@ namespace Cafe_Pos.Forms
             dgvMember.Columns["name"].HeaderText = "이름";
             dgvMember.Columns["phone"].HeaderText = "전화번호";
             dgvMember.Columns["points"].HeaderText = "포인트";
-            
-
-            //dgvMember.Columns["Id"].Width = 80;
-            //dgvMember.Columns["Name"].Width = 150;
-            //dgvMember.Columns["Category"].Width = 100;
-            //dgvMember.Columns["Price"].Width = 80;
-            //dgvMember.Columns["Is_active"].Width = 80;
         }
 
         //DataGridView row select 이벤트
@@ -314,7 +307,7 @@ namespace Cafe_Pos.Forms
 
         private void ApplyModernDesign()
         {
-            // 1. 폼 전체 배경색 (연한 회색)
+            // 1. 폼 전체 배경색
             this.BackColor = Color.FromArgb(248, 248, 248);
 
             // 2. 폼 내의 모든 컨트롤(탭 페이지 포함)을 순회하며 스타일 적용
@@ -325,7 +318,7 @@ namespace Cafe_Pos.Forms
         {
             foreach (Control ctrl in parent.Controls)
             {
-                // 1. DataGridView 디자인 일괄 적용
+                // 1. DataGridView 디자인
                 if (ctrl is DataGridView dgv)
                 {
                     dgv.BackgroundColor = Color.White;
@@ -352,16 +345,16 @@ namespace Cafe_Pos.Forms
                     dgv.AllowUserToAddRows = false; // 빈 하단 행 제거
                     dgv.RowHeadersVisible = false;  // 왼쪽 화살표 열 숨김
 
-                    // [보너스] 상태 컬럼(판매중/품절) 글씨 색상 자동 변경 이벤트 연결
+                    // 컬럼(판매중/품절) 글씨 색상 자동 변경 이벤트 연결
                     dgv.CellFormatting -= ListMenu_CellFormatting;// 중복 방지
                     dgv.CellFormatting += ListMenu_CellFormatting;
                 }
-                // 2. 탭 페이지 배경색 투명화 (위화감 제거)
+                // 2. 탭 페이지 배경색 투명화
                 else if (ctrl is TabPage tabPage)
                 {
                     tabPage.BackColor = Color.FromArgb(248, 248, 248);
                 }
-                // 3. 버튼 디자인 (버튼의 '텍스트'를 읽고 자동으로 색상 지정)
+                // 3. 버튼 디자인
                 else if (ctrl is Button btn)
                 {
                     btn.FlatStyle = FlatStyle.Flat;
@@ -379,13 +372,13 @@ namespace Cafe_Pos.Forms
                     else
                         btn.BackColor = Color.FromArgb(90, 61, 49); // 기본 갈색 (닫기 등)
                 }
-                // 4. 입력칸 (TextBox, ComboBox) 디자인
+                // 4. TextBox, ComboBox 디자인
                 else if (ctrl is TextBox || ctrl is ComboBox)
                 {
                     ctrl.Font = new Font("맑은 고딕", 11F);
                 }
 
-                // 컨테이너 컨트롤(Panel, TabControl 등) 안에 다른 컨트롤이 있다면 계속 파고들기
+                // 컨테이너 컨트롤(Panel, TabControl 등) 안에 다른 컨트롤이 있다면 디자인 적용
                 if (ctrl.HasChildren)
                 {
                     ApplyStyleToAllControls(ctrl);

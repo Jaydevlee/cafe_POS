@@ -198,10 +198,10 @@ namespace Cafe_Pos.Forms
         }
         private void ApplyModernDesign()
         {
-            // 1. 전체 배경색 (깔끔한 영수증 흰색)
+            // 1. 전체 배경색
             this.BackColor = Color.White;
 
-            Color darkText = Color.FromArgb(62, 39, 35); // 진갈색 텍스트
+            Color darkText = Color.FromArgb(62, 39, 35); 
 
             // 2. 상단 타이틀 바
             tlpTitle.BackColor = Color.FromArgb(90, 61, 49);
@@ -229,11 +229,10 @@ namespace Cafe_Pos.Forms
             lstOrderList.BackColor = Color.White;
             lstOrderList.BorderStyle = BorderStyle.None;
 
-            // 6. 결제 내역 패널 및 텍스트 (★ 잘림 현상 해결)
+            // 6. 결제 내역 패널 및 텍스트
             pnPrice.BackColor = Color.White;
             pnPrice.BorderStyle = BorderStyle.None;
 
-            // AutoSize를 끄고 폰트 크기에 맞춰 라벨 높이를 넉넉하게 키워줍니다 (윗부분 잘림 방지)
             lblTotal.AutoSize = false;
             lblTotal.Height = 35;
             lblTotal.Font = new Font("맑은 고딕", 16F, FontStyle.Bold);
@@ -249,15 +248,15 @@ namespace Cafe_Pos.Forms
             lblCharge.AutoSize = false;
             lblCharge.Height = 30;
             lblCharge.Font = new Font("맑은 고딕", 13F, FontStyle.Bold);
-            lblCharge.ForeColor = Color.FromArgb(216, 67, 21); // 주황색 포인트
+            lblCharge.ForeColor = Color.FromArgb(216, 67, 21);
             lblCharge.TextAlign = ContentAlignment.MiddleRight;
 
             // 7. 인사말
             lblGreeting.Font = new Font("맑은 고딕", 11F);
             lblGreeting.ForeColor = Color.Gray;
 
-            // 8. 하단 버튼 배치 (★ 출력 버튼을 하단 닫기 버튼 옆으로 이동)
-            // 두 개의 버튼이 하단에 나란히 배치되도록 크기와 위치를 강제 조정합니다.
+            // 8. 하단 버튼 배치
+            // 두 개의 버튼이 하단에 나란히 배치되도록 크기와 위치를 강제 조정
             int btnWidth = (this.Width - 60) / 2;
             int btnY = this.Height - 75; // 폼 맨 아래에서 살짝 띄운 위치
 
@@ -273,7 +272,7 @@ namespace Cafe_Pos.Forms
             btnPrint.Cursor = Cursors.Hand;
             btnPrint.Anchor = AnchorStyles.Bottom | AnchorStyles.Left; // 폼 크기 변경 대비
 
-            // 닫기 버튼 디자인 (기존의 갈색 꽉 찬 스타일)
+            // 닫기 버튼 디자인
             btnClose.Size = new Size(btnWidth, 45);
             btnClose.Location = new Point(40 + btnWidth, btnY);
             btnClose.FlatStyle = FlatStyle.Flat;

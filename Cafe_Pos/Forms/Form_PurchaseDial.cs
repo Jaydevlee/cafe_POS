@@ -205,6 +205,11 @@ namespace Cafe_Pos.Forms
                 MessageBox.Show("금액이 부족합니다.");
                 return;
             }
+            if(!int.TryParse(textRecived.Text, out int result))
+            {
+                MessageBox.Show("숫자만 입력해주세요");
+                return;
+            }
 
             orders.Clear();
             orders.Add(new Orders
@@ -274,7 +279,7 @@ namespace Cafe_Pos.Forms
             lstOrder.Font = new Font("맑은 고딕", 11F);
             lstOrder.BorderStyle = BorderStyle.FixedSingle;
 
-            // 5. 결제 금액 패널 및 금액 표시 (연한 주황색 배경 + 주황색 테두리)
+            // 5. 결제 금액 패널 및 금액 표시
             pnPrice.BackColor = Color.FromArgb(253, 235, 228);
             pnPrice.BorderStyle = BorderStyle.FixedSingle;
 
@@ -290,15 +295,15 @@ namespace Cafe_Pos.Forms
             foreach (Button btn in moneyBtns)
             {
                 btn.FlatStyle = FlatStyle.Flat;
-                btn.FlatAppearance.BorderColor = Color.FromArgb(180, 170, 160); // 사진의 연한 테두리
+                btn.FlatAppearance.BorderColor = Color.FromArgb(180, 170, 160); 
                 btn.BackColor = Color.FromArgb(220, 210, 205); // 베이지색 바탕
                 btn.ForeColor = darkBrown;
                 btn.Font = new Font("맑은 고딕", 11F, FontStyle.Bold);
                 btn.Cursor = Cursors.Hand;
             }
 
-            // 8. 거스름돈 표시 (사진과 동일한 초록색 포인트)
-            displayCharge.ForeColor = Color.FromArgb(67, 160, 71); // 진한 초록색
+            // 8. 거스름돈 표시
+            displayCharge.ForeColor = Color.FromArgb(67, 160, 71); 
             displayCharge.Font = new Font("맑은 고딕", 18F, FontStyle.Bold);
 
             // 9. 하단 취소 / 결제 완료 버튼
@@ -311,7 +316,7 @@ namespace Cafe_Pos.Forms
 
             btnPayment.FlatStyle = FlatStyle.Flat;
             btnPayment.FlatAppearance.BorderSize = 0;
-            btnPayment.BackColor = Color.FromArgb(215, 65, 25); // 진한 주황/빨강
+            btnPayment.BackColor = Color.FromArgb(215, 65, 25); 
             btnPayment.ForeColor = Color.White;
             btnPayment.Font = new Font("맑은 고딕", 14F, FontStyle.Bold);
             btnPayment.Cursor = Cursors.Hand;

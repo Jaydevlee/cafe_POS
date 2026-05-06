@@ -149,7 +149,7 @@ namespace Cafe_Pos.Forms
         {
             foreach (Control ctrl in parent.Controls)
             {
-                // [1] DataGridView 디자인 (핵심)
+                // 1. DataGridView 디자인 (핵심)
                 if (ctrl is DataGridView dgv)
                 {
                     dgv.BackgroundColor = Color.White;
@@ -157,14 +157,14 @@ namespace Cafe_Pos.Forms
                     dgv.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
                     dgv.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
 
-                    // 헤더 스타일 (타이틀바와 동일한 갈색 배경, 흰색 글씨)
+                    // 헤더 스타일
                     dgv.EnableHeadersVisualStyles = false;
                     dgv.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(90, 61, 49);
                     dgv.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
                     dgv.ColumnHeadersDefaultCellStyle.Font = new Font("맑은 고딕", 11F, FontStyle.Bold);
                     dgv.ColumnHeadersHeight = 40;
 
-                    // 행(Row) 스타일 (선택 시 연한 주황색 하이라이트)
+                    // 행(Row) 스타일 
                     dgv.DefaultCellStyle.BackColor = Color.White;
                     dgv.DefaultCellStyle.ForeColor = Color.Black;
                     dgv.DefaultCellStyle.Font = new Font("맑은 고딕", 10F);
@@ -174,9 +174,9 @@ namespace Cafe_Pos.Forms
 
                     dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                     dgv.AllowUserToAddRows = false;
-                    dgv.RowHeadersVisible = false;  // 왼쪽 빈 공간(화살표 열) 숨김
+                    dgv.RowHeadersVisible = false; 
                 }
-                // [2] 상단 우측 창 조절 버튼 (-, ㅁ, X)
+                // 2. 상단 우측 창 조절 버튼 
                 else if (ctrl is Button btn && (btn.Text == "-" || btn.Text == "ㅁ" || btn.Text == "□" || btn.Text.ToUpper() == "X"))
                 {
                     btn.FlatStyle = FlatStyle.Flat;
@@ -186,7 +186,7 @@ namespace Cafe_Pos.Forms
                     btn.Font = new Font("맑은 고딕", 10F, FontStyle.Bold);
                     btn.Cursor = Cursors.Hand;
                 }
-                // [3] 라벨 디자인
+                // 3. 라벨 디자인
                 else if (ctrl is Label lbl)
                 {
                     // 상단 타이틀 ("커피한잔 POS - 주문관리")
@@ -195,14 +195,14 @@ namespace Cafe_Pos.Forms
                         lbl.ForeColor = Color.White;
                         lbl.Font = new Font("맑은 고딕", 12F, FontStyle.Bold);
 
-                        // 타이틀을 감싸는 패널의 색상도 갈색으로 통일
+                       
                         if (lbl.Parent is Panel pnl)
                             pnl.BackColor = Color.FromArgb(90, 61, 49);
                     }
-                    // 본문 라벨 ("주문내역", "주문상세")
+                    
                     else if (lbl.Text == "주문내역" || lbl.Text == "주문상세")
                     {
-                        lbl.ForeColor = Color.FromArgb(62, 39, 35); // 진갈색
+                        lbl.ForeColor = Color.FromArgb(62, 39, 35);
                         lbl.Font = new Font("맑은 고딕", 11F, FontStyle.Bold);
                     }
                 }

@@ -225,10 +225,9 @@ namespace Cafe_Pos.Forms
             ApplyStyleToAllControls(this);
 
             // 3. 포인트 라벨 색상 
-
-            displayTotal.ForeColor = Color.FromArgb(216, 67, 21); // 총 매출 (주황)
-            displayOrders.ForeColor = Color.FromArgb(25, 118, 210);    // 주문 건수 (파랑)
-            displayAvg.ForeColor = Color.FromArgb(56, 142, 60);      // 평균 주문 금액 (초록)
+            displayTotal.ForeColor = Color.FromArgb(216, 67, 21);
+            displayOrders.ForeColor = Color.FromArgb(25, 118, 210);
+            displayAvg.ForeColor = Color.FromArgb(56, 142, 60); 
 
         }
 
@@ -236,7 +235,7 @@ namespace Cafe_Pos.Forms
         {
             foreach (Control ctrl in parent.Controls)
             {
-                // [그리드 뷰 디자인]
+                // 1.dgv디자인
                 if (ctrl is DataGridView dgv)
                 {
                     dgv.BackgroundColor = Color.White;
@@ -265,7 +264,7 @@ namespace Cafe_Pos.Forms
                     dgv.CellFormatting -= DgvTop5_CellFormatting;
                     dgv.CellFormatting += DgvTop5_CellFormatting;
                 }
-                // [버튼 디자인]
+                // 2. 버튼 디자인
                 else if (ctrl is Button btn)
                 {
                     btn.FlatStyle = FlatStyle.Flat;
@@ -275,7 +274,7 @@ namespace Cafe_Pos.Forms
                     btn.Font = new Font("맑은 고딕", 11F, FontStyle.Bold);
                     btn.Cursor = Cursors.Hand;
                 }
-                // [차트 디자인] - 디자인 언어를 해치지 않는 모던 플랫 스타일
+                // 3. 차트디자인
                 else if (ctrl is System.Windows.Forms.DataVisualization.Charting.Chart chart)
                 {
                     ApplyChartDesign(chart);
@@ -299,7 +298,6 @@ namespace Cafe_Pos.Forms
             foreach (var chartArea in chart.ChartAreas)
             {
                 chartArea.BackColor = Color.White;
-                // 촌스러운 굵은 검은색 축 선을 연한 회색으로 변경
                 chartArea.AxisX.MajorGrid.LineColor = Color.FromArgb(240, 240, 240);
                 chartArea.AxisY.MajorGrid.LineColor = Color.FromArgb(240, 240, 240);
                 chartArea.AxisX.LineColor = Color.LightGray;
@@ -309,7 +307,7 @@ namespace Cafe_Pos.Forms
                 chartArea.AxisY.LabelStyle.Font = new Font("맑은 고딕", 9F);
             }
 
-            // 카페 POS에 어울리는 커스텀 색상 팔레트 (주황, 갈색, 베이지, 초록 순)
+            // 색상 팔레트 
             Color[] customPalette = {
                 Color.FromArgb(216, 67, 21),   // 메인 주황 (총 매출 색상과 통일)
                 Color.FromArgb(90, 61, 49),    // 진갈색
