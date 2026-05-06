@@ -90,8 +90,10 @@ namespace Cafe_Pos.Forms
         private void btnSkip_Click(object? sender, EventArgs e)
         {
             isPointsAdded = false;
+            this.DialogResult = DialogResult.OK;
             this.Close();
         }
+
         private void ApplyModernDesign()
         {
             // 1. 폼 전체 배경색 (공통 연한 회색/베이지)

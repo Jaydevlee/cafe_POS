@@ -304,14 +304,15 @@ namespace Cafe_Pos.Data
                 {
                     conn.Open();
                     string sql = @"SELECT 
-                            (this_month - last_month) / NULLIF(last_month, 0) AS ratio
-                            FROM (
-                                    SELECT 
-                                    SUM(CASE WHEN ORDER_DATE >= '2026-04-26' AND ORDER_DATE < '2026-05-01' THEN total_amount ELSE 0 END) AS last_month,
-                                    SUM(CASE WHEN ORDER_DATE >= '2026-05-01' AND ORDER_DATE < '2026-06-01' THEN total_amount ELSE 0 END) AS this_month
-                                    FROM ORDERS
-                                    WHERE ORDER_DATE >= '2026-04-26' AND ORDER_DATE < '2026-06-01'  
-                                ) AS counts;";
+                                    (this_month - last_month) / NULLIF(last_month, 0) AS ratio
+                                    FROM (
+                                         SELECT 
+                                         SUM(CASE WHEN ORDER_DATE >= DATE_SUB(DATE_FORMAT(CURDATE(), '%Y-%m-01'), INTERVAL 1 MONTH) AND ORDER_DATE < DATE_FORMAT(CURDATE(), '%Y-%m-01') THEN total_amount ELSE 0 END) AS last_month,
+                                         SUM(CASE WHEN ORDER_DATE >= DATE_FORMAT(CURDATE(), '%Y-%m-01') AND ORDER_DATE < DATE_ADD(DATE_FORMAT(CURDATE(), '%Y-%m-01'), INTERVAL 1 MONTH) THEN total_amount ELSE 0 END) AS this_month
+                                         FROM ORDERS
+                                         WHERE ORDER_DATE >= DATE_SUB(DATE_FORMAT(CURDATE(), '%Y-%m-01'), INTERVAL 1 MONTH)
+                                         AND ORDER_DATE < DATE_ADD(DATE_FORMAT(CURDATE(), '%Y-%m-01'), INTERVAL 1 MONTH)
+                                    ) AS counts;";
                     using (MySqlCommand cmd = new MySqlCommand(sql, conn))
                     {
                         using (MySqlDataReader reader = cmd.ExecuteReader())
