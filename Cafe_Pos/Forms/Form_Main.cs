@@ -123,7 +123,7 @@ namespace Cafe_Pos
             {
                 // 1. 패널 기본 설정
                 Panel pn = new Panel();
-                pn.Width = 230;     // 작성하신 사이즈 유지
+                pn.Width = 230;
                 pn.Height = 100;
                 pn.BackColor = Color.White;
                 pn.BorderStyle = BorderStyle.FixedSingle; // 사진처럼 외곽선 추가
@@ -133,7 +133,7 @@ namespace Cafe_Pos
                 // 2. 메뉴명 라벨 설정
                 Label lblMenu = new Label();
                 lblMenu.Text = item.Name;
-                lblMenu.ForeColor = Color.FromArgb(62, 39, 35); // 작성하신 색상 유지
+                lblMenu.ForeColor = Color.FromArgb(62, 39, 35); 
                 lblMenu.Font = new Font("맑은 고딕", 12F, FontStyle.Bold);
                 lblMenu.Dock = DockStyle.Top; // Location 대신 Dock을 사용하여 자동 중앙 정렬 유도
                 lblMenu.Height = 50;
@@ -142,15 +142,15 @@ namespace Cafe_Pos
                 // 3. 가격 라벨 설정
                 Label lblPrice = new Label();
                 lblPrice.Text = item.Price + "원";
-                lblPrice.ForeColor = Color.FromArgb(216, 67, 21); // 작성하신 색상 유지
+                lblPrice.ForeColor = Color.FromArgb(216, 67, 21);
                 lblPrice.Font = new Font("맑은 고딕", 13F, FontStyle.Bold);
                 lblPrice.Dock = DockStyle.Bottom; // 하단 영역에 자동 정렬
                 lblPrice.Height = 50;
                 lblPrice.TextAlign = ContentAlignment.TopCenter; // 메뉴명과 가깝게 배치
 
-                // 4. 클릭 이벤트 통합 (★핵심 포인트)
-                // 라벨(글씨)을 클릭해도 pn_Click에서 (Panel)sender 처리를 
-                // 오류 없이 할 수 있도록 sender를 pn으로 강제 지정하여 전달합니다.
+                // 4. 클릭 이벤트 통합
+                // Label클릭시 패널 클릭이벤트 발생하도록
+                // label의 sender를 panel타입으로 강제 전환
                 pn.Click += pn_Click;
                 lblMenu.Click += (s, e) => pn_Click(pn, e);
                 lblPrice.Click += (s, e) => pn_Click(pn, e);
@@ -174,7 +174,7 @@ namespace Cafe_Pos
             {
                 // 1. 패널 기본 설정
                 Panel pn = new Panel();
-                pn.Width = 230;     // 작성하신 사이즈 유지
+                pn.Width = 230;    
                 pn.Height = 100;
                 pn.BackColor = Color.White;
                 pn.BorderStyle = BorderStyle.FixedSingle; // 사진처럼 외곽선 추가
@@ -184,7 +184,7 @@ namespace Cafe_Pos
                 // 2. 메뉴명 라벨 설정
                 Label lblMenu = new Label();
                 lblMenu.Text = item.Name;
-                lblMenu.ForeColor = Color.FromArgb(62, 39, 35); // 작성하신 색상 유지
+                lblMenu.ForeColor = Color.FromArgb(62, 39, 35); 
                 lblMenu.Font = new Font("맑은 고딕", 12F, FontStyle.Bold);
                 lblMenu.Dock = DockStyle.Top; // Location 대신 Dock을 사용하여 자동 중앙 정렬 유도
                 lblMenu.Height = 50;
@@ -193,15 +193,13 @@ namespace Cafe_Pos
                 // 3. 가격 라벨 설정
                 Label lblPrice = new Label();
                 lblPrice.Text = item.Price + "원";
-                lblPrice.ForeColor = Color.FromArgb(216, 67, 21); // 작성하신 색상 유지
+                lblPrice.ForeColor = Color.FromArgb(216, 67, 21);
                 lblPrice.Font = new Font("맑은 고딕", 13F, FontStyle.Bold);
                 lblPrice.Dock = DockStyle.Bottom; // 하단 영역에 자동 정렬
                 lblPrice.Height = 50;
                 lblPrice.TextAlign = ContentAlignment.TopCenter; // 메뉴명과 가깝게 배치
 
-                // 4. 클릭 이벤트 통합 (★핵심 포인트)
-                // 라벨(글씨)을 클릭해도 pn_Click에서 (Panel)sender 처리를 
-                // 오류 없이 할 수 있도록 sender를 pn으로 강제 지정하여 전달합니다.
+                // 4. 클릭 이벤트 통합 
                 pn.Click += pn_Click;
                 lblMenu.Click += (s, e) => pn_Click(pn, e);
                 lblPrice.Click += (s, e) => pn_Click(pn, e);
@@ -224,17 +222,17 @@ namespace Cafe_Pos
             {
                 // 1. 패널 기본 설정
                 Panel pn = new Panel();
-                pn.Width = 230;     // 작성하신 사이즈 유지
+                pn.Width = 230;    
                 pn.Height = 100;
                 pn.BackColor = Color.White;
-                pn.BorderStyle = BorderStyle.FixedSingle; // 사진처럼 외곽선 추가
+                pn.BorderStyle = BorderStyle.FixedSingle;
                 pn.Cursor = Cursors.Hand; // 마우스 오버 시 클릭 가능한 손가락 모양
                 pn.Tag = item;      // 데이터 바인딩 유지
 
                 // 2. 메뉴명 라벨 설정
                 Label lblMenu = new Label();
                 lblMenu.Text = item.Name;
-                lblMenu.ForeColor = Color.FromArgb(62, 39, 35); // 작성하신 색상 유지
+                lblMenu.ForeColor = Color.FromArgb(62, 39, 35); 
                 lblMenu.Font = new Font("맑은 고딕", 12F, FontStyle.Bold);
                 lblMenu.Dock = DockStyle.Top; // Location 대신 Dock을 사용하여 자동 중앙 정렬 유도
                 lblMenu.Height = 50;
@@ -249,9 +247,9 @@ namespace Cafe_Pos
                 lblPrice.Height = 50;
                 lblPrice.TextAlign = ContentAlignment.TopCenter; // 메뉴명과 가깝게 배치
 
-                // 4. 클릭 이벤트 통합 (★핵심 포인트)
+                // 4. 클릭 이벤트 통합
                 // 라벨(글씨)을 클릭해도 pn_Click에서 (Panel)sender 처리를 
-                // 오류 없이 할 수 있도록 sender를 pn으로 강제 지정하여 전달합니다.
+                // 오류 없이 할 수 있도록 sender를 pn으로 강제 지정하여 전달합
                 pn.Click += pn_Click;
                 lblMenu.Click += (s, e) => pn_Click(pn, e);
                 lblPrice.Click += (s, e) => pn_Click(pn, e);
@@ -274,7 +272,7 @@ namespace Cafe_Pos
             {
                 // 1. 패널 기본 설정
                 Panel pn = new Panel();
-                pn.Width = 230;     // 작성하신 사이즈 유지
+                pn.Width = 230;  
                 pn.Height = 100;
                 pn.BackColor = Color.White;
                 pn.BorderStyle = BorderStyle.FixedSingle; // 사진처럼 외곽선 추가
@@ -299,9 +297,7 @@ namespace Cafe_Pos
                 lblPrice.Height = 50;
                 lblPrice.TextAlign = ContentAlignment.TopCenter; // 메뉴명과 가깝게 배치
 
-                // 4. 클릭 이벤트 통합 (★핵심 포인트)
-                // 라벨(글씨)을 클릭해도 pn_Click에서 (Panel)sender 처리를 
-                // 오류 없이 할 수 있도록 sender를 pn으로 강제 지정하여 전달합니다.
+                // 4. 클릭 이벤트 통합
                 pn.Click += pn_Click;
                 lblMenu.Click += (s, e) => pn_Click(pn, e);
                 lblPrice.Click += (s, e) => pn_Click(pn, e);

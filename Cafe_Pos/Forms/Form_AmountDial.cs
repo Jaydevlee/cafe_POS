@@ -130,7 +130,7 @@ namespace Cafe_Pos.Forms
             lblQuantity.Font = new Font("맑은 고딕", 24F, FontStyle.Bold);
             // lblQuantity.BorderStyle = BorderStyle.FixedSingle; // 라벨인 경우 주석 해제
 
-            // -, + 버튼 디자인 (베이지색)
+            // -, + 버튼 디자인 
             Button[] qtyButtons = { btnUp, btnDown };
             foreach (Button btn in qtyButtons)
             {
@@ -142,7 +142,7 @@ namespace Cafe_Pos.Forms
                 btn.Cursor = Cursors.Hand;
             }
 
-            // 삭제 버튼 디자인 (빨간색)
+            // 삭제 버튼 디자인
             btnRemove.FlatStyle = FlatStyle.Flat;
             btnRemove.FlatAppearance.BorderSize = 0;
             btnRemove.BackColor = Color.FromArgb(211, 47, 47);
@@ -150,7 +150,7 @@ namespace Cafe_Pos.Forms
             btnRemove.Font = new Font("맑은 고딕", 12F, FontStyle.Bold);
             btnRemove.Cursor = Cursors.Hand;
 
-            // 확인 버튼 디자인 (주황/빨간색)
+            // 확인 버튼 디자인
             btnSave.FlatStyle = FlatStyle.Flat;
             btnSave.FlatAppearance.BorderSize = 0;
             btnSave.BackColor = Color.FromArgb(216, 67, 21);

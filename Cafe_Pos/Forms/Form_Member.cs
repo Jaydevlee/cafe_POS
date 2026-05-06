@@ -81,62 +81,58 @@ namespace Cafe_Pos.Forms
         {
             foreach (Control ctrl in parent.Controls)
             {
-                // [버튼 디자인] - 텍스트에 따라 디자인 분기
+                // 1. 버튼 디자인
                 if (ctrl is Button btn)
                 {
                     btn.FlatStyle = FlatStyle.Flat;
                     btn.Cursor = Cursors.Hand;
 
-                    if (btn.Text.ToUpper() == "X") // 상단 닫기 버튼
+                    if (btn.Text.ToUpper() == "X") 
                     {
                         btn.FlatAppearance.BorderSize = 0;
-                        btn.BackColor = Color.FromArgb(90, 61, 49); // 타이틀바와 같은 갈색
+                        btn.BackColor = Color.FromArgb(90, 61, 49); 
                         btn.ForeColor = Color.White;
                     }
-                    else if (btn.Text.Contains("회원가입")) // 메인 액션 버튼
+                    else if (btn.Text.Contains("회원가입")) 
                     {
                         btn.FlatAppearance.BorderSize = 0;
-                        btn.BackColor = Color.FromArgb(216, 67, 21); // 메인 테마 주황/빨강
+                        btn.BackColor = Color.FromArgb(216, 67, 21);
                         btn.ForeColor = Color.White;
                         btn.Font = new Font("맑은 고딕", 13F, FontStyle.Bold);
                     }
                     else if (btn.Text.Contains("취소")) // 서브 액션 버튼
                     {
-                        btn.FlatAppearance.BorderColor = Color.FromArgb(180, 170, 160); // 연한 테두리
+                        btn.FlatAppearance.BorderColor = Color.FromArgb(180, 170, 160);
                         btn.BackColor = Color.White;
-                        btn.ForeColor = Color.FromArgb(62, 39, 35); // 진갈색 텍스트
+                        btn.ForeColor = Color.FromArgb(62, 39, 35); 
                         btn.Font = new Font("맑은 고딕", 13F, FontStyle.Bold);
                     }
                 }
-                // [라벨 디자인] - 역할에 맞게 폰트 크기 및 색상 조정
+                // 2. Label 디자인
                 else if (ctrl is Label lbl)
                 {
-                    // 상단 타이틀바 라벨 ("회원가입") 및 패널 색상 처리
                     if (lbl.Text == "회원가입" && lbl.Parent is Panel pnl)
                     {
-                        pnl.BackColor = Color.FromArgb(90, 61, 49); // 타이틀바 갈색 배경
+                        pnl.BackColor = Color.FromArgb(90, 61, 49);
                         lbl.ForeColor = Color.White;
                         lbl.Font = new Font("맑은 고딕", 12F, FontStyle.Bold);
                     }
-                    // 메인 안내 문구 ("회원이 되셔서...")
                     else if (lbl.Text.Contains("적립"))
                     {
                         lbl.ForeColor = Color.FromArgb(62, 39, 35);
                         lbl.Font = new Font("맑은 고딕", 20F, FontStyle.Bold);
                     }
-                    // 입력칸 라벨 ("이름", "전화번호")
                     else if (lbl.Text == "이름" || lbl.Text == "전화번호")
                     {
                         lbl.ForeColor = Color.FromArgb(62, 39, 35);
                         lbl.Font = new Font("맑은 고딕", 14F, FontStyle.Bold);
                     }
                 }
-                // [텍스트박스 디자인] - 입력하기 편하도록 크기 확대
+                // 3. textbox 디자인
                 else if (ctrl is TextBox txt)
                 {
                     txt.Font = new Font("맑은 고딕", 14F);
                     txt.BorderStyle = BorderStyle.FixedSingle;
-                    // 텍스트박스 테두리 색상은 WinForms 기본 속성상 직접 변경이 까다로우므로 FixedSingle로 깔끔하게 처리
                 }
 
                 // 패널 안에 있는 컨트롤들도 놓치지 않고 탐색
