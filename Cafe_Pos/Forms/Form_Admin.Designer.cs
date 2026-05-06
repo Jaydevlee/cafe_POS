@@ -40,6 +40,7 @@
             tabAdmin = new TabControl();
             tabMenuPage = new TabPage();
             pnMenu = new Panel();
+            btnReset = new Button();
             tableLayoutPanel1 = new TableLayoutPanel();
             btnAdd = new Button();
             btnUpdate = new Button();
@@ -57,6 +58,7 @@
             lblListMenu = new Label();
             tabMember = new TabPage();
             pnMember = new Panel();
+            displayPoints = new Label();
             lblPoints = new Label();
             txtPhone = new TextBox();
             lblPhone = new Label();
@@ -64,7 +66,6 @@
             lblName = new Label();
             dgvMember = new DataGridView();
             dsMembers = new BindingSource(components);
-            displayPoints = new Label();
             ((System.ComponentModel.ISupportInitialize)dsMenu).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dsCategory).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dsStatus).BeginInit();
@@ -173,6 +174,7 @@
             // 
             pnMenu.BackColor = Color.WhiteSmoke;
             pnMenu.BorderStyle = BorderStyle.FixedSingle;
+            pnMenu.Controls.Add(btnReset);
             pnMenu.Controls.Add(tableLayoutPanel1);
             pnMenu.Controls.Add(cmbStatus);
             pnMenu.Controls.Add(cmbCategory);
@@ -182,10 +184,20 @@
             pnMenu.Controls.Add(lblCategory);
             pnMenu.Controls.Add(txtMenuName);
             pnMenu.Controls.Add(lblMenuName);
-            pnMenu.Location = new Point(568, 27);
+            pnMenu.Location = new Point(568, 26);
             pnMenu.Name = "pnMenu";
-            pnMenu.Size = new Size(340, 520);
+            pnMenu.Size = new Size(340, 521);
             pnMenu.TabIndex = 7;
+            // 
+            // btnReset
+            // 
+            btnReset.Location = new Point(216, 3);
+            btnReset.Name = "btnReset";
+            btnReset.Size = new Size(109, 38);
+            btnReset.TabIndex = 14;
+            btnReset.Text = "초기화";
+            btnReset.UseVisualStyleBackColor = true;
+            btnReset.Click += btnReset_Click;
             // 
             // tableLayoutPanel1
             // 
@@ -200,6 +212,7 @@
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 1;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tableLayoutPanel1.Size = new Size(314, 60);
             tableLayoutPanel1.TabIndex = 13;
             // 
@@ -367,6 +380,17 @@
             pnMember.Size = new Size(245, 517);
             pnMember.TabIndex = 1;
             // 
+            // displayPoints
+            // 
+            displayPoints.Font = new Font("맑은 고딕", 15F, FontStyle.Bold, GraphicsUnit.Point, 129);
+            displayPoints.ForeColor = Color.FromArgb(216, 67, 21);
+            displayPoints.Location = new Point(41, 308);
+            displayPoints.Name = "displayPoints";
+            displayPoints.Size = new Size(172, 47);
+            displayPoints.TabIndex = 12;
+            displayPoints.Text = "0";
+            displayPoints.TextAlign = ContentAlignment.MiddleRight;
+            // 
             // lblPoints
             // 
             lblPoints.AutoSize = true;
@@ -426,17 +450,6 @@
             dgvMember.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvMember.Size = new Size(623, 520);
             dgvMember.TabIndex = 0;
-            // 
-            // displayPoints
-            // 
-            displayPoints.Font = new Font("맑은 고딕", 15F, FontStyle.Bold, GraphicsUnit.Point, 129);
-            displayPoints.ForeColor = Color.FromArgb(216, 67, 21);
-            displayPoints.Location = new Point(41, 308);
-            displayPoints.Name = "displayPoints";
-            displayPoints.Size = new Size(172, 47);
-            displayPoints.TabIndex = 12;
-            displayPoints.Text = "0";
-            displayPoints.TextAlign = ContentAlignment.MiddleRight;
             // 
             // Form_Admin
             // 
@@ -504,5 +517,6 @@
         private TextBox txtName;
         private Label lblName;
         private Label displayPoints;
+        private Button btnReset;
     }
 }

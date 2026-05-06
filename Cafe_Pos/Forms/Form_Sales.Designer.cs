@@ -29,16 +29,19 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             panel1 = new Panel();
+            btnSetMonth = new Button();
+            btnSetToday = new Button();
             btnSelect = new Button();
             label1 = new Label();
             dtpEnd = new DateTimePicker();
             dtpStart = new DateTimePicker();
             lblPreiod = new Label();
             pnOrder = new Panel();
+            lblAvgOrders = new Label();
             displayOrders = new Label();
             lblOrders = new Label();
             pnTotal = new Panel();
@@ -57,6 +60,7 @@
             btnClose = new Button();
             lblTitle = new Label();
             chartOrder = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            lblGrowth = new Label();
             panel1.SuspendLayout();
             pnOrder.SuspendLayout();
             pnTotal.SuspendLayout();
@@ -70,6 +74,8 @@
             // 
             // panel1
             // 
+            panel1.Controls.Add(btnSetMonth);
+            panel1.Controls.Add(btnSetToday);
             panel1.Controls.Add(btnSelect);
             panel1.Controls.Add(label1);
             panel1.Controls.Add(dtpEnd);
@@ -80,13 +86,37 @@
             panel1.Size = new Size(922, 74);
             panel1.TabIndex = 0;
             // 
+            // btnSetMonth
+            // 
+            btnSetMonth.BackColor = Color.FromArgb(93, 55, 55);
+            btnSetMonth.ForeColor = Color.White;
+            btnSetMonth.Location = new Point(681, 19);
+            btnSetMonth.Name = "btnSetMonth";
+            btnSetMonth.Size = new Size(103, 32);
+            btnSetMonth.TabIndex = 9;
+            btnSetMonth.Text = "이번달";
+            btnSetMonth.UseVisualStyleBackColor = false;
+            btnSetMonth.Click += btnSetMonth_Click;
+            // 
+            // btnSetToday
+            // 
+            btnSetToday.BackColor = Color.FromArgb(93, 55, 55);
+            btnSetToday.ForeColor = Color.White;
+            btnSetToday.Location = new Point(572, 19);
+            btnSetToday.Name = "btnSetToday";
+            btnSetToday.Size = new Size(103, 32);
+            btnSetToday.TabIndex = 8;
+            btnSetToday.Text = "오늘";
+            btnSetToday.UseVisualStyleBackColor = false;
+            btnSetToday.Click += btnToday_Click;
+            // 
             // btnSelect
             // 
             btnSelect.BackColor = Color.FromArgb(93, 55, 55);
             btnSelect.ForeColor = Color.White;
             btnSelect.Location = new Point(463, 19);
             btnSelect.Name = "btnSelect";
-            btnSelect.Size = new Size(103, 29);
+            btnSelect.Size = new Size(103, 32);
             btnSelect.TabIndex = 7;
             btnSelect.Text = "조회";
             btnSelect.UseVisualStyleBackColor = false;
@@ -127,12 +157,22 @@
             // 
             // pnOrder
             // 
+            pnOrder.Controls.Add(lblAvgOrders);
             pnOrder.Controls.Add(displayOrders);
             pnOrder.Controls.Add(lblOrders);
             pnOrder.Location = new Point(327, 154);
             pnOrder.Name = "pnOrder";
-            pnOrder.Size = new Size(280, 128);
+            pnOrder.Size = new Size(280, 130);
             pnOrder.TabIndex = 2;
+            // 
+            // lblAvgOrders
+            // 
+            lblAvgOrders.BackColor = Color.Transparent;
+            lblAvgOrders.Location = new Point(12, 90);
+            lblAvgOrders.Name = "lblAvgOrders";
+            lblAvgOrders.Size = new Size(165, 25);
+            lblAvgOrders.TabIndex = 7;
+            lblAvgOrders.Text = "일 평균 주문건수";
             // 
             // displayOrders
             // 
@@ -155,11 +195,12 @@
             // 
             // pnTotal
             // 
+            pnTotal.Controls.Add(lblGrowth);
             pnTotal.Controls.Add(displayTotal);
             pnTotal.Controls.Add(lblTotal);
             pnTotal.Location = new Point(12, 154);
             pnTotal.Name = "pnTotal";
-            pnTotal.Size = new Size(280, 128);
+            pnTotal.Size = new Size(280, 130);
             pnTotal.TabIndex = 1;
             // 
             // displayTotal
@@ -187,7 +228,7 @@
             pnAvg.Controls.Add(lblAvg);
             pnAvg.Location = new Point(654, 154);
             pnAvg.Name = "pnAvg";
-            pnAvg.Size = new Size(280, 128);
+            pnAvg.Size = new Size(280, 130);
             pnAvg.TabIndex = 2;
             // 
             // displayAvg
@@ -303,19 +344,28 @@
             // 
             // chartOrder
             // 
-            chartArea2.Name = "ChartArea1";
-            chartOrder.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            chartOrder.Legends.Add(legend2);
+            chartArea1.Name = "ChartArea1";
+            chartOrder.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            chartOrder.Legends.Add(legend1);
             chartOrder.Location = new Point(12, 532);
             chartOrder.Name = "chartOrder";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            chartOrder.Series.Add(series2);
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            chartOrder.Series.Add(series1);
             chartOrder.Size = new Size(922, 375);
             chartOrder.TabIndex = 12;
             chartOrder.Text = "chart1";
+            // 
+            // lblGrowth
+            // 
+            lblGrowth.BackColor = Color.Transparent;
+            lblGrowth.Location = new Point(12, 90);
+            lblGrowth.Name = "lblGrowth";
+            lblGrowth.Size = new Size(165, 25);
+            lblGrowth.TabIndex = 8;
+            lblGrowth.Text = "전월 대비 증가";
             // 
             // Form_Sales
             // 
@@ -372,5 +422,9 @@
         private Button btnClose;
         private Label lblTitle;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartOrder;
+        private Button btnSetMonth;
+        private Button btnSetToday;
+        private Label lblAvgOrders;
+        private Label lblGrowth;
     }
 }

@@ -88,9 +88,24 @@ namespace Cafe_Pos.Forms
             DateTime tomorrow = today.AddDays(1);
             string dateTime2 = tomorrow.ToString("yyyy-MM-dd");
             list = orderRepostiory.SelectTodayOrders(dateTime1, dateTime2);
-
+            if(list.Count == 0)
+            {
+                MessageBox.Show("오늘 주문이 없습니다.");
+            }
             dsOrders.DataSource = list;
             dgvOrders.DataSource = dsOrders;
+
+            dgvOrders.Columns["Id"].HeaderText = "주문번호";
+            dgvOrders.Columns["Order_date"].HeaderText = "주문일자";
+            dgvOrders.Columns["Total_amount"].HeaderText = "총 금액";
+            dgvOrders.Columns["Received_amount"].HeaderText = "받은 금액";
+            dgvOrders.Columns["Change_amount"].HeaderText = "거스름돈";
+
+            dgvOrders.Columns["Id"].Width = 80;
+            dgvOrders.Columns["Order_date"].Width = 250;
+            dgvOrders.Columns["Total_amount"].Width = 150;
+            dgvOrders.Columns["Received_amount"].Width = 150;
+            dgvOrders.Columns["Change_amount"].Width = 150;
         }
 
         private void dgvOrdres_SelectionChanged(object? sender, EventArgs e)
@@ -110,6 +125,15 @@ namespace Cafe_Pos.Forms
             listItem = orderRepostiory.SelectOrderITemById(id);
             dsOrderItems.DataSource = listItem;
             dgvOrderItem.DataSource = dsOrderItems;
+
+            dgvOrderItem.Columns["Order_id"].HeaderText = "주문번호";
+            dgvOrderItem.Columns["Menu_id"].HeaderText = "메뉴번호";
+            dgvOrderItem.Columns["Menu_name"].HeaderText = "메뉴";
+            dgvOrderItem.Columns["Price"].HeaderText = "가격";
+            dgvOrderItem.Columns["Quantity"].HeaderText = "수량";
+            dgvOrderItem.Columns["SubTotal"].HeaderText = "총합";
+
+            dgvOrderItem.Columns["Id"].Width = 80;
         }
 
         private void ApplyModernDesign()
