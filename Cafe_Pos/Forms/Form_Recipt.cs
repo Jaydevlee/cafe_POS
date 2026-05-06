@@ -8,6 +8,7 @@ using System.Drawing.Printing;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Forms;
+using static Cafe_Pos.Forms.Form_Recipt;
 
 namespace Cafe_Pos.Forms
 {
@@ -25,9 +26,15 @@ namespace Cafe_Pos.Forms
         private Dictionary<string, OrderItems> orderList = new Dictionary<string, OrderItems>();
         private List<Orders> orders = new List<Orders>();
 
+        // 창닫기 후 폼 새로고침 이벤트
+        public delegate void FormRefreshHandler(bool closeForm);
+        public event FormRefreshHandler OnComplete;
+
         // 창 이동 전역 변수
         bool mouseDown;
         Point lastLotion;
+
+
 
         public Form_Recipt(long orderId, List<Orders> orders, Dictionary<string, OrderItems> orderList, Form_Main formMain)
         {
@@ -135,6 +142,9 @@ namespace Cafe_Pos.Forms
             orders.Clear();
             this.Close();
             formMain.Form_Main_Clear();
+
+            //delegate활용
+            OnComplete(true);
         }
 
         private void btnPrint_Click(object? sender, EventArgs e)
