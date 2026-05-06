@@ -242,31 +242,6 @@ namespace Cafe_Pos.Forms
                     }
                 }
             }
-                
-
-            //formPoints.OnComplete += (addPoints, phone) =>
-            //{
-            //    if (addPoints)
-            //    {
-            //        Member member = new Member
-            //        {
-            //            phone = phone,
-            //            addPoints = total * 5 / 100
-            //        };
-            //        orderRepostiory.UpdatePoints(member);
-            //    }
-
-            //    long orderId = orderRepostiory.InsertOrder(OrderList, orders);
-            //    Form_Recipt form = new Form_Recipt(orderId, orders, OrderList, formMain);
-            //    if (form.ShowDialog() == DialogResult.OK)
-            //    {
-            //        this.DialogResult = DialogResult.OK;
-            //        this.Close();
-            //    }               
-            //    form.ShowDialog();
-            //};
-
-            //formPoints.ShowDialog();
         }
 
         private void ApplyModernDesign()
