@@ -10,7 +10,6 @@ namespace Cafe_Pos
     public partial class Form_Main : Form
     {
         private Dictionary<string, OrderItems> OrderList { get; set; }
-        private List<Orders> orders { get; set; }
 
         // 창 이동 전역 변수
         bool mouseDown;
@@ -22,7 +21,6 @@ namespace Cafe_Pos
             InitializeComponent();
             ApplyModernDesign();
             OrderList = new Dictionary<string, OrderItems>();
-            orders = new List<Orders>();
             btnCoffee.Click += btnCoffee_Click;
             btnNonCoffee.Click += btnNonCoffee_Click;
             btnTea.Click += btnTea_Click;

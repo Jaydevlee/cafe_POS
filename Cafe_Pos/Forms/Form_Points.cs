@@ -20,6 +20,7 @@ namespace Cafe_Pos.Forms
         // 창 이동 전역 변수
         bool mouseDown;
         Point lastLotion;
+
         public Form_Points()
         {
             InitializeComponent();
@@ -82,7 +83,6 @@ namespace Cafe_Pos.Forms
                 return;
             }
             isPointsAdded = true;
-            //OnComplete(true, phone);
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
