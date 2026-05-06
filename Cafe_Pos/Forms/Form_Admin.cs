@@ -267,6 +267,14 @@ namespace Cafe_Pos.Forms
             menuRepository.DeleteMenu(menuItem);
         }
 
+        private void btnReset_Click(object? sender, EventArgs e)
+        {
+            txtMenuName.Text = "";
+            cmbCategory.SelectedItem = "커피";
+            txtPrice.Text = "";
+            cmbStatus.SelectedValue = 1;
+        }
+
         ////////////////////////////////
         /////////// 회원관리 ///////////
         ////////////////////////////////
@@ -275,6 +283,18 @@ namespace Cafe_Pos.Forms
             members = orderRepostiory.SelectAllMember();
             dsMembers.DataSource = members;
             dgvMember.DataSource = dsMembers;
+
+            dgvMember.Columns["id"].HeaderText = "회원번호";
+            dgvMember.Columns["name"].HeaderText = "이름";
+            dgvMember.Columns["phone"].HeaderText = "전화번호";
+            dgvMember.Columns["points"].HeaderText = "포인트";
+            
+
+            //dgvMember.Columns["Id"].Width = 80;
+            //dgvMember.Columns["Name"].Width = 150;
+            //dgvMember.Columns["Category"].Width = 100;
+            //dgvMember.Columns["Price"].Width = 80;
+            //dgvMember.Columns["Is_active"].Width = 80;
         }
 
         //DataGridView row select 이벤트

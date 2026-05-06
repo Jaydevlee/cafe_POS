@@ -96,6 +96,8 @@ namespace Cafe_Pos.Forms
             SelectAvg_Amount(dateTime1, dateTime2);
             btnSelect.Click += btnSelect_Click;
             LoadTop5(dateTime1, dateTime2);
+            SelectGrowth();
+            SelectAvg();
         }
 
 
@@ -103,6 +105,21 @@ namespace Cafe_Pos.Forms
         private void btnSelect_Click(object? sender, EventArgs e)
         {
             LoadSales();
+        }
+
+        private void btnToday_Click(object? sender, EventArgs e)
+        {
+            dtpStart.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+            dtpEnd.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+        }
+
+        private void btnSetMonth_Click(object? sender, EventArgs e)
+        {
+            int lastDay = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
+            dtpStart.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            dtpEnd.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, lastDay);
+            string dateTime1 = dtpStart.Value.ToString("yyyy-MM-dd");
+            string dateTime2 = dtpEnd.Value.ToString("yyyy-MM-dd");
         }
 
         private void LoadSales()
@@ -113,6 +130,8 @@ namespace Cafe_Pos.Forms
             SelectOrders_Amount(dateTime1, dateTime2);
             SelectAvg_Amount(dateTime1, dateTime2);
             LoadTop5(dateTime1, dateTime2);
+
+
         }
 
         private void SelectTotal_Amount(string dateTime1, string dateTime2)
@@ -141,6 +160,35 @@ namespace Cafe_Pos.Forms
             list = orderRepository.SelectOrderTop5(dateTime1, dateTime2);
             dsTop5.DataSource = list;
             dgvTop5.DataSource = list;
+
+            dgvTop5.Columns["name"].HeaderText = "메뉴";
+            dgvTop5.Columns["quantity"].HeaderText = "수량";
+            dgvTop5.Columns["subTotal"].HeaderText = "매출";
+            dgvTop5.Columns["ratio"].HeaderText = "비중";
+
+            dgvTop5.Columns["name"].Width = 300;
+            dgvTop5.Columns["quantity"].Width = 150;
+            dgvTop5.Columns["subTotal"].Width = 200;
+            dgvTop5.Columns["ratio"].Width = 200;
+        }
+
+        // 전월 대비 매출 증가
+        private void SelectGrowth()
+        {
+            double growth = 0;
+            growth = orderRepository.SelectGrowthRatio();
+            string displayGrowth = (Math.Round(growth, 2) * 100).ToString();
+            lblGrowth.Text = $"전월 대비 {displayGrowth}%";
+        }
+
+        // 일 평균 주문 건수
+        private void SelectAvg()
+        {
+            double avg = 0;
+            avg = orderRepository.SelectAvgOrder();
+            string displayAvg = Math.Round(avg, 1).ToString();
+            lblAvgOrders.Text = $"일 평균 {displayAvg}건";
+
         }
 
         private void DrawChart()
@@ -177,11 +225,11 @@ namespace Cafe_Pos.Forms
             ApplyStyleToAllControls(this);
 
             // 3. 포인트 라벨 색상 
-            
+
             displayTotal.ForeColor = Color.FromArgb(216, 67, 21); // 총 매출 (주황)
             displayOrders.ForeColor = Color.FromArgb(25, 118, 210);    // 주문 건수 (파랑)
             displayAvg.ForeColor = Color.FromArgb(56, 142, 60);      // 평균 주문 금액 (초록)
-            
+
         }
 
         private void ApplyStyleToAllControls(Control parent)
@@ -263,11 +311,11 @@ namespace Cafe_Pos.Forms
 
             // 카페 POS에 어울리는 커스텀 색상 팔레트 (주황, 갈색, 베이지, 초록 순)
             Color[] customPalette = {
-        Color.FromArgb(216, 67, 21),   // 메인 주황 (총 매출 색상과 통일)
-        Color.FromArgb(90, 61, 49),    // 진갈색
-        Color.FromArgb(205, 161, 114), // 라떼 베이지
-        Color.FromArgb(56, 142, 60)    // 포인트 초록
-    };
+                Color.FromArgb(216, 67, 21),   // 메인 주황 (총 매출 색상과 통일)
+                Color.FromArgb(90, 61, 49),    // 진갈색
+                Color.FromArgb(205, 161, 114), // 라떼 베이지
+                Color.FromArgb(56, 142, 60)    // 포인트 초록
+                };
 
             chart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
             chart.PaletteCustomColors = customPalette;

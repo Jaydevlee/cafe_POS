@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing.Text;
+using System.Runtime.Intrinsics.X86;
 using System.Text;
 using static System.Net.Mime.MediaTypeNames;
 using MenuItem = Cafe_Pos.Models.MenuItem;
@@ -292,6 +293,73 @@ namespace Cafe_Pos.Data
                 }
             }
             return list;
+        }
+        // 전월 대비 매출 증가
+        public double SelectGrowthRatio()
+        {
+            double growth = 0;
+            using (MySqlConnection conn = DBHepler.GetConnection())
+            {
+                try
+                {
+                    conn.Open();
+                    string sql = @"SELECT 
+                            (this_month - last_month) / NULLIF(last_month, 0) AS ratio
+                            FROM (
+                                    SELECT 
+                                    SUM(CASE WHEN ORDER_DATE >= '2026-04-26' AND ORDER_DATE < '2026-05-01' THEN total_amount ELSE 0 END) AS last_month,
+                                    SUM(CASE WHEN ORDER_DATE >= '2026-05-01' AND ORDER_DATE < '2026-06-01' THEN total_amount ELSE 0 END) AS this_month
+                                    FROM ORDERS
+                                    WHERE ORDER_DATE >= '2026-04-26' AND ORDER_DATE < '2026-06-01'  
+                                ) AS counts;";
+                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                    {
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                growth = reader.GetDouble("ratio");
+                            }
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("주문정보를 가져오지 못했습니다. " + e.Message);
+                }
+                return growth;
+            }
+                
+        }
+            
+        // 일 평균 주문 건수
+        public double SelectAvgOrder()
+        {
+            double avg = 0;
+            using (MySqlConnection conn = DBHepler.GetConnection())
+            {
+                try
+                {
+                    conn.Open();
+                    string sql = @"SELECT COUNT(id) / (DATEDIFF(MAX(order_date), MIN(order_date)) + 1) AS AVG_ORDER
+                                   FROM orders;";
+                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                    {
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                avg = reader.GetDouble("AVG_ORDER");
+                            }
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("주문정보를 가져오지 못했습니다. " + e.Message);
+                }
+            }
+            return avg;
         }
 
         // 차트
